@@ -13,27 +13,57 @@ Cypress.Commands.add('createGeneralRevenueInfo', () => {
 });
 
 // Set General Revenue Info
-Cypress.Commands.add('setGeneralRevenueInfo', (name, revenueType) => {
+Cypress.Commands.add('setGeneralRevenueInfo', (revenueType) => {
    // Populate Revenue Name input field
    cy.get('#revenueNameInput')
-      .type(name);
+      .type(revenueType.name);
 
    // Choose the type of revenue
-   cy.get('label')
-      .eq(revenueType)
-      .find('div')
-      .click({ force: true });
+   if (revenueType.value === 2) {
+      cy.get('div[class="sc-dhKdcB buTVds"] label')
+         .eq(revenueType.value)
+         .find('div')
+         .click({ force: true });
 
-   // Assert that the actual checkbox is checked after clicking the custom UI
-   cy.get('label')
-      .eq(revenueType)
-      .find('input[type="checkbox"]')
-      .should('be.checked');
+      // Assert that the actual checkbox is checked after clicking the custom UI
+      cy.assertRevenueType(revenueType.value);
+
+      // Type Subscription plan name
+      cy.get('[placeholder="!!Enter name for your subscription plan"]')
+         .type(revenueType.subscription_plan_name);
+
+      // Choose Subscription period
+      // cy.get('div[class="absolute top-0 right-0 bottom-0 left-0"]')
+      cy.get('[class="px-6 py-2 border border-gray-200 bg-grey-light-1 rounded-md"] button')
+         .eq(0)
+         .click();
+
+      // Choose the 6 month period
+      cy.get('div[class="absolute top-0 right-0 bottom-0 left-0"]')
+         .eq(revenueType.subscription_plan)
+         .click();
+   } else {
+      cy.get('div[class="sc-dhKdcB buTVds"] label')
+         .eq(revenueType.value)
+         .find('div')
+         .click({ force: true });
+
+      // Assert that the actual checkbox is checked after clicking the custom UI
+      cy.assertRevenueType(revenueType.value);
+   }
 
    // Click next button
    cy.get('button > span')
       .contains('Next')
       .click();
+});
+
+// Assert Revenue type
+Cypress.Commands.add('assertRevenueType', (revenueType) => {
+   cy.get('div[class="sc-dhKdcB buTVds"] label')
+      .eq(revenueType)
+      .find('input[type="checkbox"]')
+      .should('be.checked');
 });
 
 // Set Unit Sales Info
