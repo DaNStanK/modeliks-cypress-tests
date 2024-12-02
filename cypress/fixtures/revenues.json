@@ -8,9 +8,17 @@
       "value": 1,
       "name": "Service revenue test"
     },
-    "subscription_revenue": {
+    "twelve_months_subscription_revenue": {
       "value": 2,
-      "name": "Subscritpion revenue test"
+      "name": "12 months subscription revenue test",
+      "subscription_plan_name": "Plan 1, 12 month period",
+      "subscription_plan": 12
+    },
+    "six_month_subscription_revenue": {
+      "value": 2,
+      "name": "6 months subscription revenue test",
+      "subscription_plan_name": "Plan 2, 12 months period",
+      "subscription_plan": 6
     },
     "revenue_only": {
       "value": 3,
