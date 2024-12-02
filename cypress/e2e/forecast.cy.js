@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { revenue_name1 } from '../fixtures/example.json';
+import { revenue_names } from '../fixtures/example.json';
 
 describe('Forecast / Revenues Module', () => {
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('Forecast / Revenues Module', () => {
     cy.createGeneralRevenueInfo();
 
     // Set General Revenue Info
-    cy.setGeneralRevenueInfo(revenue_name1, 0);
+    cy.setGeneralRevenueInfo(revenue_names.name1, 0);
 
     // Set Unit Sales info
     cy.setUnitSalesInfo();
