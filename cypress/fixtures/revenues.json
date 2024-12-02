@@ -1,0 +1,20 @@
+{
+  "revenues_type": {
+    "product_sales": {
+      "value": 0,
+      "name": "Product sales test"
+    },
+    "service_revenue": {
+      "value": 1,
+      "name": "Service revenue test"
+    },
+    "subscription_revenue": {
+      "value": 2,
+      "name": "Subscritpion revenue test"
+    },
+    "revenue_only": {
+      "value": 3,
+      "name": "Revenue only test"
+    }
+  }
+}
