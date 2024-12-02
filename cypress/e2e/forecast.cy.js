@@ -5,7 +5,8 @@ import { revenues_type } from "../fixtures/revenues.json";
 const {
   product_sales,
   service_revenue,
-  subscritpion_revenue,
+  twelve_months_subscription_revenue,
+  six_month_subscription_revenue,
   revenue_only
 } = revenues_type;
 
@@ -18,12 +19,12 @@ describe('Forecast / Revenues Module', () => {
     );
   });
 
-  it('Should create revenues', () => {
+  it('Should create product sales revenues', () => {
     // Create Revenue
     cy.createGeneralRevenueInfo();
 
     // Set General Revenue Info
-    cy.setGeneralRevenueInfo(product_sales.name, product_sales.value);
+    cy.setGeneralRevenueInfo(product_sales);
 
     // Set Unit Sales info
     cy.setUnitSalesInfo();
@@ -32,7 +33,60 @@ describe('Forecast / Revenues Module', () => {
     cy.setUnitPriceInfo();
   });
 
-  it('Should delete revenues', () => {
+  it('Should create service revenues', () => {
+    // Create Revenue
+    cy.createGeneralRevenueInfo();
 
+    // Set General Revenue Info
+    cy.setGeneralRevenueInfo(service_revenue);
+
+    // Set Unit Sales info
+    cy.setUnitSalesInfo();
+
+    // Set Unit Price info
+    cy.setUnitPriceInfo();
   });
+
+  it('Should create 6 month subscription revenues', () => {
+    // Create Revenue
+    cy.createGeneralRevenueInfo();
+
+    // Set General Revenue Info
+    cy.setGeneralRevenueInfo(six_month_subscription_revenue);
+
+    // Set Unit Sales info
+    cy.setUnitSalesInfo();
+
+    // Set Unit Price info
+    cy.setUnitPriceInfo();
+  });
+
+  it('Should create 12 months subscription revenues', () => {
+    // Create Revenue
+    cy.createGeneralRevenueInfo();
+
+    // Set General Revenue Info
+    cy.setGeneralRevenueInfo(twelve_months_subscription_revenue);
+
+    // Set Unit Sales info
+    cy.setUnitSalesInfo();
+
+    // Set Unit Price info
+    cy.setUnitPriceInfo();
+  });
+
+  it('Should create revenue only', () => {
+    // Create Revenue
+    cy.createGeneralRevenueInfo();
+
+    // Set General Revenue Info
+    cy.setGeneralRevenueInfo(revenue_only);
+
+    // Set Unit Price info
+    cy.setUnitPriceInfo();
+  });
+
+  // it('Should delete revenues', () => {
+
+  // });
 });
