@@ -1,3 +1,5 @@
 {
-  "revenue_name1": "Revenue test 1"
+  "revenue_names": {
+    "name1": "Revenue test 1"
+  }
 }
