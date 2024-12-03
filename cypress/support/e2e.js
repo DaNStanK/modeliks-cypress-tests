@@ -14,8 +14,11 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
-import "./orgStructureCreation"
+import './commands';
+import "./orgStructureCreation";
+import './create-revenues-commands';
+import './delete-revenues-commands';
+import './login-commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
