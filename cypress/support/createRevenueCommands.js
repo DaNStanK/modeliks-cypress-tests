@@ -1,24 +1,23 @@
 /// <reference types="cypress" />
 
-// Create Revenue
-Cypress.Commands.add('createGeneralRevenueInfo', () => {
-   // Ensure you are on the right page
-   cy.url()
-      .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
-
+// Add Revenue Stream
+Cypress.Commands.add('addRevenueStream', () => {
    // Click button for adding revenues  
    cy.get('button')
       .contains('Add Revenue Stream')
       .click({ force: true });
 });
 
-// Set General Revenue Info
-Cypress.Commands.add('setGeneralRevenueInfo', (revenueType) => {
+
+// Populate Revenue Name input field
+Cypress.Commands.add('setRevenueName', (revenueName) => {
    // Populate Revenue Name input field
    cy.get('#revenueNameInput')
-      .type(revenueType.name);
+      .type(revenueName);
+});
 
-   // Choose the type of revenue
+// Choose the type of revenue
+Cypress.Commands.add('chooseRevenueType', (revenueType) => {
    if (revenueType.value === 2) {
       cy.get('div[class="sc-dhKdcB buTVds"] label')
          .eq(revenueType.value)
@@ -46,15 +45,7 @@ Cypress.Commands.add('setGeneralRevenueInfo', (revenueType) => {
          .eq(revenueType.value)
          .find('div')
          .click({ force: true });
-
-      // Assert that the actual checkbox is checked after clicking the custom UI
-      cy.assertRevenueType(revenueType.value);
    }
-
-   // Click next button
-   cy.get('button > span')
-      .contains('Next')
-      .click();
 });
 
 // Assert Revenue type
