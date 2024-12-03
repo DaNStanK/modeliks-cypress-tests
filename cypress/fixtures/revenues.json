@@ -12,13 +12,13 @@
       "index": 2,
       "name": "12 months subscription revenue test",
       "subscription_plan_name": "Plan 1, 12 month period",
-      "subscription_plan": 13
+      "subscription_plan_index": 13
     },
     "six_month_subscription_revenue": {
       "index": 2,
       "name": "6 months subscription revenue test",
-      "subscription_plan_name": "Plan 2, 12 months period",
-      "subscription_plan": 7
+      "subscription_plan_name": "Plan 2, 6 month period",
+      "subscription_plan_index": 7
     },
     "revenue_only": {
       "index": 3,

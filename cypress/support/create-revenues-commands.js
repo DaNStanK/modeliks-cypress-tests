@@ -38,7 +38,7 @@ Cypress.Commands.add('chooseRevenueType', (revenueType) => {
 
       // Choose the 6 month period
       cy.get('div[class="absolute top-0 right-0 bottom-0 left-0"]')
-         .eq(revenueType.subscription_plan)
+         .eq(revenueType.subscription_plan_index)
          .click();
    } else {
       cy.get('div[class="sc-dhKdcB buTVds"] label')
