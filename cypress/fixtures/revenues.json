@@ -1,27 +1,27 @@
 {
   "revenues_type": {
     "product_sales": {
-      "value": 0,
+      "index": 0,
       "name": "Product sales test"
     },
     "service_revenue": {
-      "value": 1,
+      "index": 1,
       "name": "Service revenue test"
     },
     "twelve_months_subscription_revenue": {
-      "value": 2,
+      "index": 2,
       "name": "12 months subscription revenue test",
       "subscription_plan_name": "Plan 1, 12 month period",
-      "subscription_plan": 12
+      "subscription_plan": 13
     },
     "six_month_subscription_revenue": {
-      "value": 2,
+      "index": 2,
       "name": "6 months subscription revenue test",
       "subscription_plan_name": "Plan 2, 12 months period",
-      "subscription_plan": 6
+      "subscription_plan": 7
     },
     "revenue_only": {
-      "value": 3,
+      "index": 3,
       "name": "Revenue only test"
     }
   }
