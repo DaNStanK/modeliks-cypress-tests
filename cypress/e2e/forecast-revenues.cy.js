@@ -31,7 +31,7 @@ describe('Forecast / Revenues Module', () => {
     cy.chooseRevenueType(product_sales);
 
     // Assert that the actual checkbox is checked after clicking the custom UI
-    cy.assertRevenueType(product_sales.value);
+    cy.assertRevenueType(product_sales.index);
 
     // Click next button
     cy.get('button > span')
@@ -60,7 +60,7 @@ describe('Forecast / Revenues Module', () => {
     cy.chooseRevenueType(service_revenue);
 
     // Assert that the actual checkbox is checked after clicking the custom UI
-    cy.assertRevenueType(service_revenue.value);
+    cy.assertRevenueType(service_revenue.index);
 
     // Click next button
     cy.get('button > span')
@@ -89,7 +89,7 @@ describe('Forecast / Revenues Module', () => {
     cy.chooseRevenueType(six_month_subscription_revenue);
 
     // Assert that the actual checkbox is checked after clicking the custom UI
-    cy.assertRevenueType(six_month_subscription_revenue.value);
+    cy.assertRevenueType(six_month_subscription_revenue.index);
 
     // Click next button
     cy.get('button > span')
@@ -118,7 +118,7 @@ describe('Forecast / Revenues Module', () => {
     cy.chooseRevenueType(twelve_months_subscription_revenue);
 
     // Assert that the actual checkbox is checked after clicking the custom UI
-    cy.assertRevenueType(twelve_months_subscription_revenue.value);
+    cy.assertRevenueType(twelve_months_subscription_revenue.index);
 
     // Click next button
     cy.get('button > span')
@@ -147,7 +147,7 @@ describe('Forecast / Revenues Module', () => {
     cy.chooseRevenueType(revenue_only);
 
     // Assert that the actual checkbox is checked after clicking the custom UI
-    cy.assertRevenueType(revenue_only.value);
+    cy.assertRevenueType(revenue_only.index);
 
     // Click next button
     cy.get('button > span')

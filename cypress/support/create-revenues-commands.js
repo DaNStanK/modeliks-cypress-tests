@@ -18,14 +18,14 @@ Cypress.Commands.add('setRevenueName', (revenueName) => {
 
 // Choose the type of revenue
 Cypress.Commands.add('chooseRevenueType', (revenueType) => {
-   if (revenueType.value === 2) {
+   if (revenueType.index === 2) {
       cy.get('div[class="sc-dhKdcB buTVds"] label')
-         .eq(revenueType.value)
+         .eq(revenueType.index)
          .find('div')
          .click({ force: true });
 
       // Assert that the actual checkbox is checked after clicking the custom UI
-      cy.assertRevenueType(revenueType.value);
+      cy.assertRevenueType(revenueType.index);
 
       // Type Subscription plan name
       cy.get('[placeholder="!!Enter name for your subscription plan"]')
@@ -42,7 +42,7 @@ Cypress.Commands.add('chooseRevenueType', (revenueType) => {
          .click();
    } else {
       cy.get('div[class="sc-dhKdcB buTVds"] label')
-         .eq(revenueType.value)
+         .eq(revenueType.index)
          .find('div')
          .click({ force: true });
    }
