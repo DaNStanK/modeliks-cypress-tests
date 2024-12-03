@@ -33,7 +33,6 @@ Cypress.Commands.add('setGeneralRevenueInfo', (revenueType) => {
          .type(revenueType.subscription_plan_name);
 
       // Choose Subscription period
-      // cy.get('div[class="absolute top-0 right-0 bottom-0 left-0"]')
       cy.get('[class="px-6 py-2 border border-gray-200 bg-grey-light-1 rounded-md"] button')
          .eq(0)
          .click();
