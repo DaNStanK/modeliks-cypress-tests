@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 // Login
-Cypress.Commands.add('login', (username, password) => {
+Cypress.Commands.add('loginUser', (username, password) => {
 
    // Auth API
    cy.intercept('POST', `/api/auth`).as('loginUser');
