@@ -1,5 +1,6 @@
 import './loginCommands';
 import './createRevenueCommands';
+import './deleteRevenuesCommand';
 
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
