@@ -57,10 +57,25 @@ Cypress.Commands.add('assertRevenueType', (revenueType) => {
 });
 
 // Set Unit Sales Info
-Cypress.Commands.add('setUnitSalesInfo', () => {
-   // Click Next button
+Cypress.Commands.add('setUnitSalesInfo', (revenueType) => {
+   if (revenueType.index !== 2) {
+      // Apply value in the first cell
+      cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+         .click()
+         .type(`${revenueType.unit_sales_value}{enter}`);
+
+      //Assert if the field i populated correctly
+      cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+         .should('contain', `${revenueType.unit_sales_value}`);
+
+      // Click the button to apply on all cells in the row
+      cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
+         .click({ force: true });
+   }
+
+   // Click the next button
    cy.get('button')
-      .contains('Next')
+      .contains('!!Next')
       .click();
 });
 
