@@ -79,25 +79,77 @@ Cypress.Commands.add('setUnitSalesInfo', (revenueType) => {
       .click();
 });
 
+// Set billable hours Info
+Cypress.Commands.add('setBillableHours', (revenueType) => {
+   // Apply value in the first cell
+   cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .click()
+      .type(`${revenueType.billable_hours_value}{enter}`);
+
+   //Assert if the field i populated correctly
+   cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .should('contain', `${revenueType.billable_hours_value}`);
+
+   // Click the button to apply on all cells in the row
+   cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
+      .click({ force: true });
+
+   // Click the next button
+   cy.get('button')
+      .contains('!!Next')
+      .click();
+});
+
 // Set Unit Price Info
 Cypress.Commands.add('setUnitPriceInfo', (revenueType) => {
    // Auth API
    cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
 
-   if (revenueType.index !== 2) {
-      // Apply value in the first cell
-      cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-         .click()
-         .type(`${revenueType.unit_price_value}{enter}`);
+   // Apply value in the first cell
+   cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .click()
+      .type(`${revenueType.unit_price_value}{enter}`);
 
-      //Assert if the field is populated correctly
-      cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-         .should('contain', `${revenueType.unit_price_value}`);
+   //Assert if the field is populated correctly
+   cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .should('contain', `${revenueType.unit_price_value}`);
 
-      // Click the button to apply on all cells in the row
-      cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
-         .click({ force: true });
-   }
+   // Click the button to apply on all cells in the row
+   cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
+      .click({ force: true });
+
+   // Click Next button
+   cy.get('button')
+      .contains('Save & Close')
+      .click();
+
+   // Wait for all fetches to complete
+   cy.wait('@chartOfAccounts', { timeout: 100000 })
+      .its('response.statusCode')
+      .should('eq', 200);
+
+   // Assert redirection
+   cy.url()
+      .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
+});
+
+// Set Unit Price Info
+Cypress.Commands.add('setHourlyRateInfo', (revenueType) => {
+   // Auth API
+   cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
+
+   // Apply value in the first cell
+   cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .click()
+      .type(`${revenueType.hourly_rate_value}{enter}`);
+
+   //Assert if the field is populated correctly
+   cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .should('contain', `${revenueType.hourly_rate_value}`);
+
+   // Click the button to apply on all cells in the row
+   cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
+      .click({ force: true });
 
    // Click Next button
    cy.get('button')
