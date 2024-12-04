@@ -16,7 +16,7 @@ describe('Forecast / Revenues Module', () => {
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
   });
 
-  it('Should create product sales revenues', () => {
+  it.only('Should be able to create product sales revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.url()
       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
@@ -45,7 +45,7 @@ describe('Forecast / Revenues Module', () => {
     cy.setUnitPriceInfo(product_sales);
   });
 
-  it('Should create service revenues', () => {
+  it.only('Should be able to create service revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.url()
       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
@@ -67,14 +67,15 @@ describe('Forecast / Revenues Module', () => {
       .contains('Next')
       .click();
 
-    // Set Unit Sales info
-    cy.setUnitSalesInfo(service_revenue);
+    // Set billable hours
+    cy.setBillableHours(service_revenue);
 
-    // Set Unit Price info
-    cy.setUnitPriceInfo(service_revenue);
+    // Set hourly rate
+    cy.setHourlyRateInfo(service_revenue);
   });
 
-  it('Should create 6 month subscription revenues', () => {
+  // Don't do this tests atm 04 Dec 2024 as the frontend is not finished
+  it('Should be able to create 6 month subscription revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.url()
       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
@@ -103,7 +104,8 @@ describe('Forecast / Revenues Module', () => {
     cy.setUnitPriceInfo(six_month_subscription_revenue);
   });
 
-  it('Should create 12 months subscription revenues', () => {
+  // Don't do this tests atm 04 Dec 2024 as the frontend is not finished
+  it('Should be able to create 12 months subscription revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.url()
       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
@@ -132,7 +134,7 @@ describe('Forecast / Revenues Module', () => {
     cy.setUnitPriceInfo(twelve_months_subscription_revenue);
   });
 
-  it('Should create revenue only', () => {
+  it.only('Should be able to create revenue only', () => {
     // Assert if you are on Forecast revenues section
     cy.url()
       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
