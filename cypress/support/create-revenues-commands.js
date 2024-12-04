@@ -90,7 +90,7 @@ Cypress.Commands.add('setUnitPriceInfo', (revenueType) => {
          .click()
          .type(`${revenueType.unit_price_value}{enter}`);
 
-      //Assert if the field i populated correctly
+      //Assert if the field is populated correctly
       cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
          .should('contain', `${revenueType.unit_price_value}`);
 
