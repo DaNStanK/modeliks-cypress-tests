@@ -4,27 +4,35 @@
       "index": 0,
       "name": "Product sales test",
       "unit_sales_value": 100,
-      "unit_price_value": 100
+      "unit_price_value": 10
     },
     "service_revenue": {
       "index": 1,
-      "name": "Service revenue test"
+      "name": "Service revenue test",
+      "unit_sales_value": 100,
+      "unit_price_value": 10
     },
     "twelve_months_subscription_revenue": {
       "index": 2,
       "name": "12 months subscription revenue test",
       "subscription_plan_name": "Plan 1, 12 month period",
-      "subscription_plan_index": 13
+      "subscription_plan_index": 13,
+      "unit_sales_value": 100,
+      "unit_price_value": 10
     },
     "six_month_subscription_revenue": {
       "index": 2,
       "name": "6 months subscription revenue test",
       "subscription_plan_name": "Plan 2, 6 month period",
-      "subscription_plan_index": 7
+      "subscription_plan_index": 7,
+      "unit_sales_value": 100,
+      "unit_price_value": 10
     },
     "revenue_only": {
       "index": 3,
-      "name": "Revenue only test"
+      "name": "Revenue only test",
+      "unit_sales_value": 100,
+      "unit_price_value": 10
     }
   }
 }
