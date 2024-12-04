@@ -9,8 +9,8 @@
     "service_revenue": {
       "index": 1,
       "name": "Service revenue test",
-      "unit_sales_value": 100,
-      "unit_price_value": 10
+      "billable_hours_value": 100,
+      "hourly_rate_value": 10
     },
     "twelve_months_subscription_revenue": {
       "index": 2,
