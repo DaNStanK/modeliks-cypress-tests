@@ -39,10 +39,10 @@ describe('Forecast / Revenues Module', () => {
       .click();
 
     // Set Unit Sales info
-    cy.setUnitSalesInfo();
+    cy.setUnitSalesInfo(product_sales);
 
     // Set Unit Price info
-    cy.setUnitPriceInfo();
+    cy.setUnitPriceInfo(product_sales);
   });
 
   it('Should create service revenues', () => {
@@ -68,10 +68,10 @@ describe('Forecast / Revenues Module', () => {
       .click();
 
     // Set Unit Sales info
-    cy.setUnitSalesInfo();
+    cy.setUnitSalesInfo(service_revenue);
 
     // Set Unit Price info
-    cy.setUnitPriceInfo();
+    cy.setUnitPriceInfo(service_revenue);
   });
 
   it('Should create 6 month subscription revenues', () => {
@@ -97,10 +97,10 @@ describe('Forecast / Revenues Module', () => {
       .click();
 
     // Set Unit Sales info
-    cy.setUnitSalesInfo();
+    cy.setUnitSalesInfo(six_month_subscription_revenue);
 
     // Set Unit Price info
-    cy.setUnitPriceInfo();
+    cy.setUnitPriceInfo(six_month_subscription_revenue);
   });
 
   it('Should create 12 months subscription revenues', () => {
@@ -126,10 +126,10 @@ describe('Forecast / Revenues Module', () => {
       .click();
 
     // Set Unit Sales info
-    cy.setUnitSalesInfo();
+    cy.setUnitSalesInfo(twelve_months_subscription_revenue);
 
     // Set Unit Price info
-    cy.setUnitPriceInfo();
+    cy.setUnitPriceInfo(twelve_months_subscription_revenue);
   });
 
   it('Should create revenue only', () => {
@@ -155,7 +155,7 @@ describe('Forecast / Revenues Module', () => {
       .click();
 
     // Set Unit Price info
-    cy.setUnitPriceInfo();
+    cy.setUnitPriceInfo(revenue_only);
   });
 
   // it('Should delete revenues', () => {
