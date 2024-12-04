@@ -2,7 +2,9 @@
   "revenues_type": {
     "product_sales": {
       "index": 0,
-      "name": "Product sales test"
+      "name": "Product sales test",
+      "unit_sales_value": 100,
+      "unit_price_value": 100
     },
     "service_revenue": {
       "index": 1,
