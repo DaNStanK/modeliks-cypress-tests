@@ -17,8 +17,9 @@
       "name": "12 months subscription revenue test",
       "subscription_plan_name": "Plan 1, 12 month period",
       "subscription_plan_index": 13,
-      "unit_sales_value": 100,
-      "unit_price_value": 10
+      "signups_value": 100,
+      "churn_rate_value": 10,
+      "subscription_price_value": 10
     },
     "six_month_subscription_revenue": {
       "index": 2,
