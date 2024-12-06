@@ -19,15 +19,16 @@
       "subscription_plan_index": 13,
       "signups_value": 100,
       "churn_rate_value": 10,
-      "subscription_price_value": 10
+      "refund_value": 15
     },
     "six_month_subscription_revenue": {
       "index": 2,
       "name": "6 months subscription revenue test",
       "subscription_plan_name": "Plan 2, 6 month period",
       "subscription_plan_index": 7,
-      "unit_sales_value": 100,
-      "unit_price_value": 10
+      "signups_value": 100,
+      "churn_rate_value": 10,
+      "refund_value": 15
     },
     "revenue_only": {
       "index": 3,

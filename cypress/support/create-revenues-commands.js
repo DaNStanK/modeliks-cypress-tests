@@ -62,11 +62,11 @@ Cypress.Commands.add('setUnitSalesInfo', (revenueType) => {
       // Apply value in the first cell
       cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
          .click()
-         .type(`${revenueType.unit_sales_value}{enter}`);
+         .type(`${revenueType.signups_value}{enter}`);
 
       //Assert if the field i populated correctly
       cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-         .should('contain', `${revenueType.unit_sales_value}`);
+         .should('contain', `${revenueType.signups_value}`);
 
       // Click the button to apply on all cells in the row
       cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
@@ -80,15 +80,57 @@ Cypress.Commands.add('setUnitSalesInfo', (revenueType) => {
 });
 
 // Set Signup Info values
-Cypress.Commands.add('setSignupValue', (revenueType) => {
+Cypress.Commands.add('setSignupValue', (signupsValue) => {
    // Apply value in the first cell
    cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
       .click()
-      .type(`${revenueType.signups_value}{enter}`);
+      .type(`${signupsValue}{enter}`);
 
    //Assert if the field i populated correctly
    cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-      .should('contain', `${revenueType.signups_value}`);
+      .should('contain', `${signupsValue}`);
+
+   // Click the button to apply on all cells in the row
+   cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
+      .click({ force: true });
+
+   // Click the next button
+   cy.get('button')
+      .contains('!!Next')
+      .click();
+});
+
+// Set Churn Rate
+Cypress.Commands.add('setChurnRate', (churnRate) => {
+   // Apply value in the first cell
+   cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .click()
+      .type(`${churnRate}{enter}`);
+
+   //Assert if the field i populated correctly
+   cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .should('contain', `${churnRate}`);
+
+   // Click the button to apply on all cells in the row
+   cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
+      .click({ force: true });
+
+   // Click the next button
+   cy.get('button')
+      .contains('!!Next')
+      .click();
+});
+
+// Set Refund Rate
+Cypress.Commands.add('setChurnRate', (refundRate) => {
+   // Apply value in the first cell
+   cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .click()
+      .type(`${refundRate}{enter}`);
+
+   //Assert if the field i populated correctly
+   cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+      .should('contain', `${refundRate}`);
 
    // Click the button to apply on all cells in the row
    cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')

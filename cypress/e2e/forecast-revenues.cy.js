@@ -97,8 +97,17 @@ describe('Forecast / Revenues Module', () => {
       .contains('Next')
       .click();
 
-    // Set Unit Sales info
-    cy.setUnitSalesInfo(six_month_subscription_revenue);
+    // Set Signup Value
+    cy.setSignupValue(six_month_subscription_revenue.signups_value);
+
+    // Set Churn Rate
+    cy.setChurnRate(six_month_subscription_revenue.churn_rate_value);
+
+    // Set Churn Rate
+    cy.setChurnRate(six_month_subscription_revenue.churn_rate_value);
+
+    // Set Refund Rate
+    cy.setChurnRate(six_month_subscription_revenue.refund_value);
 
     // Set Unit Price info
     cy.setUnitPriceInfo(six_month_subscription_revenue);
