@@ -8,6 +8,40 @@ Cypress.Commands.add('addRevenueStream', () => {
       .click({ force: true });
 });
 
+// Select advance settings
+Cypress.Commands.add('chooseAdvanceSettings', () => {
+   // Find and click the "Advance settings" button
+   cy.get('p')
+      .contains("Advanced Settings")
+      .click();
+
+   // Assert if the popup appears by asserting title fo the popup
+   cy.get('h2')
+      .contains('Advanced Settings')
+      .should('exist');
+});
+
+// Select allocation methodology
+Cypress.Commands.add('setAllocationMethodology', (methodology) => {
+   // Click the methodology dropdown 
+   cy.contains('span', 'do not allocate') // Find the span with the text
+      .parent() // Get its immediate parent (span)
+      .parent('button') // Selects the parent button
+      .click();
+
+   // Choose from the dropdown options
+   cy.contains('span', methodology) // Find the span with the text
+      .parent() // Get its immediate parent (span)
+      .parent('div') // Selects the parent div
+      .click();
+
+   // Assert chosen methodology 
+   cy.contains('span', methodology) // Find the span with the text
+      .parent() // Get its immediate parent (span)
+      .parent('button') // Selects the parent button
+      .should('exist');
+});
+
 
 // Populate Revenue Name input field
 Cypress.Commands.add('setRevenueName', (revenueName) => {
