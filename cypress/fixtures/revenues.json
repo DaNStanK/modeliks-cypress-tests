@@ -4,7 +4,11 @@
       "index": 0,
       "name": "Product sales test",
       "unit_sales_value": 100,
-      "unit_price_value": 10
+      "unit_price_value": 10,
+      "methodology": [
+        "breakdown",
+        "do not allocate"
+      ]
     },
     "service_revenue": {
       "index": 1,

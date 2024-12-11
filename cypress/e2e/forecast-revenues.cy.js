@@ -33,19 +33,26 @@ describe('Forecast / Revenues Module', () => {
     // Assert that the actual checkbox is checked after clicking the custom UI
     cy.assertRevenueType(product_sales.index);
 
-    // Click next button
-    cy.get('button > span')
-      .contains('Next')
-      .click();
+    // Select advance settings
+    cy.chooseAdvanceSettings();
 
-    // Set Unit Sales info
-    cy.setUnitSalesInfo(product_sales);
+    // Set the allocation methodology
+    cy.setAllocationMethodology('do not allocate');
 
-    // Set Unit Price info
-    cy.setUnitPriceInfo(product_sales);
+
+    // // Click next button
+    // cy.get('button > span')
+    //   .contains('Next')
+    //   .click();
+
+    // // Set Unit Sales info
+    // cy.setUnitSalesInfo(product_sales);
+
+    // // Set Unit Price info
+    // cy.setUnitPriceInfo(product_sales);
   });
 
-  it.only('Should be able to create service revenues', () => {
+  it('Should be able to create service revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.url()
       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
@@ -134,7 +141,7 @@ describe('Forecast / Revenues Module', () => {
     cy.setUnitPriceInfo(twelve_months_subscription_revenue);
   });
 
-  it.only('Should be able to create revenue only', () => {
+  it('Should be able to create revenue only', () => {
     // Assert if you are on Forecast revenues section
     cy.url()
       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
