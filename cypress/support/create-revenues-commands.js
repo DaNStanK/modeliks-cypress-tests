@@ -29,7 +29,7 @@ Cypress.Commands.add('setAllocationMethodology', (methodology) => {
       .parent('button') // Selects the parent button
       .click();
 
-   // // Choose from the dropdown options
+   // Choose from the dropdown options
    cy.get('div.dropdown.relative div.origin-top-left.absolute')
       .contains(methodology)
       .click({ force: true });
