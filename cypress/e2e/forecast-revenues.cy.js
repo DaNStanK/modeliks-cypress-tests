@@ -36,9 +36,11 @@ describe('Forecast / Revenues Module', () => {
     // Select advance settings
     cy.chooseAdvanceSettings();
 
-    // Set the allocation methodology
-    cy.setAllocationMethodology('do not allocate');
+    // Choose planning level
+    cy.choosePlanningLevel('BU');
 
+    // // Set the allocation methodology
+    // cy.setAllocationMethodology('breakdown');
 
     // // Click next button
     // cy.get('button > span')
