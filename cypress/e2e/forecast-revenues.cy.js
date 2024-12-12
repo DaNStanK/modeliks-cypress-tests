@@ -22,7 +22,7 @@ describe('Forecast / Revenues Module', () => {
       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
 
     // Click on Add Revenue Stream
-    cy.addRevenueStream();
+    cy.clickButton('Add Revenue Stream');
 
     // Populate Revenue Name input field
     cy.setRevenueName(product_sales.name);

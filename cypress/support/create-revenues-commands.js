@@ -1,13 +1,5 @@
 /// <reference types="cypress" />
 
-// Add Revenue Stream
-Cypress.Commands.add('addRevenueStream', () => {
-   // Click button for adding revenues  
-   cy.get('button')
-      .contains('Add Revenue Stream')
-      .click({ force: true });
-});
-
 // Select advance settings
 Cypress.Commands.add('chooseAdvanceSettings', () => {
    // Find and click the "Advance settings" button
