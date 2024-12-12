@@ -29,11 +29,10 @@ Cypress.Commands.add('setAllocationMethodology', (methodology) => {
       .parent('button') // Selects the parent button
       .click();
 
-   // Choose from the dropdown options
-   cy.contains('span', methodology) // Find the span with the text
-      .parent() // Get its immediate parent (span)
-      .parent('div') // Selects the parent div
-      .click();
+   // // Choose from the dropdown options
+   cy.get('div.dropdown.relative div.origin-top-left.absolute')
+      .contains(methodology)
+      .click({ force: true });
 
    // Assert chosen methodology 
    cy.contains('span', methodology) // Find the span with the text
