@@ -100,13 +100,6 @@ Cypress.Commands.add('assertRevenueType', (revenueType) => {
       .should('be.checked');
 });
 
-// Click button
-Cypress.Commands.add('clickButton', (button) => {
-   cy.get('button')
-      .contains(button)
-      .click();
-});
-
 // Set Unit Sales Info
 Cypress.Commands.add('setUnitSalesInfo', (revenueType) => {
    if (revenueType.index !== 2) {

@@ -11,3 +11,17 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
+// Click button
+Cypress.Commands.add('clickButton', (button) => {
+   cy.get('button')
+      .contains(button)
+      .click();
+});
+
+// Assert URL
+Cypress.Commands.add('expectedUrl', (url) => {
+   cy.url()
+      .should('eq', url);
+});
