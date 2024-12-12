@@ -21,6 +21,25 @@ Cypress.Commands.add('chooseAdvanceSettings', () => {
       .should('exist');
 });
 
+// Choose planning level
+Cypress.Commands.add('choosePlanningLevel', (planningLevel) => {
+   // Click the planning level dropdown
+   cy.get('button') // Finds dropdown field
+      .contains('Level 1') // That has an HTML text "Level 1"
+      .click({ force: true });
+
+   // Choose from the dropdown options
+   cy.get('div.dropdown.relative div.origin-top-left.absolute')
+      .eq(1)
+      .contains(planningLevel)
+      .click({ force: true });
+
+   // Assert chosen planning level 
+   cy.get('button span span.overflow-hidden') // Finds dropdown field
+      .contains(planningLevel) // That has an HTML text [Planning level]
+      .should('exist');
+});
+
 // Select allocation methodology
 Cypress.Commands.add('setAllocationMethodology', (methodology) => {
    // Click the methodology dropdown 
