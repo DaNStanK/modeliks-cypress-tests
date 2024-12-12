@@ -18,8 +18,7 @@ describe('Forecast / Revenues Module', () => {
 
   it.only('Should be able to create product sales revenues', () => {
     // Assert if you are on Forecast revenues section
-    cy.url()
-      .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
+    cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
