@@ -39,13 +39,14 @@ describe('Forecast / Revenues Module', () => {
     // Choose planning level
     cy.choosePlanningLevel('BU');
 
-    // // Set the allocation methodology
-    // cy.setAllocationMethodology('breakdown');
+    // Set the allocation methodology
+    cy.setAllocationMethodology('breakdown');
 
-    // // Click next button
-    // cy.get('button > span')
-    //   .contains('Next')
-    //   .click();
+    // Click save button in the advanced settings
+    cy.clickButton('Save');
+
+    // Click next button
+    cy.clickButton('Next');
 
     // // Set Unit Sales info
     // cy.setUnitSalesInfo(product_sales);
