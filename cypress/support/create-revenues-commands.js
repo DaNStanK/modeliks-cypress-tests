@@ -108,6 +108,13 @@ Cypress.Commands.add('assertRevenueType', (revenueType) => {
       .should('be.checked');
 });
 
+// Assert Revenue type
+Cypress.Commands.add('saveAdvancedSettings', (revenueType) => {
+   cy.get('button')
+      .contains('Save')
+      .click();
+});
+
 // Set Unit Sales Info
 Cypress.Commands.add('setUnitSalesInfo', (revenueType) => {
    if (revenueType.index !== 2) {
