@@ -1,5 +1,25 @@
 {
    "company": {
-      "number": 1751
+      "name": "Test Company 1",
+      "number": 1751,
+      "organisationalStructure": {
+         "levelOne": {
+            "name": "Company 1"
+         },
+         "levelTwo": {
+            "name": "BU",
+            "units": {
+               "unit1": "BU1",
+               "unit2": "BU2"
+            }
+         },
+         "LevelThree": {
+            "name": "SU",
+            "units": {
+               "unit1": "Subunit1",
+               "unit2": "Subunit2"
+            }
+         }
+      }
    }
 }
