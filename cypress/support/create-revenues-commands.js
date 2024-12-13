@@ -128,40 +128,57 @@ Cypress.Commands.add('applyToAllFields', (row, month) => {
    });
 });
 
-// Set Unit Sales Info
-Cypress.Commands.add('setUnitSalesInfo', (row, month, value) => {
+Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
    // Check if it is on level 1 or not
    cy.get(`table tbody tr.text-xs.group.false`).then(rows => {
       const rowsCount = rows.length;
 
-      // Check how many rows has the table
       if (rowsCount <= 2) {
-         // Check the month value
-         if (month > 12) {
-            // Apply value in the first cell
-            cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${month - 10}) .text-right`)
-               .eq(1)
-               .click()
+         if (cellIndex <= 12) {
+            // Set table cell value according to the assigned row, cell index and value
+            cy.get('table tbody tr')
+               .eq(rowIndex - 1) // Select the desired row.
+               .find('td')
+               .eq(cellIndex) // Select the desired cell.
+               .dblclick('bottomRight')
+               .find('input')
+               .should('be.visible')
+               .clear()
                .type(`${value}{enter}`);
          } else {
-            // Apply value in the first cell
-            cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${month + 1}) .text-right`)
-               .eq(1)
-               .click()
+            // Set table cell value according to the assigned row, cell index and value
+            cy.get('table tbody tr')
+               .eq(rowIndex - 1) // Select the desired row.
+               .find('td')
+               .eq(cellIndex - 10) // Select the desired cell.
+               .dblclick('bottomRight')
+               .find('input')
+               .should('be.visible')
+               .clear()
                .type(`${value}{enter}`);
          }
-
       } else {
-         // Check how many rows has the table
-         if (month > 12) {
-            // Apply value in the first cell
-            cy.get(`section.main-table-theme tr[data-rowdataindex=${row}] td:nth-of-type(${month - 10}) span.text-right`)
-               .click({ force: true })
+         if (cellIndex <= 12) {
+            // Set table cell value according to the assigned row, cell index and value
+            cy.get('table tbody tr')
+               .eq(rowIndex) // Select the desired row.
+               .find('td')
+               .eq(cellIndex) // Select the desired cell.
+               .dblclick('bottomRight')
+               .find('input')
+               .should('be.visible')
+               .clear()
                .type(`${value}{enter}`);
          } else {
-            // Apply value in the first cell
-            cy.get(`section.main-table-theme tr[data-rowdataindex=${row}] td:nth-of-type(${month + 1}) span.text-right`)
-               .click({ force: true })
+            // Set table cell value according to the assigned row, cell index and value
+            cy.get('table tbody tr')
+               .eq(rowIndex) // Select the desired row.
+               .find('td')
+               .eq(cellIndex - 10) // Select the desired cell.
+               .dblclick('bottomRight')
+               .find('input')
+               .should('be.visible')
+               .clear()
                .type(`${value}{enter}`);
          }
       }
@@ -169,10 +186,56 @@ Cypress.Commands.add('setUnitSalesInfo', (row, month, value) => {
 });
 
 // Check revenue table fields value
-Cypress.Commands.add('checkValue', (month, value) => {
-   cy.get(`section.main-table-theme tr[data-rowdataindex="0"] td:nth-of-type(${month + 1}) .text-right`)
-      .eq(1)
-      .should('contain', value);
+Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
+
+   // Check if it is on level 1 or not
+   cy.get(`table tbody tr.text-xs.group.false`).then(rows => {
+      const rowsCount = rows.length;
+
+      if (rowsCount <= 2) {
+         if (cellIndex <= 12) {
+            // Set table cell value according to the assigned row, cell index and value
+            cy.get('table tbody tr')
+               .eq(rowIndex - 1) // Select the desired row.
+               .find('td')
+               .eq(cellIndex) // Select the desired cell.
+               .dblclick('bottomRight')
+               .find('input')
+               .should('be.visible')
+               .should('have.value', value); // Validate the input value.
+         } else {
+            // Set table cell value according to the assigned row, cell index and value
+            cy.get('table tbody tr')
+               .eq(rowIndex - 1) // Select the desired row.
+               .find('td')
+               .eq(cellIndex - 10) // Select the desired cell.
+               .dblclick('bottomRight')
+               .find('input')
+               .should('be.visible')
+               .should('have.value', value); // Validate the input value.
+         }
+      } else {
+         if (cellIndex <= 12) {
+            // Set table cell value according to the assigned row, cell index and value
+            cy.get('table tbody tr')
+               .eq(rowIndex) // Select the desired row.
+               .find('td')
+               .eq(cellIndex) // Select the desired cell.
+               .dblclick('bottomRight')
+               .find('input')
+               .should('be.visible').should('have.value', value); // Validate the input value.
+         } else {
+            // Set table cell value according to the assigned row, cell index and value
+            cy.get('table tbody tr')
+               .eq(rowIndex) // Select the desired row.
+               .find('td')
+               .eq(cellIndex - 10) // Select the desired cell.
+               .dblclick('bottomRight')
+               .find('input')
+               .should('be.visible').should('have.value', value); // Validate the input value.
+         }
+      }
+   });
 });
 
 // Set billable hours Info
