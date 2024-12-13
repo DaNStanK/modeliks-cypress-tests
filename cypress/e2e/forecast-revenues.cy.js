@@ -59,38 +59,50 @@ describe('Forecast / Revenues Module', () => {
     // Click save button in the advanced settings
     cy.clickButton('Save');
 
-    // Click next button
+    // Click next button and continue to unit sales info section
     cy.clickButton('Next');
 
-    // Set Unit Sales info
+    // Set Unit Sales info for the 1st month
     cy.editTableCell(1, 1, product_sales.unit_sales); // rowIndex, cellIndex, value
 
-    // Check if the value is correctly applied
+    // Check if the value for the 1st month is correctly applied
     cy.checkCellValue(1, 1, product_sales.unit_sales); // rowIndex, cellIndex, value
 
-    // Apply to all fields
+    // Apply the units set for the 1st month to all remaining
     cy.applyToAllFields(1, 1); // parameters: [row, month]
 
-    // Set Unit Sales info
+    // Set Unit Sales info for the 12th month
     cy.editTableCell(1, 12, product_sales.unit_sales_12); // rowIndex, cellIndex, value
 
-    // Check if the value is correctly applied
+    // Check if the value is correctly applied on 12th month
     cy.checkCellValue(1, 12, product_sales.unit_sales_12); // rowIndex, cellIndex, value
 
-    // Set Unit Sales info
+    // Set Unit Sales info for 24th month
     cy.editTableCell(1, 24, product_sales.unit_sales_24); // rowIndex, cellIndex, value
 
-    // Check if the value is correctly applied
+    // Check if the value is correctly applied for 24th month
     cy.checkCellValue(1, 24, product_sales.unit_sales_24); // rowIndex, cellIndex, value
 
-    // Click next button
+    // Click next button and continue to unit prices setup
     cy.clickButton('Next');
 
-    // Set Unit Price info
+    // Set Unit Price info for the first month
     cy.editTableCell(1, 1, product_sales.unit_price); // rowIndex, cellIndex, value
 
-    // Apply to all fields
+    // Check if the value of the unit price for the first month is correctly applied
+    cy.checkCellValue(1, 1, product_sales.unit_price); // rowIndex, cellIndex, value
+
+    // Apply the unit price for all months
     cy.applyToAllFields(1, 1); // parameters: [row, month]
+
+    // Set Unit Price info for the 12th month
+    cy.editTableCell(1, 12, product_sales.unit_price_12); // rowIndex, cellIndex, value
+
+    // Check if the value of the unit price for the 12th month is correctly applied
+    cy.checkCellValue(1, 12, product_sales.unit_price_12); // rowIndex, cellIndex, value
+
+    // Click next button and continue to allocation
+    cy.clickButton('Next');
   });
 
   it('Should be able to create service revenues', () => {
