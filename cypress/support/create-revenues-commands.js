@@ -128,6 +128,17 @@ Cypress.Commands.add('applyToAllFields', (row, month) => {
    });
 });
 
+Cypress.Commands.add('findCell', (row, cell) => {
+   // Set table cell value according to the assigned row, cell and value
+   cy.get('table tbody tr')
+      .eq(row) // Select the desired row.
+      .find('td')
+      .eq(cell) // Select the desired cell.
+      .dblclick('bottomRight')
+      .find('input')
+      .should('be.visible');
+});
+
 Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
    // Check if it is on level 1 or not
    cy.get(`table tbody tr.text-xs.group.false`).then(rows => {
@@ -136,48 +147,24 @@ Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
       if (rowsCount <= 2) {
          if (cellIndex <= 12) {
             // Set table cell value according to the assigned row, cell index and value
-            cy.get('table tbody tr')
-               .eq(rowIndex - 1) // Select the desired row.
-               .find('td')
-               .eq(cellIndex) // Select the desired cell.
-               .dblclick('bottomRight')
-               .find('input')
-               .should('be.visible')
+            cy.findCell(rowIndex - 1, cellIndex,)
                .clear()
                .type(`${value}{enter}`);
          } else {
             // Set table cell value according to the assigned row, cell index and value
-            cy.get('table tbody tr')
-               .eq(rowIndex - 1) // Select the desired row.
-               .find('td')
-               .eq(cellIndex - 10) // Select the desired cell.
-               .dblclick('bottomRight')
-               .find('input')
-               .should('be.visible')
+            cy.findCell(rowIndex - 1, cellIndex - 10)
                .clear()
                .type(`${value}{enter}`);
          }
       } else {
          if (cellIndex <= 12) {
             // Set table cell value according to the assigned row, cell index and value
-            cy.get('table tbody tr')
-               .eq(rowIndex) // Select the desired row.
-               .find('td')
-               .eq(cellIndex) // Select the desired cell.
-               .dblclick('bottomRight')
-               .find('input')
-               .should('be.visible')
+            cy.findCell(rowIndex, cellIndex)
                .clear()
                .type(`${value}{enter}`);
          } else {
             // Set table cell value according to the assigned row, cell index and value
-            cy.get('table tbody tr')
-               .eq(rowIndex) // Select the desired row.
-               .find('td')
-               .eq(cellIndex - 10) // Select the desired cell.
-               .dblclick('bottomRight')
-               .find('input')
-               .should('be.visible')
+            cy.findCell(rowIndex, cellIndex - 10)
                .clear()
                .type(`${value}{enter}`);
          }
@@ -187,7 +174,6 @@ Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
 
 // Check revenue table fields value
 Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
-
    // Check if it is on level 1 or not
    cy.get(`table tbody tr.text-xs.group.false`).then(rows => {
       const rowsCount = rows.length;
@@ -195,44 +181,26 @@ Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
       if (rowsCount <= 2) {
          if (cellIndex <= 12) {
             // Set table cell value according to the assigned row, cell index and value
-            cy.get('table tbody tr')
-               .eq(rowIndex - 1) // Select the desired row.
-               .find('td')
-               .eq(cellIndex) // Select the desired cell.
-               .dblclick('bottomRight')
-               .find('input')
+            cy.findCell(rowIndex - 1, cellIndex)
                .should('be.visible')
                .should('have.value', value); // Validate the input value.
          } else {
             // Set table cell value according to the assigned row, cell index and value
-            cy.get('table tbody tr')
-               .eq(rowIndex - 1) // Select the desired row.
-               .find('td')
-               .eq(cellIndex - 10) // Select the desired cell.
-               .dblclick('bottomRight')
-               .find('input')
+            cy.findCell(rowIndex - 1, cellIndex - 10)
                .should('be.visible')
                .should('have.value', value); // Validate the input value.
          }
       } else {
          if (cellIndex <= 12) {
             // Set table cell value according to the assigned row, cell index and value
-            cy.get('table tbody tr')
-               .eq(rowIndex) // Select the desired row.
-               .find('td')
-               .eq(cellIndex) // Select the desired cell.
-               .dblclick('bottomRight')
-               .find('input')
-               .should('be.visible').should('have.value', value); // Validate the input value.
+            cy.findCell(rowIndex, cellIndex)
+               .should('be.visible')
+               .should('have.value', value); // Validate the input value.
          } else {
             // Set table cell value according to the assigned row, cell index and value
-            cy.get('table tbody tr')
-               .eq(rowIndex) // Select the desired row.
-               .find('td')
-               .eq(cellIndex - 10) // Select the desired cell.
-               .dblclick('bottomRight')
-               .find('input')
-               .should('be.visible').should('have.value', value); // Validate the input value.
+            cy.findCell(rowIndex, cellIndex - 10)
+               .should('be.visible')
+               .should('have.value', value); // Validate the input value.
          }
       }
    });
