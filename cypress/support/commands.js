@@ -14,9 +14,9 @@
 
 
 // Click button
-Cypress.Commands.add('clickButton', (button) => {
+Cypress.Commands.add('clickButton', (buttonName) => {
    cy.get('button')
-      .contains(button)
+      .contains(buttonName)
       .click();
 });
 
