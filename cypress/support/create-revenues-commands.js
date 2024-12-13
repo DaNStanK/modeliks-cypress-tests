@@ -100,27 +100,79 @@ Cypress.Commands.add('assertRevenueType', (revenueType) => {
       .should('be.checked');
 });
 
+// Click on apply to all fields button 
+Cypress.Commands.add('applyToAllFields', (row, month) => {
+   // Check if it is on level 1 or not
+   cy.get(`table tbody tr.text-xs.group.false`).then(rows => {
+      const rowsCount = rows.length;
+
+      if (rowsCount <= 2) {
+         // Click the button to apply value on all of the remaining fields
+         if (month > 12) {
+            cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${month - 10}) .m-round-button`)
+               .click({ force: true });
+         } else {
+            cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${month + 1}) .m-round-button`)
+               .click({ force: true });
+         }
+      } else {
+         // Click the button to apply value on all of the remaining fields
+         if (month > 12) {
+            cy.get(`section.main-table-theme tr[data-rowdataindex=${row}] td:nth-of-type(${month - 10}) .m-round-button`)
+               .click({ force: true });
+         } else {
+            cy.get(`section.main-table-theme tr[data-rowdataindex=${row}] td:nth-of-type(${month + 1}) .m-round-button`)
+               .click({ force: true });
+         }
+      }
+   });
+});
+
 // Set Unit Sales Info
-Cypress.Commands.add('setUnitSalesInfo', (revenueType) => {
-   if (revenueType.index !== 2) {
-      // Apply value in the first cell
-      cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-         .click()
-         .type(`${revenueType.unit_sales_value}{enter}`);
+Cypress.Commands.add('setUnitSalesInfo', (row, month, value) => {
+   // Check if it is on level 1 or not
+   cy.get(`table tbody tr.text-xs.group.false`).then(rows => {
+      const rowsCount = rows.length;
 
-      //Assert if the field i populated correctly
-      cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-         .should('contain', `${revenueType.unit_sales_value}`);
+      // Check how many rows has the table
+      if (rowsCount <= 2) {
+         // Check the month value
+         if (month > 12) {
+            // Apply value in the first cell
+            cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${month - 10}) .text-right`)
+               .eq(1)
+               .click()
+               .type(`${value}{enter}`);
+         } else {
+            // Apply value in the first cell
+            cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${month + 1}) .text-right`)
+               .eq(1)
+               .click()
+               .type(`${value}{enter}`);
+         }
 
-      // Click the button to apply on all cells in the row
-      cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
-         .click({ force: true });
-   }
+      } else {
+         // Check how many rows has the table
+         if (month > 12) {
+            // Apply value in the first cell
+            cy.get(`section.main-table-theme tr[data-rowdataindex=${row}] td:nth-of-type(${month - 10}) span.text-right`)
+               .click({ force: true })
+               .type(`${value}{enter}`);
+         } else {
+            // Apply value in the first cell
+            cy.get(`section.main-table-theme tr[data-rowdataindex=${row}] td:nth-of-type(${month + 1}) span.text-right`)
+               .click({ force: true })
+               .type(`${value}{enter}`);
+         }
+      }
+   });
+});
 
-   // Click the next button
-   cy.get('button')
-      .contains('!!Next')
-      .click();
+// Check revenue table fields value
+Cypress.Commands.add('checkValue', (month, value) => {
+   cy.get(`section.main-table-theme tr[data-rowdataindex="0"] td:nth-of-type(${month + 1}) .text-right`)
+      .eq(1)
+      .should('contain', value);
 });
 
 // Set billable hours Info
