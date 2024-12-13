@@ -13,6 +13,7 @@ const {
 
 describe('Forecast / Revenues Module', () => {
   beforeEach(() => {
+    cy.clearAllLocalStorage();
     // Login the user
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
 
@@ -62,44 +63,34 @@ describe('Forecast / Revenues Module', () => {
     cy.clickButton('Next');
 
     // Set Unit Sales info
-    cy.setUnitSalesInfo(1, 1, product_sales.unit_sales); // parameters: [row, month, value]
+    cy.editTableCell(1, 1, product_sales.unit_sales); // rowIndex, cellIndex, value
 
     // Check if the value is correctly applied
-    cy.checkValue(1, product_sales.unit_sales); // parameters: [month, value]
+    cy.checkCellValue(1, 1, product_sales.unit_sales); // rowIndex, cellIndex, value
 
     // Apply to all fields
     cy.applyToAllFields(1, 1); // parameters: [row, month]
 
-    // // Set Unit Sales info
-    // cy.setUnitSalesInfo(1, 12, product_sales.unit_sales_12); // parameters: [row, month, value]
+    // Set Unit Sales info
+    cy.editTableCell(1, 12, product_sales.unit_sales_12); // rowIndex, cellIndex, value
 
-    // Apply value in the 2 year cell
-    // cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${11 + 1})`) // .text-right
-    //   .eq(1)
-    //   .find('.text-right')
-    //   .dblclick()
-    //   .should('contain', '100')
-    //   .type('{selectall}')
-    //   .type(`${product_sales.unit_sales_12}{enter}`);
+    // Check if the value is correctly applied
+    cy.checkCellValue(1, 12, product_sales.unit_sales_12); // rowIndex, cellIndex, value
 
-    cy.get('table tbody tr')
-      .eq(1) // Select the first row.
-      .find('td') // Find all cells in the row.
-      .eq(12) // Select the 13th cell (index starts from 0).
-      .find('span.text-right')
-      .dblclick(); // Activate edit mode (if needed).
-    // .clear();
-    // .type('365{enter}');
+    // Set Unit Sales info
+    cy.editTableCell(1, 24, product_sales.unit_sales_24); // rowIndex, cellIndex, value
 
-    // cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${10 + 1})`)
-    //   .eq(1)
-    //   .click();
+    // Check if the value is correctly applied
+    cy.checkCellValue(1, 24, product_sales.unit_sales_24); // rowIndex, cellIndex, value
 
-    // // Check if the value is correctly applied
-    // cy.checkValue(12, product_sales.unit_sales_12); // parameters: [month, value]
+    // Click next button
+    cy.clickButton('Next');
 
-    // // Set Unit Price info
-    // cy.setUnitPriceInfo(product_sales);
+    // Set Unit Price info
+    cy.editTableCell(1, 1, product_sales.unit_price); // rowIndex, cellIndex, value
+
+    // Apply to all fields
+    cy.applyToAllFields(1, 1); // parameters: [row, month]
   });
 
   it('Should be able to create service revenues', () => {
