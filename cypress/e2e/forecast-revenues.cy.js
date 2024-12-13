@@ -36,7 +36,7 @@ describe('Forecast / Revenues Module', () => {
     cy.chooseAdvanceSettings();
 
     // Choose planning level
-    cy.choosePlanningLevel('BU');
+    cy.choosePlanningLevel('Level 1');
 
     // Set the allocation methodology
     cy.setAllocationMethodology('breakdown');
@@ -47,8 +47,33 @@ describe('Forecast / Revenues Module', () => {
     // Click next button
     cy.clickButton('Next');
 
+    // Set Unit Sales info
+    cy.setUnitSalesInfo(1, 1, product_sales.unit_sales); // parameters: [row, month, value]
+
+    // Check if the value is correctly applied
+    cy.checkValue(1, product_sales.unit_sales); // parameters: [month, value]
+
+    // Apply to all fields
+    cy.applyToAllFields(1, 1); // parameters: [row, month]
+
     // // Set Unit Sales info
-    // cy.setUnitSalesInfo(product_sales);
+    // cy.setUnitSalesInfo(1, 12, product_sales.unit_sales_12); // parameters: [row, month, value]
+
+    // Apply value in the 2 year cell
+    cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${11 + 1})`) // .text-right
+      .eq(1)
+      .find('.text-right')
+      .click()
+      .should('contain', '100')
+      .type(`${product_sales.unit_sales_12}{enter}`)
+      .should('contain', '1000');
+
+    // cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${10 + 1})`)
+    //   .eq(1)
+    //   .click();
+
+    // // Check if the value is correctly applied
+    // cy.checkValue(12, product_sales.unit_sales_12); // parameters: [month, value]
 
     // // Set Unit Price info
     // cy.setUnitPriceInfo(product_sales);
