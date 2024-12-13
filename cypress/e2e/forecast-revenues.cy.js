@@ -18,11 +18,10 @@ describe('Forecast / Revenues Module', () => {
 
   it.only('Should be able to create product sales revenues', () => {
     // Assert if you are on Forecast revenues section
-    cy.url()
-      .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
+    cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
     // Click on Add Revenue Stream
-    cy.addRevenueStream();
+    cy.clickButton('Add Revenue Stream');
 
     // Populate Revenue Name input field
     cy.setRevenueName(product_sales.name);
@@ -36,17 +35,45 @@ describe('Forecast / Revenues Module', () => {
     // Select advance settings
     cy.chooseAdvanceSettings();
 
+    // Choose planning level
+    cy.choosePlanningLevel('Level 1');
+
     // Set the allocation methodology
-    cy.setAllocationMethodology('do not allocate');
+    cy.setAllocationMethodology('breakdown');
 
+    // Click save button in the advanced settings
+    cy.clickButton('Save');
 
-    // // Click next button
-    // cy.get('button > span')
-    //   .contains('Next')
-    //   .click();
+    // Click next button
+    cy.clickButton('Next');
+
+    // Set Unit Sales info
+    cy.setUnitSalesInfo(1, 1, product_sales.unit_sales); // parameters: [row, month, value]
+
+    // Check if the value is correctly applied
+    cy.checkValue(1, product_sales.unit_sales); // parameters: [month, value]
+
+    // Apply to all fields
+    cy.applyToAllFields(1, 1); // parameters: [row, month]
 
     // // Set Unit Sales info
-    // cy.setUnitSalesInfo(product_sales);
+    // cy.setUnitSalesInfo(1, 12, product_sales.unit_sales_12); // parameters: [row, month, value]
+
+    // Apply value in the 2 year cell
+    cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${11 + 1})`) // .text-right
+      .eq(1)
+      .find('.text-right')
+      .click()
+      .should('contain', '100')
+      .type(`${product_sales.unit_sales_12}{enter}`)
+      .should('contain', '1000');
+
+    // cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${10 + 1})`)
+    //   .eq(1)
+    //   .click();
+
+    // // Check if the value is correctly applied
+    // cy.checkValue(12, product_sales.unit_sales_12); // parameters: [month, value]
 
     // // Set Unit Price info
     // cy.setUnitPriceInfo(product_sales);

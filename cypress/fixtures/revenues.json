@@ -2,17 +2,37 @@
   "revenues_type": {
     "product_sales": {
       "index": 0,
-      "name": "Product sales test",
-      "unit_sales_value": 100,
-      "unit_price_value": 10,
-      "methodology": [
-        "breakdown",
-        "do not allocate"
-      ]
+      "name": "Product Sales Revenue L1",
+      "unit_sales": 100,
+      "unit_sales_12": 1000,
+      "unit_sales_24": 3000,
+      "unit_price": 5,
+      "unit_price_12": 100,
+      "bu1_allocation": 20,
+      "bu1_allocation_12": 40,
+      "bu1_allocation_24": 10,
+      "bu2_allocation": 80,
+      "bu2_allocation_12": 60,
+      "bu2_allocation_24": 90,
+      "bu1_subunit1": 50,
+      "bu1_subunit1_12": 20,
+      "bu1_subunit1_24": 60,
+      "bu1_subunit2": 50,
+      "bu1_subunit2_12": 80,
+      "bu1_subunit2_24": 40,
+      "company_12": 100000,
+      "company_Y1": 105500,
+      "company_Y2": 15000,
+      "bu1_12": 40000,
+      "bu1_Y1": 41100,
+      "bu1_Y2": 1500,
+      "bu2_subunit1_12": 15000,
+      "bu2_subunit1_Y1": 16100,
+      "bu2_subunit1_Y2": 3375
     },
     "service_revenue": {
       "index": 1,
-      "name": "Service revenue test",
+      "name": "Service Revenue L3",
       "billable_hours_value": 100,
       "hourly_rate_value": 10
     },
@@ -34,7 +54,7 @@
     },
     "revenue_only": {
       "index": 3,
-      "name": "Revenue only test",
+      "name": "RevenueOnly Revenue L2",
       "unit_sales_value": 100,
       "unit_price_value": 10
     }
