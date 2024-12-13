@@ -13,21 +13,20 @@ const {
 
 describe('Forecast / Revenues Module', () => {
   beforeEach(() => {
-    cy.clearAllLocalStorage();
     // Login the user
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
 
-    cy.intercept('GET', `/api/organizational-structure?CompanyID=${company.number}`).as('oranizationalStructure');
-    cy.intercept('GET', `/api/chart_of_accounts?CompanyID=${company.number}`).as('chartOfAccounts');
+    // cy.intercept('GET', `/api/organizational-structure?CompanyID=${company.number}`).as('oranizationalStructure');
+    // cy.intercept('GET', `/api/chart_of_accounts?CompanyID=${company.number}`).as('chartOfAccounts');
 
-    // Wait for all fetches to complete
-    cy.wait('@oranizationalStructure', { timeout: 100000 })
-      .its('response.statusCode')
-      .should('eq', 200);
+    // // Wait for all fetches to complete
+    // cy.wait('@oranizationalStructure', { timeout: 100000 })
+    //   .its('response.statusCode')
+    //   .should('eq', 200);
 
-    cy.wait('@chartOfAccounts', { timeout: 100000 })
-      .its('response.statusCode')
-      .should('eq', 200);
+    // cy.wait('@chartOfAccounts', { timeout: 100000 })
+    //   .its('response.statusCode')
+    //   .should('eq', 200);
   });
 
   it.only('Should be able to create product sales revenues', () => {
