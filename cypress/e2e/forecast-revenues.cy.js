@@ -30,7 +30,6 @@ describe('Forecast / Revenues Module', () => {
   });
 
   it.only('Should be able to create product sales revenues', () => {
-
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
@@ -102,6 +101,20 @@ describe('Forecast / Revenues Module', () => {
 
     // Click next button and continue to allocation
     cy.clickButton('Next');
+
+    // Click the set button for the main unit of the org. structure
+    cy.setTotals(company.organisationalStructure.levelOne.name);
+
+    // Set business unit allocation for 1st month
+    cy.editAllocationTableCell(1, 1, product_sales.bu1_allocation);
+
+    // Check if the value was set for the 1st month
+    cy.checkAllocationCellValue(1, 1, product_sales.bu1_allocation);
+
+    // Apply to all remaining months
+    cy.applyToAllFieldsAllocation(1, 1);
+
+
   });
 
   it('Should be able to create service revenues', () => {
