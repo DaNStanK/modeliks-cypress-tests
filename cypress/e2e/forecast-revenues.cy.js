@@ -60,61 +60,173 @@ describe('Forecast / Revenues Module', () => {
     // Click next button and continue to unit sales info section
     cy.clickButton('Next');
 
+
+    //  *************************************************  \\
+    //                 UNIT SALES SETUP                    \\
+    //  *************************************************  \\
+
+
     // Set Unit Sales info for the 1st month
-    cy.editTableCell(1, 1, product_sales.unit_sales); // rowIndex, cellIndex, value
+    cy.editTableCell(1, 1, product_sales.unit_sales); // row, month, value
 
     // Check if the value for the 1st month is correctly applied
-    cy.checkCellValue(1, 1, product_sales.unit_sales); // rowIndex, cellIndex, value
+    cy.checkCellValue(1, 1, product_sales.unit_sales); // row, month, value
 
     // Apply the units set for the 1st month to all remaining
-    cy.applyToAllFields(1, 1); // parameters: [row, month]
+    cy.applyToAllFields(1, 1); // row, month
 
     // Set Unit Sales info for the 12th month
-    cy.editTableCell(1, 12, product_sales.unit_sales_12); // rowIndex, cellIndex, value
+    cy.editTableCell(1, 12, product_sales.unit_sales_12); // row, month, value
 
     // Check if the value is correctly applied on 12th month
-    cy.checkCellValue(1, 12, product_sales.unit_sales_12); // rowIndex, cellIndex, value
+    cy.checkCellValue(1, 12, product_sales.unit_sales_12); // row, month, value
 
     // Set Unit Sales info for 24th month
-    cy.editTableCell(1, 24, product_sales.unit_sales_24); // rowIndex, cellIndex, value
+    cy.editTableCell(1, 24, product_sales.unit_sales_24); // row, month, value
 
     // Check if the value is correctly applied for 24th month
-    cy.checkCellValue(1, 24, product_sales.unit_sales_24); // rowIndex, cellIndex, value
+    cy.checkCellValue(1, 24, product_sales.unit_sales_24); // row, month, value
 
     // Click next button and continue to unit prices setup
     cy.clickButton('Next');
 
+
+    //  *************************************************  \\
+    //                 UNIT PRICE SETUP                    \\
+    //  *************************************************  \\
+
+
     // Set Unit Price info for the first month
-    cy.editTableCell(1, 1, product_sales.unit_price); // rowIndex, cellIndex, value
+    cy.editTableCell(1, 1, product_sales.unit_price); // row, month, value
 
     // Check if the value of the unit price for the first month is correctly applied
-    cy.checkCellValue(1, 1, product_sales.unit_price); // rowIndex, cellIndex, value
+    cy.checkCellValue(1, 1, product_sales.unit_price); // row, month, value
 
     // Apply the unit price for all months
     cy.applyToAllFields(1, 1); // parameters: [row, month]
 
     // Set Unit Price info for the 12th month
-    cy.editTableCell(1, 12, product_sales.unit_price_12); // rowIndex, cellIndex, value
+    cy.editTableCell(1, 12, product_sales.unit_price_12); // row, month, value
 
     // Check if the value of the unit price for the 12th month is correctly applied
-    cy.checkCellValue(1, 12, product_sales.unit_price_12); // rowIndex, cellIndex, value
+    cy.checkCellValue(1, 12, product_sales.unit_price_12); // row, month, value
 
     // Click next button and continue to allocation
     cy.clickButton('Next');
 
-    // Click the set button for the main unit of the org. structure
+
+    //  *************************************************  \\
+    //  ALLOCATION SETUP FOR BUSINESS UNIT 1 OF MAIN UNIT  \\
+    //  *************************************************  \\
+
+
+    // Click the set button for the business units of the main unit from the org. structure
     cy.setTotals(company.organisationalStructure.levelOne.name);
 
     // Set business unit allocation for 1st month
-    cy.editAllocationTableCell(1, 1, product_sales.bu1_allocation);
+    cy.editAllocationTableCell(1, 1, product_sales.bu1_allocation); // row, month, value
 
     // Check if the value was set for the 1st month
-    cy.checkAllocationCellValue(1, 1, product_sales.bu1_allocation);
+    cy.checkAllocationCellValue(1, 1, product_sales.bu1_allocation); // row, month, value
 
     // Apply to all remaining months
-    cy.applyToAllFieldsAllocation(1, 1);
+    cy.applyToAllFieldsAllocation(1, 1); // row, month
+
+    // Set business unit allocation for 12th month
+    cy.editAllocationTableCell(1, 12, product_sales.bu1_allocation_12); // row, month, value
+
+    // Check if the value was set for the 12th month
+    cy.checkAllocationCellValue(1, 12, product_sales.bu1_allocation_12); // row, month, value
+
+    // Set business unit allocation for 24th month
+    cy.editAllocationTableCell(1, 24, product_sales.bu1_allocation_24); // row, month, value
+
+    // Check if the value was set for the 24th month
+    cy.checkAllocationCellValue(1, 24, product_sales.bu1_allocation_24); // row, month, value
 
 
+    //  *************************************************  \\
+    //  ALLOCATION SETUP FOR BUSINESS UNIT 2 OF MAIN UNIT  \\
+    //  *************************************************  \\
+
+
+    // Set business unit allocation for 1st month
+    cy.editAllocationTableCell(2, 1, product_sales.bu2_allocation); // row, month, value
+
+    // Check if the value was set for the 1st month
+    cy.checkAllocationCellValue(2, 1, product_sales.bu2_allocation); // row, month, value
+
+    // Apply to all remaining months
+    cy.applyToAllFieldsAllocation(2, 1); // row, month
+
+    // Set business unit allocation for 12th month
+    cy.editAllocationTableCell(2, 12, product_sales.bu2_allocation_12); // row, month, value
+
+    // Check if the value was set for the 12th month
+    cy.checkAllocationCellValue(2, 12, product_sales.bu2_allocation_12); // row, month, value
+
+    // Set business unit allocation for 24th month
+    cy.editAllocationTableCell(2, 24, product_sales.bu2_allocation_24); // row, month, value
+
+    // Check if the value was set for the 24th month
+    cy.checkAllocationCellValue(2, 24, product_sales.bu2_allocation_24); // row, month, value
+
+
+    //  *************************************************  \\
+    //  ALLOCATION SETUP FOR SUBUNIT 1 OF BUSINESS UNIT 1  \\
+    //  *************************************************  \\
+
+
+    // Click the set button for the subunits of business unit 1 from the org. structure
+    cy.setTotals(company.organisationalStructure.levelTwo.name);
+
+    // Set subunit 1 of business unit 1 allocation for 1st month
+    cy.editAllocationTableCell(1, 1, product_sales.bu1_subunit1); // row, month, value
+
+    // Check if the value was set for the 1st month
+    cy.checkAllocationCellValue(1, 1, product_sales.bu1_subunit1); // row, month, value
+
+    // Apply to all remaining months
+    cy.applyToAllFieldsAllocation(1, 1); // row, month
+
+    // Set subunit 1 of business unit 1 allocation for 12th month
+    cy.editAllocationTableCell(1, 12, product_sales.bu1_subunit1_12); // row, month, value
+
+    // Check if the value was set for the 12th month
+    cy.checkAllocationCellValue(1, 12, product_sales.bu1_subunit1_12); // row, month, value
+
+    // Set subunit 1 of business unit 1 allocation for 24th month
+    cy.editAllocationTableCell(1, 24, product_sales.bu1_subunit1_24); // row, month, value
+
+    // Check if the value was set for the 24th month
+    cy.checkAllocationCellValue(1, 24, product_sales.bu1_subunit1_24); // row, month, value
+
+
+    //  *************************************************  \\
+    //  ALLOCATION SETUP FOR SUBUNIT 2 OF BUSINESS UNIT 1  \\
+    //  *************************************************  \\
+
+
+    // Set subunit 1 of business unit 1 allocation for 1st month
+    cy.editAllocationTableCell(2, 1, product_sales.bu1_subunit2); // row, month, value
+
+    // Check if the value was set for the 1st month
+    cy.checkAllocationCellValue(2, 1, product_sales.bu1_subunit2); // row, month, value
+
+    // Apply to all remaining months
+    cy.applyToAllFieldsAllocation(2, 1); // row, month
+
+    // Set subunit 1 of business unit 1 allocation for 12th month
+    cy.editAllocationTableCell(2, 12, product_sales.bu1_subunit2_12); // row, month, value
+
+    // Check if the value was set for the 12th month
+    cy.checkAllocationCellValue(2, 12, product_sales.bu1_subunit2_12); // row, month, value
+
+    // Set subunit 1 of business unit 1 allocation for 24th month
+    cy.editAllocationTableCell(2, 24, product_sales.bu1_subunit2_24); // row, month, value
+
+    // Check if the value was set for the 24th month
+    cy.checkAllocationCellValue(2, 24, product_sales.bu1_subunit2_24); // row, month, value
   });
 
   it('Should be able to create service revenues', () => {

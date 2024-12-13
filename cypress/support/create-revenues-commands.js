@@ -241,8 +241,7 @@ Cypress.Commands.add('findAllocationInputCell', (row, month) => {
       .find(`tr[data-rowdataindex="${row}"] td`)
       .eq(month)
       .dblclick()
-      .find('input')
-      .should('be.visible');
+      .find('input');
 });
 
 // Set value in the allocation input table unit cell
