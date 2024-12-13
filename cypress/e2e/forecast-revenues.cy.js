@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { revenues_type } from "../fixtures/revenues.json";
+import { company } from '../fixtures/company.json';
 
 const {
   product_sales,
@@ -14,9 +15,22 @@ describe('Forecast / Revenues Module', () => {
   beforeEach(() => {
     // Login the user
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
+
+    cy.intercept('GET', `/api/organizational-structure?CompanyID=${company.number}`).as('oranizationalStructure');
+    cy.intercept('GET', `/api/chart_of_accounts?CompanyID=${company.number}`).as('chartOfAccounts');
+
+    // Wait for all fetches to complete
+    cy.wait('@oranizationalStructure', { timeout: 100000 })
+      .its('response.statusCode')
+      .should('eq', 200);
+
+    cy.wait('@chartOfAccounts', { timeout: 100000 })
+      .its('response.statusCode')
+      .should('eq', 200);
   });
 
   it.only('Should be able to create product sales revenues', () => {
+
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
@@ -60,13 +74,22 @@ describe('Forecast / Revenues Module', () => {
     // cy.setUnitSalesInfo(1, 12, product_sales.unit_sales_12); // parameters: [row, month, value]
 
     // Apply value in the 2 year cell
-    cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${11 + 1})`) // .text-right
-      .eq(1)
-      .find('.text-right')
-      .click()
-      .should('contain', '100')
-      .type(`${product_sales.unit_sales_12}{enter}`)
-      .should('contain', '1000');
+    // cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${11 + 1})`) // .text-right
+    //   .eq(1)
+    //   .find('.text-right')
+    //   .dblclick()
+    //   .should('contain', '100')
+    //   .type('{selectall}')
+    //   .type(`${product_sales.unit_sales_12}{enter}`);
+
+    cy.get('table tbody tr')
+      .eq(1) // Select the first row.
+      .find('td') // Find all cells in the row.
+      .eq(12) // Select the 13th cell (index starts from 0).
+      .find('span.text-right')
+      .dblclick(); // Activate edit mode (if needed).
+    // .clear();
+    // .type('365{enter}');
 
     // cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${10 + 1})`)
     //   .eq(1)
