@@ -220,13 +220,13 @@ Cypress.Commands.add('clickSetButton', (value) => {
 // Set allocation level
 Cypress.Commands.add('setTotals', (value) => {
    switch (value) {
-      case company.organisationalStructure.levelOne.name:
+      case company.organizationalStructure.levelOne.name:
          cy.clickSetButton(0);
          break;
-      case company.organisationalStructure.levelTwo.name:
+      case company.organizationalStructure.levelTwo.name:
          cy.clickSetButton(1);
          break;
-      case company.organisationalStructure.levelThree.name:
+      case company.organizationalStructure.levelThree.name:
          cy.clickSetButton(2);
          break;
       default:
@@ -292,6 +292,38 @@ Cypress.Commands.add('checkAllocationCellValue', (rowIndex, cellIndex, value) =>
    }
 });
 
+
+// Find cell in total table
+Cypress.Commands.add('findTotalInputCell', (row, month) => {
+   cy.get('table')
+      .eq(0) // select the totals table
+      .find(`tr.text-xs.group.false`) // select rows without table headers
+      .eq(row)
+      .find('td') // select all month cells in a row
+      .eq(month)
+      .find('span.text-right'); // locate the span that holds the value
+});
+
+// Check cell value in total table
+Cypress.Commands.add('checkTotalCellValue', (rowIndex, cellIndex, value) => {
+   if (cellIndex <= 13) {
+      // Set table cell value according to the assigned row, cell index and value
+      cy.findTotalInputCell(rowIndex - 1, cellIndex)
+         .invoke('text') // Get the text content.
+         .then((text) => {
+            const normalizedValue = text.replace(/,/g, ''); // Remove commas.
+            expect(Number(normalizedValue)).to.equal(value); // Assert as a number.
+         });
+   } else {
+      // Set table cell value according to the assigned row, cell index and value
+      cy.findTotalInputCell(rowIndex - 1, cellIndex - 10)
+         .invoke('text') // Get the text content.
+         .then((text) => {
+            const normalizedValue = text.replace(/,/g, ''); // Remove commas.
+            expect(Number(normalizedValue)).to.equal(value); // Assert as a number.
+         });
+   }
+});
 
 // Set billable hours Info
 Cypress.Commands.add('setBillableHours', (revenueType) => {

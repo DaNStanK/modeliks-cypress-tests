@@ -121,7 +121,7 @@ describe('Forecast / Revenues Module', () => {
 
 
     // Click the set button for the business units of the main unit from the org. structure
-    cy.setTotals(company.organisationalStructure.levelOne.name);
+    cy.setTotals(company.organizationalStructure.levelOne.name);
 
     // Set business unit allocation for 1st month
     cy.editAllocationTableCell(1, 1, product_sales.bu1_allocation); // row, month, value
@@ -178,7 +178,7 @@ describe('Forecast / Revenues Module', () => {
 
 
     // Click the set button for the subunits of business unit 1 from the org. structure
-    cy.setTotals(company.organisationalStructure.levelTwo.name);
+    cy.setTotals(company.organizationalStructure.levelTwo.name);
 
     // Set subunit 1 of business unit 1 allocation for 1st month
     cy.editAllocationTableCell(1, 1, product_sales.bu1_subunit1); // row, month, value
@@ -235,7 +235,7 @@ describe('Forecast / Revenues Module', () => {
 
 
     // Click the set button for the subunits of business unit 2 from the org. structure
-    cy.setTotals(company.organisationalStructure.levelThree.name);
+    cy.setTotals(company.organizationalStructure.levelThree.name);
 
     // Set subunit 1 of business unit 2 allocation for 1st month
     cy.editAllocationTableCell(1, 1, product_sales.bu2_subunit1); // row, month, value
@@ -253,7 +253,7 @@ describe('Forecast / Revenues Module', () => {
 
 
     // Click the set button for the subunits of business unit 2 from the org. structure
-    cy.setTotals(company.organisationalStructure.levelThree.name);
+    cy.setTotals(company.organizationalStructure.levelThree.name);
 
     // Set subunit 1 of business unit 2 allocation for 1st month
     cy.editAllocationTableCell(2, 1, product_sales.bu2_subunit2); // row, month, value
@@ -263,6 +263,41 @@ describe('Forecast / Revenues Module', () => {
 
     // Apply to all remaining months
     cy.applyToAllFieldsAllocation(2, 1); // row, month
+
+
+    //  *************************************************  \\
+    //               TOTALS RESULT ASSERTION               \\
+    //  *************************************************  \\
+
+    // Assert total unit sales 12 month value
+    cy.checkTotalCellValue(1, 12, product_sales.company_12); // row, month, value
+
+    // Assert total unit sales year 1 value
+    cy.checkTotalCellValue(1, 13, product_sales.company_Y1); // row, month, value
+
+    // Assert total unit sales year 2 value
+    cy.checkTotalCellValue(1, 24, product_sales.company_Y2); // row, month, value
+
+    // Assert total business unit 1 12 month value
+    cy.checkTotalCellValue(2, 12, product_sales.bu1_12); // row, month, value
+
+    // Assert business unit 1 sales year 1 value
+    cy.checkTotalCellValue(2, 13, product_sales.bu1_Y1); // row, month, value
+
+    // Assert business unit 1 sales year 2 value
+    cy.checkTotalCellValue(2, 24, product_sales.bu1_Y2); // row, month, value
+
+    // Assert total business unit 2 subunit 1 12 month value
+    cy.checkTotalCellValue(6, 12, product_sales.bu2_subunit1_12); // row, month, value
+
+    // Assert business unit 2 subunit 1 sales year 1 value
+    cy.checkTotalCellValue(6, 13, product_sales.bu2_subunit1_Y1); // row, month, value
+
+    // Assert business unit 2 subunit 1 sales year 2 value
+    cy.checkTotalCellValue(6, 24, product_sales.bu2_subunit1_Y2); // row, month, value
+
+    // Click the save and close button
+    cy.clickButton('Save & Close');
 
   });
 
