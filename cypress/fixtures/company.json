@@ -13,7 +13,7 @@
                "unit2": "BU2"
             }
          },
-         "LevelThree": {
+         "levelThree": {
             "name": "SU",
             "units": {
                "unit1": "Subunit1",

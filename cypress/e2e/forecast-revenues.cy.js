@@ -227,6 +227,43 @@ describe('Forecast / Revenues Module', () => {
 
     // Check if the value was set for the 24th month
     cy.checkAllocationCellValue(2, 24, product_sales.bu1_subunit2_24); // row, month, value
+
+
+    //  *************************************************  \\
+    //  ALLOCATION SETUP FOR SUBUNIT 1 OF BUSINESS UNIT 2  \\
+    //  *************************************************  \\
+
+
+    // Click the set button for the subunits of business unit 1 from the org. structure
+    cy.setTotals(company.organisationalStructure.levelThree.name);
+
+    // Set subunit 1 of business unit 1 allocation for 1st month
+    cy.editAllocationTableCell(1, 1, product_sales.bu2_subunit1); // row, month, value
+
+    // Check if the value was set for the 1st month
+    cy.checkAllocationCellValue(1, 1, product_sales.bu2_subunit1); // row, month, value
+
+    // Apply to all remaining months
+    cy.applyToAllFieldsAllocation(1, 1); // row, month
+
+
+    //  *************************************************  \\
+    //  ALLOCATION SETUP FOR SUBUNIT 2 OF BUSINESS UNIT 2  \\
+    //  *************************************************  \\
+
+
+    // Click the set button for the subunits of business unit 1 from the org. structure
+    cy.setTotals(company.organisationalStructure.levelThree.name);
+
+    // Set subunit 1 of business unit 1 allocation for 1st month
+    cy.editAllocationTableCell(2, 1, product_sales.bu2_subunit2); // row, month, value
+
+    // Check if the value was set for the 1st month
+    cy.checkAllocationCellValue(2, 1, product_sales.bu2_subunit2); // row, month, value
+
+    // Apply to all remaining months
+    cy.applyToAllFieldsAllocation(2, 1); // row, month
+
   });
 
   it('Should be able to create service revenues', () => {
