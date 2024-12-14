@@ -234,10 +234,10 @@ describe('Forecast / Revenues Module', () => {
     //  *************************************************  \\
 
 
-    // Click the set button for the subunits of business unit 1 from the org. structure
+    // Click the set button for the subunits of business unit 2 from the org. structure
     cy.setTotals(company.organisationalStructure.levelThree.name);
 
-    // Set subunit 1 of business unit 1 allocation for 1st month
+    // Set subunit 1 of business unit 2 allocation for 1st month
     cy.editAllocationTableCell(1, 1, product_sales.bu2_subunit1); // row, month, value
 
     // Check if the value was set for the 1st month
@@ -252,10 +252,10 @@ describe('Forecast / Revenues Module', () => {
     //  *************************************************  \\
 
 
-    // Click the set button for the subunits of business unit 1 from the org. structure
+    // Click the set button for the subunits of business unit 2 from the org. structure
     cy.setTotals(company.organisationalStructure.levelThree.name);
 
-    // Set subunit 1 of business unit 1 allocation for 1st month
+    // Set subunit 1 of business unit 2 allocation for 1st month
     cy.editAllocationTableCell(2, 1, product_sales.bu2_subunit2); // row, month, value
 
     // Check if the value was set for the 1st month
