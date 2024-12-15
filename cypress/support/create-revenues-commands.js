@@ -292,6 +292,22 @@ Cypress.Commands.add('checkAllocationCellValue', (rowIndex, cellIndex, value) =>
    }
 });
 
+// Choose revenue option
+Cypress.Commands.add('chooseRevenueOption', (option) => {
+   // Find and click the hamburger menu icon
+   cy.get('table tr[data-rowindex="0"]')
+      .find('td')
+      .eq(0) // selecting the first column of the row
+      .find('div.cursor-pointer') // locate all clickable options
+      .eq(1) // choose the hamburger menu
+      .click();
+
+   // Choose option from the menu (duplicate, organize streams and delete)
+   cy.get('span')
+      .contains(option) // finding the option with the name provided
+      .click();
+});
+
 
 // Find cell in total table
 Cypress.Commands.add('findTotalInputCell', (row, month) => {
@@ -306,6 +322,8 @@ Cypress.Commands.add('findTotalInputCell', (row, month) => {
 
 // Check cell value in total table
 Cypress.Commands.add('checkTotalCellValue', (rowIndex, cellIndex, value) => {
+   // cy.wait(100);
+
    if (cellIndex <= 13) {
       // Set table cell value according to the assigned row, cell index and value
       cy.findTotalInputCell(rowIndex - 1, cellIndex)
