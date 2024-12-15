@@ -264,10 +264,14 @@ describe('Forecast / Revenues Module', () => {
     // Apply to all remaining months
     cy.applyToAllFieldsAllocation(2, 1); // row, month
 
+    // Click the set button for the subunits of business unit 2 from the org. structure
+    cy.setTotals(company.organizationalStructure.levelTwo.name);
+
 
     //  *************************************************  \\
     //               TOTALS RESULT ASSERTION               \\
     //  *************************************************  \\
+
 
     // Assert total unit sales 12 month value
     cy.checkTotalCellValue(1, 12, product_sales.company_12); // row, month, value
@@ -299,6 +303,25 @@ describe('Forecast / Revenues Module', () => {
     // Click the save and close button
     cy.clickButton('Save & Close');
 
+    // Intercept post revenue fetch
+    cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
+
+    // Assert if the revenue was successfully deleted
+    cy.wait('@chartOfAccounts', { timeout: 100000 })
+      .its('response.statusCode')
+      .should('eq', 200);
+
+
+    //  *************************************************  \\
+    //                   DELETE REVENUE                    \\
+    //  *************************************************  \\
+
+
+    // Delete revenue
+    cy.chooseRevenueOption('Delete'); // Choose delete option
+
+    // Click the confirm button on delete option
+    cy.clickButton('Confirm');
   });
 
   it('Should be able to create service revenues', () => {
