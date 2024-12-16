@@ -210,21 +210,25 @@ Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
 
 // Click allocation set button
 Cypress.Commands.add('clickSetButton', (value) => {
-   cy.get('.scdi_info_dialog_div * table').then(setButtons => {
-      if (setButtons.length > 2) {
-         cy.get('.scdi_info_dialog_div * table')
-            .eq(0)
-            .find('button')
-            .eq(value)
-            .click();
-      } else {
-         cy.get('.scdi_info_dialog_div * table')
-            .eq(0)
-            .find('button')
-            .eq(value - 1)
-            .click();
-      }
-   });
+   cy.get('.scdi_info_dialog_div * table')
+      .eq(0)
+      .find('button')
+      .then(setButtons => {
+         console.log(setButtons.length);
+         if (setButtons.length > 2) {
+            cy.get('.scdi_info_dialog_div * table')
+               .eq(0)
+               .find('button')
+               .eq(value)
+               .click();
+         } else {
+            cy.get('.scdi_info_dialog_div * table')
+               .eq(0)
+               .find('button')
+               .eq(value - 1)
+               .click();
+         }
+      });
 });
 
 // Set allocation level
