@@ -105,25 +105,25 @@ Cypress.Commands.add('assertRevenueType', (revenueType) => {
 // Click on apply to all fields button 
 Cypress.Commands.add('applyToAllFields', (row, month) => {
    // Check if it is on level 1 or not
-   cy.get(`table tbody tr.text-xs.group.false`).then(rows => {
+   cy.get(`.scdi_info_dialog_div * table tbody tr.text-xs.group.false`).then(rows => {
       const rowsCount = rows.length;
 
       if (rowsCount <= 2) {
          // Click the button to apply value on all of the remaining fields
          if (month > 12) {
-            cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${month - 10}) .m-round-button`)
+            cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex='0'] td:nth-of-type(${month - 10}) .m-round-button`)
                .click({ force: true });
          } else {
-            cy.get(`section.main-table-theme tr[data-rowdataindex='0'] td:nth-of-type(${month + 1}) .m-round-button`)
+            cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex='0'] td:nth-of-type(${month + 1}) .m-round-button`)
                .click({ force: true });
          }
       } else {
          // Click the button to apply value on all of the remaining fields
          if (month > 12) {
-            cy.get(`section.main-table-theme tr[data-rowdataindex=${row}] td:nth-of-type(${month - 10}) .m-round-button`)
+            cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex=${row}] td:nth-of-type(${month - 10}) .m-round-button`)
                .click({ force: true });
          } else {
-            cy.get(`section.main-table-theme tr[data-rowdataindex=${row}] td:nth-of-type(${month + 1}) .m-round-button`)
+            cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex=${row}] td:nth-of-type(${month + 1}) .m-round-button`)
                .click({ force: true });
          }
       }
@@ -132,7 +132,7 @@ Cypress.Commands.add('applyToAllFields', (row, month) => {
 
 Cypress.Commands.add('findCell', (row, cell) => {
    // Set table cell value according to the assigned row, cell and value
-   cy.get('table tbody tr')
+   cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false')
       .eq(row) // Select the desired row.
       .find('td')
       .eq(cell) // Select the desired cell.
@@ -143,7 +143,7 @@ Cypress.Commands.add('findCell', (row, cell) => {
 
 Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
    // Check if it is on level 1 or not
-   cy.get(`table tbody tr.text-xs.group.false`).then(rows => {
+   cy.get(`.scdi_info_dialog_div * table tbody tr.text-xs.group.false`).then(rows => {
       const rowsCount = rows.length;
 
       if (rowsCount <= 2) {
@@ -177,7 +177,7 @@ Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
 // Check revenue table fields value
 Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
    // Check if it is on level 1 or not
-   cy.get(`table tbody tr.text-xs.group.false`).then(rows => {
+   cy.get(`.scdi_info_dialog_div * table tbody tr.text-xs.group.false`).then(rows => {
       const rowsCount = rows.length;
 
       if (rowsCount <= 2) {
@@ -210,7 +210,7 @@ Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
 
 // Click allocation set button
 Cypress.Commands.add('clickSetButton', (value) => {
-   cy.get('table')
+   cy.get('.scdi_info_dialog_div * table')
       .eq(0)
       .find('button')
       .eq(value)
@@ -236,7 +236,7 @@ Cypress.Commands.add('setTotals', (value) => {
 
 // Find cell in allocation input table
 Cypress.Commands.add('findAllocationInputCell', (row, month) => {
-   cy.get('table')
+   cy.get('.scdi_info_dialog_div * table')
       .eq(1)
       .find(`tr[data-rowdataindex="${row}"] td`)
       .eq(month)
@@ -311,7 +311,7 @@ Cypress.Commands.add('chooseRevenueOption', (option) => {
 
 // Find cell in total table
 Cypress.Commands.add('findTotalInputCell', (row, month) => {
-   cy.get('table')
+   cy.get('.scdi_info_dialog_div * table')
       .eq(0) // select the totals table
       .find(`tr.text-xs.group.false`) // select rows without table headers
       .eq(row)
@@ -322,7 +322,7 @@ Cypress.Commands.add('findTotalInputCell', (row, month) => {
 
 // Check cell value in total table
 Cypress.Commands.add('checkTotalCellValue', (rowIndex, cellIndex, value) => {
-   // cy.wait(100);
+   cy.wait(50);
 
    if (cellIndex <= 13) {
       // Set table cell value according to the assigned row, cell index and value

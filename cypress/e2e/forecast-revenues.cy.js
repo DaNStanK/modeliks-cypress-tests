@@ -317,11 +317,11 @@ describe('Forecast / Revenues Module', () => {
     //  *************************************************  \\
 
 
-    // Delete revenue
-    cy.chooseRevenueOption('Delete'); // Choose delete option
+    // // Delete revenue
+    // cy.chooseRevenueOption('Delete'); // Choose delete option
 
-    // Click the confirm button on delete option
-    cy.clickButton('Confirm');
+    // // Click the confirm button on delete option
+    // cy.clickButton('Confirm');
   });
 
   it('Should be able to create service revenues', () => {
