@@ -57,8 +57,21 @@
     "revenue_only": {
       "index": 3,
       "name": "RevenueOnly Revenue L2",
-      "unit_sales_value": 100,
-      "unit_price_value": 10
+      "unit1_revenue_lvl2": 1000,
+      "unit2_revenue_lvl2": 4000,
+      "unit1_subunit1_revenue_lvl2": 40,
+      "unit1_subunit2_revenue_lvl2": 60,
+      "unit2_subunit1_revenue_lvl2": 25,
+      "unit2_subunit2_revenue_lvl2": 75,
+      "company_12": 5000,
+      "company_Y1": 60000,
+      "company_Y2": 60000,
+      "bu1_12": 1000,
+      "bu1_Y1": 12000,
+      "bu1_Y2": 12000,
+      "bu2_subunit1_12": 1000,
+      "bu2_subunit1_Y1": 12000,
+      "bu2_subunit1_Y2": 12000
     }
   }
 }
