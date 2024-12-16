@@ -210,11 +210,21 @@ Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
 
 // Click allocation set button
 Cypress.Commands.add('clickSetButton', (value) => {
-   cy.get('.scdi_info_dialog_div * table')
-      .eq(0)
-      .find('button')
-      .eq(value)
-      .click();
+   cy.get('.scdi_info_dialog_div * table').then(setButtons => {
+      if (setButtons.length > 2) {
+         cy.get('.scdi_info_dialog_div * table')
+            .eq(0)
+            .find('button')
+            .eq(value)
+            .click();
+      } else {
+         cy.get('.scdi_info_dialog_div * table')
+            .eq(0)
+            .find('button')
+            .eq(value - 1)
+            .click();
+      }
+   });
 });
 
 // Set allocation level
@@ -223,10 +233,10 @@ Cypress.Commands.add('setTotals', (value) => {
       case company.organizationalStructure.levelOne.name:
          cy.clickSetButton(0);
          break;
-      case company.organizationalStructure.levelTwo.name:
+      case company.organizationalStructure.levelTwo_unitOne.name:
          cy.clickSetButton(1);
          break;
-      case company.organizationalStructure.levelThree.name:
+      case company.organizationalStructure.levelTwo_unitTwo.name:
          cy.clickSetButton(2);
          break;
       default:
@@ -261,20 +271,35 @@ Cypress.Commands.add('editAllocationTableCell', (rowIndex, cellIndex, value) => 
 
 // Click on apply to all fields button in the allocation table
 Cypress.Commands.add('applyToAllFieldsAllocation', (row, month) => {
-   // Check if it is on level 1 or not
-   cy.get(`table`)
-      .eq(1)
-      .find('tr.text-xs.group.false')
-      .then((rows) => {
-         // Click the button to apply value on all of the remaining fields
-         if (month > 12) {
-            cy.get(`tr[data-rowdataindex=${row}] td:nth-of-type(${month - 10}) .m-round-button`)
-               .click({ force: true });
-         } else {
-            cy.get(`tr[data-rowdataindex=${row}] td:nth-of-type(${month + 1}) .m-round-button`)
-               .click({ force: true });
-         }
-      });
+   if (month > 12) {
+      cy.get(`.scdi_info_dialog_div * table`)
+         .eq(1)
+         .find('tr.text-xs.group.false')
+         .eq(row)
+         .find('td')
+         .eq(month - 10)
+         .find('.m-round-button')
+         .click({ force: true });
+   } else {
+      cy.get(`.scdi_info_dialog_div * table`)
+         .eq(1)
+         .find('tr.text-xs.group.false')
+         .eq(row)
+         .find('td')
+         .eq(month)
+         .find('.m-round-button')
+         .click({ force: true });
+   }
+   // .then((rows) => {
+   //    // Click the button to apply value on all of the remaining fields
+   //    if (month > 12) {
+   //       cy.get(`tr[data-rowdataindex=${row}] td:nth-of-type(${month - 10}) .m-round-button`)
+   //          .click({ force: true });
+   //    } else {
+   //       cy.get(`tr[data-rowdataindex=${row}] td:nth-of-type(${month + 1}) .m-round-button`)
+   //          .click({ force: true });
+   //    }
+   // });
 });
 
 // Check cell value in allocation table
@@ -329,7 +354,15 @@ Cypress.Commands.add('checkTotalCellValue', (rowIndex, cellIndex, value) => {
       cy.findTotalInputCell(rowIndex - 1, cellIndex)
          .invoke('text') // Get the text content.
          .then((text) => {
+            if (!text) {
+               throw new Error('Text content is empty or undefined. Check the targeted element.');
+            }
             const normalizedValue = text.replace(/,/g, ''); // Remove commas.
+
+            if (typeof value !== 'number') {
+               throw new Error(`Expected value is not a number. Received: ${value}`);
+            }
+
             expect(Number(normalizedValue)).to.equal(value); // Assert as a number.
          });
    } else {
@@ -337,8 +370,16 @@ Cypress.Commands.add('checkTotalCellValue', (rowIndex, cellIndex, value) => {
       cy.findTotalInputCell(rowIndex - 1, cellIndex - 10)
          .invoke('text') // Get the text content.
          .then((text) => {
+            if (!text) {
+               throw new Error('Text content is empty or undefined. Check the targeted element.');
+            }
             const normalizedValue = text.replace(/,/g, ''); // Remove commas.
-            expect(Number(normalizedValue)).to.equal(value); // Assert as a number.
+
+            if (typeof value !== 'number') {
+               throw new Error(`Expected value is not a number. Received: ${value}`);
+            }
+
+            expect(Number(normalizedValue)).to.equal(value); // Assert as a number
          });
    }
 });
