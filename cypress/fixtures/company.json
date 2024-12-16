@@ -6,14 +6,14 @@
          "levelOne": {
             "name": "Company 1"
          },
-         "levelTwo": {
+         "levelTwo_unitOne": {
             "name": "BU",
             "units": {
                "unit1": "BU1",
                "unit2": "BU2"
             }
          },
-         "levelThree": {
+         "levelTwo_unitTwo": {
             "name": "SU",
             "units": {
                "unit1": "Subunit1",
