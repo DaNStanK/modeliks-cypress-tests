@@ -29,7 +29,7 @@ describe('Forecast / Revenues Module', () => {
       .should('eq', 200);
   });
 
-  it.only('Should be able to create product sales revenues', () => {
+  it('Should be able to create product sales revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
@@ -328,11 +328,13 @@ describe('Forecast / Revenues Module', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
+    cy.wait(1000);
+
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
 
     // Populate Revenue Name input field
-    cy.setRevenueName(revenue_only.name);
+    cy.setRevenueName(revenue_only.type_name);
 
     // Choose the type of revenue
     cy.chooseRevenueType(revenue_only);
@@ -492,7 +494,7 @@ describe('Forecast / Revenues Module', () => {
     cy.addRevenueStream();
 
     // Populate Revenue Name input field
-    cy.setRevenueName(service_revenue.name);
+    cy.setRevenueName(service_revenue.type_name);
 
     // Choose the type of revenue
     cy.chooseRevenueType(service_revenue);
