@@ -2,6 +2,25 @@
 
 import { company } from "../fixtures/company.json";
 
+// Helper function to validate inputs
+const validateInputs = (rowIndex, cellIndex, value) => {
+   if (rowIndex == null || rowIndex < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cellIndex == null || cellIndex < 0) {
+      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+   if (typeof value !== 'number') {
+      console.log(`Invalid value type. Expected a number but received: ${value}`);
+
+      throw new Error(`Invalid value type. Expected a number but received: ${value}`);
+   }
+};
+
 // Select advance settings
 Cypress.Commands.add('chooseAdvanceSettings', () => {
    // Find and click the "Advance settings" button
@@ -17,6 +36,13 @@ Cypress.Commands.add('chooseAdvanceSettings', () => {
 
 // Choose planning level
 Cypress.Commands.add('choosePlanningLevel', (planningLevel) => {
+   // Validate input
+   if (planningLevel == null || typeof planningLevel != 'string') {
+      console.log('Invalid or missing name of planning level. Ensure the value is defined and is not a number');
+
+      throw new Error('Invalid or missing name of planning level. Ensure the value is defined and is not a number');
+   }
+
    // Click the planning level dropdown
    cy.get('button') // Finds dropdown field
       .contains('Level 1') // That has an HTML text "Level 1"
@@ -36,6 +62,13 @@ Cypress.Commands.add('choosePlanningLevel', (planningLevel) => {
 
 // Select allocation methodology
 Cypress.Commands.add('setAllocationMethodology', (methodology) => {
+   // Validate input
+   if (methodology == null || typeof methodology != 'string') {
+      console.log('Invalid or missing name of methodology. Ensure the methodology value is populated as a parameter in the function and is not a number');
+
+      throw new Error('Invalid or missing name of methodology. Ensure the methodology value is populated as a parameter in the function and is not a number');
+   }
+
    // Click the methodology dropdown 
    cy.contains('span', 'do not allocate') // Find the span with the text
       .parent() // Get its immediate parent (span)
@@ -57,6 +90,13 @@ Cypress.Commands.add('setAllocationMethodology', (methodology) => {
 
 // Populate Revenue Name input field
 Cypress.Commands.add('setRevenueName', (revenueName) => {
+   // Validate input
+   if (revenueName == null || typeof revenueName != 'string') {
+      console.log('Invalid or missing revenue name. Ensure the revenue name is populated as a parameter in the function and is not a number');
+
+      throw new Error('Invalid or missing revenue name. Ensure the revenue name is populated as a parameter in the function and is not a number');
+   }
+
    // Populate Revenue Name input field
    cy.get('#revenueNameInput')
       .type(revenueName);
@@ -64,6 +104,14 @@ Cypress.Commands.add('setRevenueName', (revenueName) => {
 
 // Choose the type of revenue
 Cypress.Commands.add('chooseRevenueType', (revenueType) => {
+   // Validate input
+   if (revenueType == null || typeof revenueType != 'object') {
+      console.log('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is an object');
+
+      throw new Error('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is an object');
+   }
+
+   // Check if subscription revenue was selected
    if (revenueType.index === 2) {
       cy.get('div[class="sc-dhKdcB buTVds"] label')
          .eq(revenueType.index)
@@ -96,6 +144,12 @@ Cypress.Commands.add('chooseRevenueType', (revenueType) => {
 
 // Assert Revenue type
 Cypress.Commands.add('assertRevenueType', (revenueType) => {
+   // Validate input
+   if (revenueType == null || typeof revenueType != 'number') {
+      console.log('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is a number');
+
+      throw new Error('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is a number');
+   }
    cy.get('div[class="sc-dhKdcB buTVds"] label')
       .eq(revenueType)
       .find('input[type="checkbox"]')
@@ -104,10 +158,22 @@ Cypress.Commands.add('assertRevenueType', (revenueType) => {
 
 // Click on apply to all fields button 
 Cypress.Commands.add('applyToAllFields', (row, month) => {
+   // Validate inputs
+   if (row == null || row < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (month == null || month < 0) {
+      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+
    // Check if it is on level 1 or not
    cy.get(`.scdi_info_dialog_div * table tbody tr.text-xs.group.false`).then(rows => {
       const rowsCount = rows.length;
-
+      // Check if the table has more than two rows
       if (rowsCount <= 2) {
          // Click the button to apply value on all of the remaining fields
          if (month > 12) {
@@ -131,6 +197,18 @@ Cypress.Commands.add('applyToAllFields', (row, month) => {
 });
 
 Cypress.Commands.add('findCell', (row, cell) => {
+   // Validate inputs
+   if (row == null || row < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cell == null || cell < 0) {
+      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+
    // Set table cell value according to the assigned row, cell and value
    cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false')
       .eq(row) // Select the desired row.
@@ -142,6 +220,23 @@ Cypress.Commands.add('findCell', (row, cell) => {
 });
 
 Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
+   // Validate inputs
+   if (rowIndex == null || rowIndex < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cellIndex == null || cellIndex < 0) {
+      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+   if (typeof value !== 'number') {
+      console.log(`Invalid value type. Expected a number but received: ${value}`);
+
+      throw new Error(`Invalid value type. Expected a number but received: ${value}`);
+   }
+
    // Check if it is on level 1 or not
    cy.get(`.scdi_info_dialog_div * table tbody tr.text-xs.group.false`).then(rows => {
       const rowsCount = rows.length;
@@ -176,6 +271,23 @@ Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
 
 // Check revenue table fields value
 Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
+   // Validate inputs
+   if (rowIndex == null || rowIndex < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cellIndex == null || cellIndex < 0) {
+      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+   if (typeof value !== 'number') {
+      console.log(`Invalid value type. Expected a number but received: ${value}`);
+
+      throw new Error(`Invalid value type. Expected a number but received: ${value}`);
+   }
+
    // Check if it is on level 1 or not
    cy.get(`.scdi_info_dialog_div * table tbody tr.text-xs.group.false`).then(rows => {
       const rowsCount = rows.length;
@@ -210,6 +322,13 @@ Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
 
 // Click allocation set button
 Cypress.Commands.add('clickSetButton', (value) => {
+   // Validate inputs
+   if (value == null || value < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+
    cy.get('.scdi_info_dialog_div * table')
       .eq(0)
       .find('button')
@@ -260,6 +379,23 @@ Cypress.Commands.add('findAllocationInputCell', (row, month) => {
 
 // Set value in the allocation input table unit cell
 Cypress.Commands.add('editAllocationTableCell', (rowIndex, cellIndex, value) => {
+   // Check if all provided parameters are valid
+   if (rowIndex == null || rowIndex < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cellIndex == null || cellIndex < 0) {
+      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+   if (typeof value !== 'number') {
+      console.log(`Invalid value type. Expected a number but received: ${value}`);
+
+      throw new Error(`Invalid value type. Expected a number but received: ${value}`);
+   }
+
    if (cellIndex <= 12) {
       // Set table cell value according to the assigned row, cell index and value
       cy.findAllocationInputCell(rowIndex, cellIndex)
@@ -275,6 +411,18 @@ Cypress.Commands.add('editAllocationTableCell', (rowIndex, cellIndex, value) => 
 
 // Click on apply to all fields button in the allocation table
 Cypress.Commands.add('applyToAllFieldsAllocation', (row, month) => {
+   // Validate inputs
+   if (row == null || row < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (month == null || month < 0) {
+      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+
    if (month > 12) {
       cy.get(`.scdi_info_dialog_div * table`)
          .eq(1)
@@ -308,6 +456,23 @@ Cypress.Commands.add('applyToAllFieldsAllocation', (row, month) => {
 
 // Check cell value in allocation table
 Cypress.Commands.add('checkAllocationCellValue', (rowIndex, cellIndex, value) => {
+   // Check if all provided parameters are valid
+   if (rowIndex == null || rowIndex < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cellIndex == null || cellIndex < 0) {
+      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+   if (typeof value !== 'number') {
+      console.log(`Invalid value type. Expected a number but received: ${value}`);
+
+      throw new Error(`Invalid value type. Expected a number but received: ${value}`);
+   }
+
    if (cellIndex <= 12) {
       // Set table cell value according to the assigned row, cell index and value
       cy.findAllocationInputCell(rowIndex, cellIndex)
@@ -323,6 +488,13 @@ Cypress.Commands.add('checkAllocationCellValue', (rowIndex, cellIndex, value) =>
 
 // Choose revenue option
 Cypress.Commands.add('chooseRevenueOption', (option) => {
+   // Validate input
+   if (option == null || option < 0) {
+      console.log('Invalid or missing "option" value. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing "option" value. Ensure the value is defined and non-negative.');
+   }
+
    // Find and click the hamburger menu icon
    cy.get('table tr[data-rowindex="0"]')
       .find('td')
@@ -351,126 +523,124 @@ Cypress.Commands.add('findTotalInputCell', (row, month) => {
 
 // Check cell value in total table
 Cypress.Commands.add('checkTotalCellValue', (rowIndex, cellIndex, value) => {
+   // Validate inputs
+   if (rowIndex == null || rowIndex < 0) {
+      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cellIndex == null || cellIndex < 0) {
+      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+   if (typeof value !== 'number') {
+      console.log(`Invalid value type. Expected a number but received: ${value}`);
+
+      throw new Error(`Invalid value type. Expected a number but received: ${value}`);
+   }
+
+   // Determine cell index (accounting for different table structures)
+   const adjustedCellIndex = cellIndex <= 13 ? cellIndex : cellIndex - 10;
+
    cy.wait(50);
 
-   if (cellIndex <= 13) {
-      // Set table cell value according to the assigned row, cell index and value
-      cy.findTotalInputCell(rowIndex - 1, cellIndex)
-         .invoke('text') // Get the text content.
-         .then((text) => {
-            if (!text) {
-               throw new Error('Text content is empty or undefined. Check the targeted element.');
-            }
-            const normalizedValue = text.replace(/,/g, ''); // Remove commas.
+   cy.findTotalInputCell(rowIndex - 1, adjustedCellIndex)
+      .should('exist') // Ensure the element exists.
+      .invoke('text') // Get the text content.
+      .then((text) => {
+         expect(text).to.exist.and.not.be.empty; // Validate that text exists and is not empty.
 
-            if (typeof value !== 'number') {
-               throw new Error(`Expected value is not a number. Received: ${value}`);
-            }
+         const normalizedValue = text.replace(/,/g, ''); // Remove commas.
 
-            expect(Number(normalizedValue)).to.equal(value); // Assert as a number.
-         });
-   } else {
-      // Set table cell value according to the assigned row, cell index and value
-      cy.findTotalInputCell(rowIndex - 1, cellIndex - 10)
-         .invoke('text') // Get the text content.
-         .then((text) => {
-            if (!text) {
-               throw new Error('Text content is empty or undefined. Check the targeted element.');
-            }
-            const normalizedValue = text.replace(/,/g, ''); // Remove commas.
-
-            if (typeof value !== 'number') {
-               throw new Error(`Expected value is not a number. Received: ${value}`);
-            }
-
-            expect(Number(normalizedValue)).to.equal(value); // Assert as a number
-         });
-   }
+         // Assert the normalized value matches the expected value
+         expect(Number(normalizedValue)).to.equal(value);
+      });
 });
 
-// Set billable hours Info
-Cypress.Commands.add('setBillableHours', (revenueType) => {
-   // Apply value in the first cell
-   cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-      .click()
-      .type(`${revenueType.billable_hours_value}{enter}`);
+// // Set billable hours Info
+// Cypress.Commands.add('setBillableHours', (revenueType) => {
+//    // Apply value in the first cell
+//    cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+//       .click()
+//       .type(`${revenueType.billable_hours_value}{enter}`);
 
-   //Assert if the field i populated correctly
-   cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-      .should('contain', `${revenueType.billable_hours_value}`);
+//    //Assert if the field i populated correctly
+//    cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+//       .should('contain', `${revenueType.billable_hours_value}`);
 
-   // Click the button to apply on all cells in the row
-   cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
-      .click({ force: true });
+//    // Click the button to apply on all cells in the row
+//    cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
+//       .click({ force: true });
 
-   // Click the next button
-   cy.get('button')
-      .contains('!!Next')
-      .click();
-});
+//    // Click the next button
+//    cy.get('button')
+//       .contains('!!Next')
+//       .click();
+// });
 
-// Set Unit Price Info
-Cypress.Commands.add('setUnitPriceInfo', (revenueType) => {
-   // Auth API
-   cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
+// // Set Unit Price Info
+// Cypress.Commands.add('setUnitPriceInfo', (revenueType) => {
+//    // Auth API
+//    cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
 
-   // Apply value in the first cell
-   cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-      .click()
-      .type(`${revenueType.unit_price_value}{enter}`);
+//    // Apply value in the first cell
+//    cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+//       .click()
+//       .type(`${revenueType.unit_price_value}{enter}`);
 
-   //Assert if the field is populated correctly
-   cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-      .should('contain', `${revenueType.unit_price_value}`);
+//    //Assert if the field is populated correctly
+//    cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+//       .should('contain', `${revenueType.unit_price_value}`);
 
-   // Click the button to apply on all cells in the row
-   cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
-      .click({ force: true });
+//    // Click the button to apply on all cells in the row
+//    cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
+//       .click({ force: true });
 
-   // Click Next button
-   cy.get('button')
-      .contains('Save & Close')
-      .click();
+//    // Click Next button
+//    cy.get('button')
+//       .contains('Save & Close')
+//       .click();
 
-   // Wait for all fetches to complete
-   cy.wait('@chartOfAccounts', { timeout: 100000 })
-      .its('response.statusCode')
-      .should('eq', 200);
+//    // Wait for all fetches to complete
+//    cy.wait('@chartOfAccounts', { timeout: 100000 })
+//       .its('response.statusCode')
+//       .should('eq', 200);
 
-   // Assert redirection
-   cy.url()
-      .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
-});
+//    // Assert redirection
+//    cy.url()
+//       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
+// });
 
-// Set Unit Price Info
-Cypress.Commands.add('setHourlyRateInfo', (revenueType) => {
-   // Auth API
-   cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
+// // Set Unit Price Info
+// Cypress.Commands.add('setHourlyRateInfo', (revenueType) => {
+//    // Auth API
+//    cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
 
-   // Apply value in the first cell
-   cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-      .click()
-      .type(`${revenueType.hourly_rate_value}{enter}`);
+//    // Apply value in the first cell
+//    cy.get('.dialog_table_container > section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+//       .click()
+//       .type(`${revenueType.hourly_rate_value}{enter}`);
 
-   //Assert if the field is populated correctly
-   cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
-      .should('contain', `${revenueType.hourly_rate_value}`);
+//    //Assert if the field is populated correctly
+//    cy.get('.dialog_table_container> section.bg-white > .overflow-x-scroll > .cellSizeStyle_100 > .border-none > .text-xs.false > :nth-child(2) > .body_cell > .mr-1 > .w-full > .text-right')
+//       .should('contain', `${revenueType.hourly_rate_value}`);
 
-   // Click the button to apply on all cells in the row
-   cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
-      .click({ force: true });
+//    // Click the button to apply on all cells in the row
+//    cy.get('tbody tr:first-of-type td:nth-of-type(2) .m-round-button')
+//       .click({ force: true });
 
-   // Click Next button
-   cy.get('button')
-      .contains('Save & Close')
-      .click();
+//    // Click Next button
+//    cy.get('button')
+//       .contains('Save & Close')
+//       .click();
 
-   // Wait for all fetches to complete
-   cy.wait('@chartOfAccounts', { timeout: 100000 })
-      .its('response.statusCode')
-      .should('eq', 200);
+//    // Wait for all fetches to complete
+//    cy.wait('@chartOfAccounts', { timeout: 100000 })
+//       .its('response.statusCode')
+//       .should('eq', 200);
 
-   // Assert redirection
-   cy.url()
-      .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
-});
+//    // Assert redirection
+//    cy.url()
+//       .should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
+// });
