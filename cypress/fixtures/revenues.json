@@ -2,7 +2,7 @@
   "revenues_type": {
     "product_sales": {
       "index": 0,
-      "name": "Product Sales Revenue L1",
+      "type_name": "Product Sales Revenue L1",
       "unit_sales": 100,
       "unit_sales_12": 1000,
       "unit_sales_24": 3000,
@@ -34,13 +34,13 @@
     },
     "service_revenue": {
       "index": 1,
-      "name": "Service Revenue L3",
+      "type_name": "Service Revenue L3",
       "billable_hours_value": 100,
       "hourly_rate_value": 10
     },
     "twelve_months_subscription_revenue": {
       "index": 2,
-      "name": "12 months subscription revenue test",
+      "type_name": "12 months subscription revenue test",
       "subscription_plan_name": "Plan 1, 12 month period",
       "subscription_plan_index": 13,
       "unit_sales_value": 100,
@@ -48,7 +48,7 @@
     },
     "six_month_subscription_revenue": {
       "index": 2,
-      "name": "6 months subscription revenue test",
+      "type_name": "6 months subscription revenue test",
       "subscription_plan_name": "Plan 2, 6 month period",
       "subscription_plan_index": 7,
       "unit_sales_value": 100,
@@ -56,7 +56,7 @@
     },
     "revenue_only": {
       "index": 3,
-      "name": "RevenueOnly Revenue L2",
+      "type_name": "RevenueOnly Revenue L2",
       "unit1_revenue_lvl2": 1000,
       "unit2_revenue_lvl2": 4000,
       "unit1_subunit1_revenue_lvl2": 40,
