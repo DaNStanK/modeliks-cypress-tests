@@ -35,8 +35,20 @@
     "service_revenue": {
       "index": 1,
       "type_name": "Service Revenue L3",
-      "billable_hours_value": 100,
-      "hourly_rate_value": 10
+      "level": "SU",
+      "methodology": "breakdown",
+      "bh_bu1_subunit1": 100,
+      "bh_bu1_subunit1_12": 1000,
+      "bh_bu1_subunit1_24": 15000,
+      "bh_bu1_subunit2": 200,
+      "bh_bu2_subunit1": 300,
+      "bh_bu2_subunit2": 400,
+      "hr_bu1_subunit1": 3,
+      "hr_bu1_subunit1_12": 50,
+      "hr_bu1_subunit1_24": 50,
+      "hr_bu1_subunit2": 4,
+      "hr_bu2_subunit1": 5,
+      "hr_bu2_subunit2": 6
     },
     "twelve_months_subscription_revenue": {
       "index": 2,
