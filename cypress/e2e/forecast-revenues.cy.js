@@ -674,7 +674,7 @@ describe('Forecast / Revenues Module', () => {
   if (service_revenue && service_revenue.length > 0) {
     service_revenue.forEach(product => {
       // All Service Revenue tests
-      it.only(`Should be able to create ${product.type_name}`, () => {
+      it(`Should be able to create ${product.type_name}`, () => {
         // Assert if you are on Forecast revenues section
         cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
