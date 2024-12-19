@@ -18,13 +18,14 @@ describe('Forecast / Revenues Module', () => {
     // cy.intercept('GET', `/api/chart_of_accounts?CompanyID=${company.number}`).as('chartOfAccounts');
 
     // // Wait for all fetches to complete
-    // cy.wait('@oranizationalStructure', { timeout: 100000 })
-    //   .its('response.statusCode')
-    //   .should('eq', 200);
-
-    // cy.wait('@chartOfAccounts', { timeout: 100000 })
-    //   .its('response.statusCode')
-    //   .should('eq', 200);
+    // cy.wait(['@oranizationalStructure', '@chartOfAccounts'], { timeout: 100000 })
+    //   .then(fetches => {
+    //     // Check if the fetches were successful
+    //     fetches.forEach(result => {
+    //       // Check if the fetch was successful
+    //       expect(result.response.statusCode).to.eq(200);
+    //     });
+    //   })
   });
 
   // All Revenue Only tests;
