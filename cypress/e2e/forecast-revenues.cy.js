@@ -6,8 +6,6 @@ import { company } from '../fixtures/company.json';
 const {
   product_sales,
   service_revenue,
-  twelve_months_subscription_revenue,
-  six_month_subscription_revenue,
   revenue_only
 } = revenues.revenues_type;
 
@@ -38,11 +36,11 @@ describe('Forecast / Revenues Module', () => {
     }
 
     // Test per Revenue Only
-    it(`Should be able to create revenue only: ${product.type_name}`, () => {
-      cy.wait(1000);
-
+    it(`Should be able to create ${product.type_name}`, () => {
       // Assert if you are on Forecast revenues section
       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+
+      cy.wait(1000);
 
       // Click on Add Revenue Stream
       cy.clickButton('Add Revenue Stream');
@@ -77,20 +75,20 @@ describe('Forecast / Revenues Module', () => {
       //  *************************************************  \\
 
 
-      // Set Unit Sales info for the 1st month
-      cy.editTableCell(1, 1, product.unit1_revenue_lvl2); // row, month, value
+      // Set business unit 1 Revenue Only for the 1st month
+      cy.editTableCell(1, 1, product.unit1_revenue); // row, month, value
 
       // Check if the value for the 1st month is correctly applied
-      cy.checkCellValue(1, 1, product.unit1_revenue_lvl2); // row, month, value
+      cy.checkCellValue(1, 1, product.unit1_revenue); // row, month, value
 
       // Apply the units set for the 1st month to all remaining
       cy.applyToAllFields(1, 1); // row, month
 
-      // Set Unit Sales info for the 12th month
-      cy.editTableCell(2, 1, product.unit2_revenue_lvl2); // row, month, value
+      // Set business unit 2 Revenue Only for the 1st month
+      cy.editTableCell(2, 1, product.unit2_revenue); // row, month, value
 
-      // Check if the value is correctly applied on 12th month
-      cy.checkCellValue(2, 1, product.unit2_revenue_lvl2); // row, month, value
+      // Check if the value for the 1st month is correctly applied
+      cy.checkCellValue(2, 1, product.unit2_revenue); // row, month, value
 
       // Apply the units set for the 1st month to all remaining
       cy.applyToAllFields(2, 1); // row, month
@@ -189,13 +187,19 @@ describe('Forecast / Revenues Module', () => {
       // Click the save and close button
       cy.clickButton('Save & Close');
 
-      // Intercept post revenue fetch
+      // Intercept post and put revenue fetch
       cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
+      cy.intercept('PUT', `/api/cdv/calculateddrivers_v2`).as('calculatedDrivers');
 
-      // Assert if the revenue was successfully deleted
-      cy.wait('@chartOfAccounts', { timeout: 10000 })
-        .its('response.statusCode')
-        .should('eq', 200);
+      // Assert post and put fetches
+      cy.wait(['@chartOfAccounts', '@calculatedDrivers'], { timeout: 10000 })
+        .then(fetches => {
+          // Check if the fetches were successful
+          fetches.forEach(result => {
+            // Check if the fetch was successful
+            expect(result.response.statusCode).to.eq(200);
+          });
+        });
     });
   });
 
@@ -208,9 +212,11 @@ describe('Forecast / Revenues Module', () => {
     }
 
     // Test per Product Revenue
-    it(`Should be able to create product sales revenue: ${product.type_name}`, () => {
+    it(`Should be able to create ${product.type_name}`, () => {
       // Assert if you are on Forecast revenues section
       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+
+      cy.wait(1000);
 
       // Click on Add Revenue Stream
       cy.clickButton('Add Revenue Stream');
@@ -228,10 +234,10 @@ describe('Forecast / Revenues Module', () => {
       cy.chooseAdvanceSettings();
 
       // Choose planning level
-      cy.choosePlanningLevel('Level 1');
+      cy.choosePlanningLevel(product.level);
 
       // Set the allocation methodology
-      cy.setAllocationMethodology('breakdown');
+      cy.setAllocationMethodology(product.methodology);
 
       // Click save button in the advanced settings
       cy.clickButton('Save');
@@ -482,25 +488,19 @@ describe('Forecast / Revenues Module', () => {
       // Click the save and close button
       cy.clickButton('Save & Close');
 
-      // // Intercept post revenue fetch
-      // cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
+      // Intercept post and put revenue fetch
+      cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
+      cy.intercept('PUT', `/api/cdv/calculateddrivers_v2`).as('calculatedDrivers');
 
-      // // Assert if the revenue was successfully deleted
-      // cy.wait('@chartOfAccounts', { timeout: 10000 })
-      //   .its('response.statusCode')
-      //   .should('eq', 200);
-
-
-      //  *************************************************  \\
-      //                   DELETE REVENUE                    \\
-      //  *************************************************  \\
-
-
-      // // Delete revenue
-      // cy.chooseRevenueOption('Delete'); // Choose delete option
-
-      // // Click the confirm button on delete option
-      // cy.clickButton('Confirm');
+      // Assert post and put fetches
+      cy.wait(['@chartOfAccounts', '@calculatedDrivers'], { timeout: 10000 })
+        .then(fetches => {
+          // Check if the fetches were successful
+          fetches.forEach(result => {
+            // Check if the fetch was successful
+            expect(result.response.statusCode).to.eq(200);
+          });
+        });
     });
   });
 
@@ -513,9 +513,11 @@ describe('Forecast / Revenues Module', () => {
     }
 
     // Test per Service Revenue
-    it(`Should be able to create service revenue: ${product.type_name}`, () => {
+    it(`Should be able to create ${product.type_name}`, () => {
       // Assert if you are on Forecast revenues section
       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+
+      cy.wait(1000);
 
       // Click on Add Revenue Stream
       cy.clickButton('Add Revenue Stream');
@@ -668,13 +670,19 @@ describe('Forecast / Revenues Module', () => {
       // Click next button and continue to unit prices setup
       cy.clickButton('Save & Close');
 
-      // Intercept post revenue fetch
+      // Intercept post and put revenue fetch
       cy.intercept('POST', `/api/chart_of_accounts`).as('chartOfAccounts');
+      cy.intercept('PUT', `/api/cdv/calculateddrivers_v2`).as('calculatedDrivers');
 
-      // Assert if the revenue was successfully deleted
-      cy.wait('@chartOfAccounts', { timeout: 10000 })
-        .its('response.statusCode')
-        .should('eq', 200);
+      // Assert post and put fetches
+      cy.wait(['@chartOfAccounts', '@calculatedDrivers'], { timeout: 10000 })
+        .then(fetches => {
+          // Check if the fetches were successful
+          fetches.forEach(result => {
+            // Check if the fetch was successful
+            expect(result.response.statusCode).to.eq(200);
+          });
+        });
     });
   });
 });
