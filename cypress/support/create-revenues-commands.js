@@ -2,25 +2,6 @@
 
 import { company } from "../fixtures/company.json";
 
-// Helper function to validate inputs
-const validateInputs = (rowIndex, cellIndex, value) => {
-   if (rowIndex == null || rowIndex < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
-      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-   }
-   if (cellIndex == null || cellIndex < 0) {
-      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
-
-      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
-   }
-   if (typeof value !== 'number') {
-      console.log(`Invalid value type. Expected a number but received: ${value}`);
-
-      throw new Error(`Invalid value type. Expected a number but received: ${value}`);
-   }
-};
-
 // Select advance settings
 Cypress.Commands.add('chooseAdvanceSettings', () => {
    // Find and click the "Advance settings" button
@@ -37,43 +18,37 @@ Cypress.Commands.add('chooseAdvanceSettings', () => {
 // Choose planning level
 Cypress.Commands.add('choosePlanningLevel', (planningLevel) => {
    // Validate input
-   if (planningLevel == null || typeof planningLevel != 'string') {
-      console.log('Invalid or missing name of planning level. Ensure the value is defined and is not a string');
-
-      throw new Error('Invalid or missing name of planning level. Ensure the value is defined and is not a string');
+   if (!planningLevel || typeof planningLevel !== 'string') {
+      throw new Error('Invalid or missing name of planning level. Ensure the value is defined and is a string');
    }
 
    // Click the planning level dropdown
-   cy.get('button') // Finds dropdown field
-      .contains('Level 1') // That has an HTML text "Level 1"
+   cy.get('div.MuiDialogContent-root button')
+      .contains('Level 1')
       .click({ force: true });
 
    // Choose from the dropdown options
-   cy.get('div.dropdown.relative div.origin-top-left.absolute')
-      .eq(1)
+   cy.get('div.MuiDialogContent-root div.dropdown.relative div.origin-top-left.absolute')
       .contains(planningLevel)
       .click({ force: true });
 
    // Assert chosen planning level 
-   cy.get('button span span.overflow-hidden') // Finds dropdown field
-      .contains(planningLevel) // That has an HTML text [Planning level]
+   cy.get('.MuiDialogContent-root .grid div')
+      .contains(planningLevel)
       .should('exist');
 });
 
 // Select allocation methodology
 Cypress.Commands.add('setAllocationMethodology', (methodology) => {
    // Validate input
-   if (methodology == null || typeof methodology != 'string') {
-      console.log('Invalid or missing name of methodology. Ensure the methodology value is populated as a parameter in the function and is not a number');
-
-      throw new Error('Invalid or missing name of methodology. Ensure the methodology value is populated as a parameter in the function and is not a number');
+   if (!methodology || typeof methodology !== 'string') {
+      throw new Error('Invalid or missing name of methodology. Ensure the methodology value is defined and is a string');
    }
 
-   // Click the methodology dropdown 
-   cy.contains('span', 'do not allocate') // Find the span with the text
-      .parent() // Get its immediate parent (span)
-      .parent('button') // Selects the parent button
-      .click();
+   // Click the methodology dropdown
+   cy.get('div.MuiDialogContent-root button')
+      .contains('do not allocate')
+      .click({ force: true });
 
    // Choose from the dropdown options
    cy.get('div.dropdown.relative div.origin-top-left.absolute')
@@ -81,9 +56,8 @@ Cypress.Commands.add('setAllocationMethodology', (methodology) => {
       .click({ force: true });
 
    // Assert chosen methodology 
-   cy.contains('span', methodology) // Find the span with the text
-      .parent() // Get its immediate parent (span)
-      .parent('button') // Selects the parent button
+   cy.get('button span span.overflow-hidden')
+      .contains(methodology)
       .should('exist');
 });
 
@@ -91,67 +65,40 @@ Cypress.Commands.add('setAllocationMethodology', (methodology) => {
 // Populate Revenue Name input field
 Cypress.Commands.add('setRevenueName', (revenueName) => {
    // Validate input
-   if (revenueName == null || typeof revenueName != 'string') {
-      console.log('Invalid or missing revenue name. Ensure the revenue name is populated as a parameter in the function and is not a number');
-
-      throw new Error('Invalid or missing revenue name. Ensure the revenue name is populated as a parameter in the function and is not a number');
+   if (revenueName == null || typeof revenueName !== 'string') {
+      throw new Error('Invalid or missing revenue name. Ensure the revenue name is populated as a parameter in the function and is a string.');
    }
 
    // Populate Revenue Name input field
    cy.get('#revenueNameInput')
-      .type(revenueName);
+      .clear() // Clear any existing value
+      .type(revenueName); // Type the new revenue name
 });
 
 // Choose the type of revenue
-Cypress.Commands.add('chooseRevenueType', (revenueType) => {
+Cypress.Commands.add('chooseRevenueType', (index) => {
    // Validate input
-   if (revenueType == null || typeof revenueType != 'object') {
-      console.log('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is an object');
-
-      throw new Error('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is an object');
+   if (index == null || typeof index !== 'number') {
+      throw new Error('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is a number.');
    }
 
-   // Check if subscription revenue was selected
-   if (revenueType.index === 2) {
-      cy.get('div[class="sc-dhKdcB buTVds"] label')
-         .eq(revenueType.index)
-         .find('div')
-         .click({ force: true });
-
-      // Assert that the actual checkbox is checked after clicking the custom UI
-      cy.assertRevenueType(revenueType.index);
-
-      // Type Subscription plan name
-      cy.get('[placeholder="!!Enter name for your subscription plan"]')
-         .type(revenueType.subscription_plan_name);
-
-      // Choose Subscription period
-      cy.get('[class="px-6 py-2 border border-gray-200 bg-grey-light-1 rounded-md"] button')
-         .eq(0)
-         .click();
-
-      // Choose the 6 month period
-      cy.get('div[class="absolute top-0 right-0 bottom-0 left-0"]')
-         .eq(revenueType.subscription_plan_index)
-         .click();
-   } else {
-      cy.get('div[class="sc-dhKdcB buTVds"] label')
-         .eq(revenueType.index)
-         .find('div')
-         .click({ force: true });
-   }
+   // Choose the revenue type based on the index
+   cy.get('div[class="sc-dhKdcB buTVds"] label')
+      .eq(index)
+      .find('div')
+      .click({ force: true });
 });
 
 // Assert Revenue type
-Cypress.Commands.add('assertRevenueType', (revenueType) => {
+Cypress.Commands.add('assertRevenueType', (index) => {
    // Validate input
-   if (revenueType == null || typeof revenueType != 'number') {
-      console.log('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is a number');
-
-      throw new Error('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is a number');
+   if (index == null || typeof index !== 'number') {
+      throw new Error('Invalid or missing revenue type. Ensure the revenue type is populated as a parameter in the function and is a number.');
    }
+
+   // Assert that the checkbox for the revenue type is checked
    cy.get('div[class="sc-dhKdcB buTVds"] label')
-      .eq(revenueType)
+      .eq(index)
       .find('input[type="checkbox"]')
       .should('be.checked');
 });
@@ -160,112 +107,70 @@ Cypress.Commands.add('assertRevenueType', (revenueType) => {
 Cypress.Commands.add('applyToAllFields', (row, month) => {
    // Validate inputs
    if (row == null || row < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
    if (month == null || month < 0) {
-      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
    }
 
-   // Check if it is on level 1 or not
-   cy.get(`.scdi_info_dialog_div * table tbody tr.text-xs.group.false`).then(rows => {
-      const rowsCount = rows.length;
-      // Check if the table has more than two rows
-      if (rowsCount <= 2) {
-         // Click the button to apply value on all of the remaining fields
-         if (month > 12) {
-            cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex='0'] td:nth-of-type(${month - 10}) .m-round-button`)
-               .click({ force: true });
-         } else {
-            cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex='0'] td:nth-of-type(${month + 1}) .m-round-button`)
-               .click({ force: true });
-         }
-      } else {
-         // Click the button to apply value on all of the remaining fields
-         if (month > 12) {
-            cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex=${row}] td:nth-of-type(${month - 10}) .m-round-button`)
-               .click({ force: true });
-         } else {
-            cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex=${row}] td:nth-of-type(${month + 1}) .m-round-button`)
-               .click({ force: true });
-         }
-      }
+   // Adjust month index if necessary
+   const adjustedMonth = month > 13 ? month - 10 : month + 1;
+
+   // Determine row index based on the number of rows
+   cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false').then(rows => {
+      const rowIndex = rows.length <= 2 ? 0 : row;
+
+      // Click the apply button in the specified cell
+      cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex=${rowIndex}] td:nth-of-type(${adjustedMonth}) .m-round-button`)
+         .click({ force: true });
    });
 });
 
+// Find cell in the table
 Cypress.Commands.add('findCell', (row, cell) => {
    // Validate inputs
    if (row == null || row < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
    if (cell == null || cell < 0) {
-      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
    }
 
-   // Set table cell value according to the assigned row, cell and value
+   // Locate the cell in the table
    cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false')
-      .eq(row) // Select the desired row.
+      .eq(row) // Select the desired row
       .find('td')
-      .eq(cell) // Select the desired cell.
-      .dblclick('bottomRight')
+      .eq(cell) // Select the desired cell
+      .dblclick('bottomRight') // Double-click to activate the input
       .find('input')
-      .should('be.visible');
+      .should('be.visible'); // Ensure the input is visible
 });
 
+// Edit table cell value
 Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
    // Validate inputs
    if (rowIndex == null || rowIndex < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
    if (cellIndex == null || cellIndex < 0) {
-      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
    }
    if (typeof value !== 'number') {
-      console.log(`Invalid value type. Expected a number but received: ${value}`);
-
       throw new Error(`Invalid value type. Expected a number but received: ${value}`);
    }
 
    // Check if it is on level 1 or not
-   cy.get(`.scdi_info_dialog_div * table tbody tr.text-xs.group.false`).then(rows => {
+   cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false').then(rows => {
       const rowsCount = rows.length;
 
-      if (rowsCount <= 2) {
-         if (cellIndex <= 12) {
-            // Set table cell value according to the assigned row, cell index and value
-            cy.findCell(rowIndex - 1, cellIndex,)
-               .clear()
-               .type(`${value}{enter}`);
-         } else {
-            // Set table cell value according to the assigned row, cell index and value
-            cy.findCell(rowIndex - 1, cellIndex - 10)
-               .clear()
-               .type(`${value}{enter}`);
-         }
-      } else {
-         if (cellIndex <= 12) {
-            // Set table cell value according to the assigned row, cell index and value
-            cy.findCell(rowIndex, cellIndex)
-               .clear()
-               .type(`${value}{enter}`);
-         } else {
-            // Set table cell value according to the assigned row, cell index and value
-            cy.findCell(rowIndex, cellIndex - 10)
-               .clear()
-               .type(`${value}{enter}`);
-         }
-      }
+      // Determine the correct row and cell index based on the number of rows
+      const adjustedRowIndex = rowsCount <= 2 ? rowIndex - 1 : rowIndex;
+      const adjustedCellIndex = cellIndex <= 12 ? cellIndex : cellIndex - 10;
+
+      // Set table cell value according to the assigned row, cell index and value
+      cy.findCell(adjustedRowIndex, adjustedCellIndex)
+         .clear() // Clear the existing value
+         .type(`${value}{enter}`); // Type the new value and press enter
    });
 });
 
@@ -273,239 +178,181 @@ Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
 Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
    // Validate inputs
    if (rowIndex == null || rowIndex < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
    if (cellIndex == null || cellIndex < 0) {
-      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
    }
    if (typeof value !== 'number') {
-      console.log(`Invalid value type. Expected a number but received: ${value}`);
-
       throw new Error(`Invalid value type. Expected a number but received: ${value}`);
    }
 
    // Check if it is on level 1 or not
-   cy.get(`.scdi_info_dialog_div * table tbody tr.text-xs.group.false`).then(rows => {
+   cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false').then(rows => {
       const rowsCount = rows.length;
 
-      if (rowsCount <= 2) {
-         if (cellIndex <= 12) {
-            // Set table cell value according to the assigned row, cell index and value
-            cy.findCell(rowIndex - 1, cellIndex)
-               .should('be.visible')
-               .should('have.value', value); // Validate the input value.
-         } else {
-            // Set table cell value according to the assigned row, cell index and value
-            cy.findCell(rowIndex - 1, cellIndex - 10)
-               .should('be.visible')
-               .should('have.value', value); // Validate the input value.
-         }
-      } else {
-         if (cellIndex <= 12) {
-            // Set table cell value according to the assigned row, cell index and value
-            cy.findCell(rowIndex, cellIndex)
-               .should('be.visible')
-               .should('have.value', value); // Validate the input value.
-         } else {
-            // Set table cell value according to the assigned row, cell index and value
-            cy.findCell(rowIndex, cellIndex - 10)
-               .should('be.visible')
-               .should('have.value', value); // Validate the input value.
-         }
-      }
+      // Determine the correct row and cell index based on the number of rows
+      const adjustedRowIndex = rowsCount <= 2 ? rowIndex - 1 : rowIndex;
+      const adjustedCellIndex = cellIndex <= 12 ? cellIndex : cellIndex - 10;
+
+      // Validate the input value in the specified cell
+      cy.findCell(adjustedRowIndex, adjustedCellIndex)
+         .should('be.visible')
+         .should('have.value', value);
    });
 });
 
 // Click allocation set button
 Cypress.Commands.add('clickSetButton', (value) => {
-   // Validate inputs
+   // Validate input
    if (value == null || value < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
-      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+      throw new Error('Invalid or missing value. Ensure the value is defined and non-negative.');
    }
 
+   // Click the set button based on the value
    cy.get('.scdi_info_dialog_div * table')
       .eq(0)
       .find('button')
       .then(setButtons => {
-         console.log(setButtons.length);
-         if (setButtons.length > 2) {
-            cy.get('.scdi_info_dialog_div * table')
-               .eq(0)
-               .find('button')
-               .eq(value)
-               .click();
-         } else {
-            cy.get('.scdi_info_dialog_div * table')
-               .eq(0)
-               .find('button')
-               .eq(value - 1)
-               .click();
-         }
+         const buttonIndex = setButtons.length > 2 ? value : value - 1;
+         cy.wrap(setButtons)
+            .eq(buttonIndex)
+            .click();
       });
 });
 
-// Set allocation level
+// Set allocation level based on the provided value
 Cypress.Commands.add('setTotals', (value) => {
+   // Validate input
+   if (!value || typeof value !== 'string') {
+      throw new Error('Invalid or missing value. Ensure the value is defined and is a string.');
+   }
+
+   // Determine the button index based on the value
+   let buttonIndex;
    switch (value) {
       case company.organizationalStructure.levelOne.name:
-         cy.clickSetButton(0);
+         buttonIndex = 0;
          break;
       case company.organizationalStructure.levelTwo_unitOne.name:
-         cy.clickSetButton(1);
+         buttonIndex = 1;
          break;
       case company.organizationalStructure.levelTwo_unitTwo.name:
-         cy.clickSetButton(2);
+         buttonIndex = 2;
          break;
       default:
-         break;
+         throw new Error('Invalid value. Ensure the value matches one of the defined levels.');
    }
+
+   // Click the set button based on the determined index
+   cy.clickSetButton(buttonIndex);
 });
 
 // Find cell in allocation input table
 Cypress.Commands.add('findAllocationInputCell', (row, month) => {
-   cy.get('.scdi_info_dialog_div * table')
-      .eq(1)
-      .find(`tr[data-rowdataindex="${row}"] td`)
-      .eq(month)
-      .dblclick()
-      .find('input');
+   // Validate inputs
+   if (row == null || row < 0) {
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (month == null || month < 0) {
+      throw new Error('Invalid or missing monthIndex. Ensure the value is defined and non-negative.');
+   }
+
+   // Locate the cell in the allocation input table
+   return cy.get('.scdi_info_dialog_div * table')
+      .eq(1) // Select the second table (allocation input table)
+      .find(`tr[data-rowdataindex="${row}"] td`) // Find the row and cells
+      .eq(month) // Select the specific cell
+      .dblclick() // Double-click to activate the input
+      .find('input'); // Find the input element within the cell
 });
 
 // Set value in the allocation input table unit cell
 Cypress.Commands.add('editAllocationTableCell', (rowIndex, cellIndex, value) => {
-   // Check if all provided parameters are valid
+   // Validate inputs
    if (rowIndex == null || rowIndex < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
    if (cellIndex == null || cellIndex < 0) {
-      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
    }
    if (typeof value !== 'number') {
-      console.log(`Invalid value type. Expected a number but received: ${value}`);
-
       throw new Error(`Invalid value type. Expected a number but received: ${value}`);
    }
 
-   if (cellIndex <= 12) {
-      // Set table cell value according to the assigned row, cell index and value
-      cy.findAllocationInputCell(rowIndex, cellIndex)
-         .clear()
-         .type(`${value}{enter}`);
-   } else {
-      // Set table cell value according to the assigned row, cell index and value
-      cy.findAllocationInputCell(rowIndex, cellIndex - 10)
-         .clear()
-         .type(`${value}{enter}`);
-   }
+   // Determine the correct cell index based on the table structure
+   const adjustedCellIndex = cellIndex <= 12 ? cellIndex : cellIndex - 10;
+
+   // Set the value in the specified cell
+   cy.findAllocationInputCell(rowIndex, adjustedCellIndex)
+      .clear() // Clear the existing value
+      .type(`${value}{enter}`); // Type the new value and press enter
 });
 
 // Click on apply to all fields button in the allocation table
 Cypress.Commands.add('applyToAllFieldsAllocation', (row, month) => {
    // Validate inputs
    if (row == null || row < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
    if (month == null || month < 0) {
-      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
-
-      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+      throw new Error('Invalid or missing monthIndex. Ensure the value is defined and non-negative.');
    }
 
-   if (month > 12) {
-      cy.get(`.scdi_info_dialog_div * table`)
-         .eq(1)
-         .find('tr.text-xs.group.false')
-         .eq(row)
-         .find('td')
-         .eq(month - 10)
-         .find('.m-round-button')
-         .click({ force: true });
-   } else {
-      cy.get(`.scdi_info_dialog_div * table`)
-         .eq(1)
-         .find('tr.text-xs.group.false')
-         .eq(row)
-         .find('td')
-         .eq(month)
-         .find('.m-round-button')
-         .click({ force: true });
-   }
-   // .then((rows) => {
-   //    // Click the button to apply value on all of the remaining fields
-   //    if (month > 12) {
-   //       cy.get(`tr[data-rowdataindex=${row}] td:nth-of-type(${month - 10}) .m-round-button`)
-   //          .click({ force: true });
-   //    } else {
-   //       cy.get(`tr[data-rowdataindex=${row}] td:nth-of-type(${month + 1}) .m-round-button`)
-   //          .click({ force: true });
-   //    }
-   // });
+   // Determine the correct cell index based on the table structure
+   const adjustedMonth = month > 12 ? month - 10 : month;
+
+   // Click the apply button in the specified cell
+   cy.get('.scdi_info_dialog_div * table')
+      .eq(1) // Select the second table (allocation input table)
+      .find('tr.text-xs.group.false') // Find the rows without table headers
+      .eq(row) // Select the specific row
+      .find('td') // Find the cells in the row
+      .eq(adjustedMonth) // Select the specific cell
+      .find('.m-round-button') // Find the apply button within the cell
+      .click({ force: true }); // Click the apply button
 });
 
 // Check cell value in allocation table
 Cypress.Commands.add('checkAllocationCellValue', (rowIndex, cellIndex, value) => {
-   // Check if all provided parameters are valid
+   // Validate inputs
    if (rowIndex == null || rowIndex < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
    if (cellIndex == null || cellIndex < 0) {
-      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
    }
    if (typeof value !== 'number') {
-      console.log(`Invalid value type. Expected a number but received: ${value}`);
-
       throw new Error(`Invalid value type. Expected a number but received: ${value}`);
    }
 
-   if (cellIndex <= 12) {
-      // Set table cell value according to the assigned row, cell index and value
-      cy.findAllocationInputCell(rowIndex, cellIndex)
-         .should('be.visible')
-         .should('have.value', value); // Validate the input value.
-   } else {
-      // Set table cell value according to the assigned row, cell index and value
-      cy.findAllocationInputCell(rowIndex, cellIndex - 10)
-         .should('be.visible')
-         .should('have.value', value); // Validate the input value.
-   }
+   // Determine the correct cell index based on the table structure
+   const adjustedCellIndex = cellIndex <= 12 ? cellIndex : cellIndex - 10;
+
+   // Validate the input value in the specified cell
+   cy.findAllocationInputCell(rowIndex, adjustedCellIndex)
+      .should('be.visible')
+      .should('have.value', value);
 });
 
 // Choose revenue option
 Cypress.Commands.add('chooseRevenueOption', (option) => {
    // Validate input
-   if (option == null || option < 0) {
-      console.log('Invalid or missing "option" value. Ensure the value is defined and non-negative.');
-
-      throw new Error('Invalid or missing "option" value. Ensure the value is defined and non-negative.');
+   if (option == null || typeof option !== 'string') {
+      throw new Error('Invalid or missing "option" value. Ensure the value is defined and is a string.');
    }
 
    // Find and click the hamburger menu icon
    cy.get('table tr[data-rowindex="0"]')
       .find('td')
-      .eq(0) // selecting the first column of the row
-      .find('div.cursor-pointer') // locate all clickable options
-      .eq(1) // choose the hamburger menu
+      .eq(0) // Select the first column of the row
+      .find('div.cursor-pointer') // Locate all clickable options
+      .eq(1) // Choose the hamburger menu
       .click();
 
-   // Choose option from the menu (duplicate, organize streams and delete)
+   // Choose option from the menu (duplicate, organize streams, and delete)
    cy.get('span')
-      .contains(option) // finding the option with the name provided
+      .contains(option) // Find the option with the name provided
       .click();
 });
 
@@ -525,17 +372,15 @@ Cypress.Commands.add('findTotalInputCell', (row, month) => {
 Cypress.Commands.add('checkTotalCellValue', (rowIndex, cellIndex, value) => {
    // Validate inputs
    if (rowIndex == null || rowIndex < 0) {
-      console.log('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
-
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
    if (cellIndex == null || cellIndex < 0) {
-      console.log('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+      alert('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
 
       throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
    }
    if (typeof value !== 'number') {
-      console.log(`Invalid value type. Expected a number but received: ${value}`);
+      alert(`Invalid value type. Expected a number but received: ${value}`);
 
       throw new Error(`Invalid value type. Expected a number but received: ${value}`);
    }
