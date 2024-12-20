@@ -3,27 +3,14 @@
       {
          "id": 1,
          "type_name": "COGS $ cost L1",
+         "relation": "Service Revenue L3",
+         "type_of_cost": "Cost per unit sold",
          "level": "Level 1",
-         "methodology": "breakdown",
-         "company_unit": 1.00
-      },
-      {
-         "id": 2,
-         "type_name": "COGS $ cost L3",
-         "level": "SU",
-         "company_unit": 2.00
-      },
-      {
-         "id": 3,
-         "type_name": "COGS % specific L1",
-         "level": "Level 1",
-         "company_unit": 3.00
-      },
-      {
-         "id": 4,
-         "type_name": "COGS % specific L3",
-         "level": "Level 3",
-         "company_unit": 3.00
+         "methodology": "do not allocate",
+         "unit_cost_1": 4,
+         "unit_cost_12": 30,
+         "unit_cost_13": 7.8,
+         "unit_cost_24": 40
       }
    ]
 }
