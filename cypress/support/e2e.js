@@ -14,7 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands';
+import './global-commands';
 import "./organizational-structure";
 import './forecast-commands';
 import './create-revenues';
