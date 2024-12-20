@@ -98,10 +98,10 @@ Cypress.Commands.add('findCell', (row, cell) => {
    cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false')
       .eq(row) // Select the desired row
       .find('td')
-      .eq(cell) // Select the desired cell
-      .dblclick('bottomRight') // Double-click to activate the input
-      .find('input')
-      .should('be.visible'); // Ensure the input is visible
+      .eq(cell); // Select the desired cell
+   // .dblclick('bottomRight') // Double-click to activate the input
+   // .find('input')
+   // .should('be.visible'); // Ensure the input is visible
 });
 
 // Edit table cell value
@@ -127,6 +127,9 @@ Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
 
       // Set table cell value according to the assigned row, cell index and value
       cy.findCell(adjustedRowIndex, adjustedCellIndex)
+         .dblclick('bottomRight') // Double-click to activate the input
+         .find('input')
+         .should('be.visible') // Ensure the input is visible
          .clear() // Clear the existing value
          .type(`${value}{enter}`); // Type the new value and press enter
    });
@@ -151,12 +154,18 @@ Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
 
       // Determine the correct row and cell index based on the number of rows
       const adjustedRowIndex = rowsCount <= 2 ? rowIndex - 1 : rowIndex;
-      const adjustedCellIndex = cellIndex <= 12 ? cellIndex : cellIndex - 10;
+      const adjustedCellIndex = cellIndex <= 13 ? cellIndex : cellIndex - 10;
 
-      // Validate the input value in the specified cell
-      cy.findCell(adjustedRowIndex, adjustedCellIndex)
-         .should('be.visible')
-         .should('have.value', value);
+      if (adjustedCellIndex === 13) {
+         cy.findCell(adjustedRowIndex, adjustedCellIndex)
+            .contains(value);
+      } else {
+         // Validate the input value in the specified cell
+         cy.findCell(adjustedRowIndex, adjustedCellIndex)
+            .dblclick('bottomRight') // Double-click to activate the input
+            .find('input')
+            .should('have.value', value);
+      }
    });
 });
 
@@ -359,4 +368,12 @@ Cypress.Commands.add('checkTotalCellValue', (rowIndex, cellIndex, value) => {
          // Assert the normalized value matches the expected value
          expect(Number(normalizedValue)).to.equal(value);
       });
+});
+
+// Increase the number of decimals displayed
+Cypress.Commands.add('increaseDecimals', () => {
+   // Find and click the "Increase Decimals" button
+   cy.get('[aria-label="!!Increase Decimals"]')
+      .should('exist') // Ensure the button exists
+      .click(); // Click the button
 });
