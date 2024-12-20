@@ -83,9 +83,9 @@ Cypress.Commands.add('chooseRevenueType', (index) => {
    }
 
    // Choose the revenue type based on the index
-   cy.get('div[class="sc-dhKdcB buTVds"] label')
+   cy.get('div[role="dialog"] label')
       .eq(index)
-      .find('div')
+      .find('input[type="checkbox"]')
       .click({ force: true });
 });
 
@@ -97,7 +97,7 @@ Cypress.Commands.add('assertRevenueType', (index) => {
    }
 
    // Assert that the checkbox for the revenue type is checked
-   cy.get('div[class="sc-dhKdcB buTVds"] label')
+   cy.get('div[role="dialog"] label')
       .eq(index)
       .find('input[type="checkbox"]')
       .should('be.checked');
