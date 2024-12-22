@@ -157,8 +157,48 @@ Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
       const adjustedCellIndex = cellIndex <= 13 ? cellIndex : cellIndex - 10;
 
       if (adjustedCellIndex === 13) {
+         // Validate the input value in the specified cell
          cy.findCell(adjustedRowIndex, adjustedCellIndex)
-            .contains(value);
+            .should('contain', value);
+      } else {
+         // Validate the input value in the specified cell
+         cy.findCell(adjustedRowIndex, adjustedCellIndex)
+            .dblclick('bottomRight') // Double-click to activate the input
+            .find('input')
+            .should('have.value', value);
+      }
+   });
+});
+
+// Check revenue table fields value
+Cypress.Commands.add('checkCogsCellValue', (rowIndex, cellIndex, value) => {
+   // Validate inputs
+   if (rowIndex == null || rowIndex < 0) {
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cellIndex == null || cellIndex < 0) {
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+   if (typeof value !== 'number') {
+      throw new Error(`Invalid value type. Expected a number but received: ${value}`);
+   }
+
+   // Check if it is on level 1 or not
+   cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false').then(rows => {
+      const rowsCount = rows.length;
+
+      // Determine the correct row and cell index based on the number of rows
+      const adjustedRowIndex = rowsCount <= 2 ? rowIndex - 1 : rowIndex;
+      const adjustedCellIndex = cellIndex <= 13 ? cellIndex : cellIndex - 10;
+
+      if (adjustedRowIndex === 0 || adjustedRowIndex === 1) {
+         // Validate the input value in the specified cell
+         cy.findCell(adjustedRowIndex, adjustedCellIndex)
+            .should('contain', value);
+      } else if (adjustedCellIndex === 13) {
+         // Validate the input value in the specified cell
+         cy.findCell(adjustedRowIndex, adjustedCellIndex)
+            .should('contain', value);
       } else {
          // Validate the input value in the specified cell
          cy.findCell(adjustedRowIndex, adjustedCellIndex)
@@ -373,7 +413,7 @@ Cypress.Commands.add('checkTotalCellValue', (rowIndex, cellIndex, value) => {
 // Increase the number of decimals displayed
 Cypress.Commands.add('increaseDecimals', () => {
    // Find and click the "Increase Decimals" button
-   cy.get('[aria-label="!!Increase Decimals"]')
+   cy.get('.dialog_table_container .table-menu [aria-label="!!Increase Decimals"]')
       .should('exist') // Ensure the button exists
       .click(); // Click the button
 });

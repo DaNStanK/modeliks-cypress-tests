@@ -4,13 +4,46 @@
          "id": 1,
          "type_name": "COGS $ cost L1",
          "relation": "Service Revenue L3",
-         "type_of_cost": "Cost per unit sold",
+         "type_of_cost": "cost per unit sold",
          "level": "Level 1",
          "methodology": "do not allocate",
          "unit_cost_1": 4,
          "unit_cost_12": 30,
          "unit_cost_13": 7.8,
          "unit_cost_24": 40
+      },
+      {
+         "id": 2,
+         "type_name": "COGS $ cost L3",
+         "relation": "Service Revenue L3",
+         "type_of_cost": "cost per unit sold",
+         "level": "SU",
+         "methodology": "do not allocate",
+         "uc_company_12": 162.0,
+         "uc_company_13": 29.0,
+         "uc_company_24": 4.9,
+         "uc_bu1_12": 4.2,
+         "uc_bu1_13": 4.5,
+         "uc_bu1_24": 4.1,
+         "uc_bu1_subunit1_1": 4,
+         "uc_bu1_subunit2_1": 5,
+         "uc_bu2_subunit1_1": 6,
+         "uc_bu2_subunit2_1": 7,
+         "uc_bu2_subunit1_12": 1000,
+         "uc_bu2_subunit1_13": 88,
+         "uc_bu2_subunit1_24": 6.0,
+         "comments": {
+            "id": 3,
+            "type_name": "COGS % specific L1",
+            "relation": "Service Revenue L3",
+            "type_of_cost": "% of total revenue",
+            "level": "Level 1",
+            "methodology": "Revenue",
+            "unit_cost_1": 40,
+            "unit_cost_12": 80,
+            "unit_cost_13": 7.8,
+            "unit_cost_24": 59.9
+         }
       }
    ]
 }
