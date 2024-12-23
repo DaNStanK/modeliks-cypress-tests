@@ -58,12 +58,26 @@ Cypress.Commands.add('selectTypeOfCost', (type) => {
 });
 
 // Default table view
-Cypress.Commands.add('checkMainTableValue', (rowTitle, month, value) => {
+Cypress.Commands.add('checkMainTableValue', (rowTitle, cellIndex, value) => {
+   // Validate inputs
+   if (rowTitle == null || typeof rowTitle !== 'string') {
+      throw new Error('Invalid or missing row title. Ensure the row title is populated as a parameter in the function and is a string.');
+   }
+   if (cellIndex == null || typeof cellIndex !== 'number') {
+      throw new Error('Invalid or missing cell index. Ensure the cell index is populated as a parameter in the function and is a number.');
+   }
+   if (value == null || typeof value !== 'number') {
+      throw new Error('Invalid or missing value. Ensure the value is populated as a parameter in the function and is a number.');
+   }
+
+   // Determine cell index (accounting for different table structures)
+   const adjustedCellIndex = cellIndex <= 13 ? cellIndex : cellIndex - 10;
+
    // Check cell value of the main table
    cy.get('table tbody tr') // Get all rows in the table
-      .contains(rowTitle) // Find the row (or child element within the row) that contains the text "tata"
-      .closest('tr')
-      .find('td')
-      .eq(month)
-      .should('contain', value.toLocaleString());
+      .contains(rowTitle) // Find the row (or child element within the row) that contains the rowTitle
+      .closest('tr') // Get the closest tr element
+      .find('td') // Find all td elements within the row
+      .eq(adjustedCellIndex) // Get the td element at the adjusted cell index
+      .should('contain', Number(value).toLocaleString()); // Assert that the td element contains the expected value
 });
