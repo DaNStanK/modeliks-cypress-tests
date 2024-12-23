@@ -56,3 +56,14 @@ Cypress.Commands.add('selectTypeOfCost', (type) => {
          }
       });
 });
+
+// Default table view
+Cypress.Commands.add('checkMainTableValue', (rowTitle, month, value) => {
+   // Check cell value of the main table
+   cy.get('table tbody tr') // Get all rows in the table
+      .contains(rowTitle) // Find the row (or child element within the row) that contains the text "tata"
+      .closest('tr')
+      .find('td')
+      .eq(month)
+      .should('contain', value.toLocaleString());
+});
