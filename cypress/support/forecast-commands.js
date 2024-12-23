@@ -417,3 +417,33 @@ Cypress.Commands.add('increaseDecimals', () => {
       .should('exist') // Ensure the button exists
       .click(); // Click the button
 });
+
+// Expand all rows
+Cypress.Commands.add('expandAll', () => {
+   // Click on the expand all button
+   cy.get('table thead td')
+      .find('div[aria-label="!!Expand All"]')
+      .click();
+});
+
+// Collapse all rows
+Cypress.Commands.add('collapseAll', () => {
+   // Click on the expand all button
+   cy.get('table thead td')
+      .find('div[aria-label="!!Collapse All"]')
+      .click();
+});
+
+// Organizational table view
+Cypress.Commands.add('organizationalTableView', () => {
+   // Click on the organizational table view
+   cy.get('div.table-menu div[aria-label="!!Organizational table view"]')
+      .click();
+});
+
+// Default table view
+Cypress.Commands.add('defaultTableView', () => {
+   // Click on the default table view
+   cy.get('div.table-menu div[aria-label="!!Default table view"]')
+      .click();
+});
