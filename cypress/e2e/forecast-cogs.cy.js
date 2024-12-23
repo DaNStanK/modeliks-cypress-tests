@@ -81,7 +81,7 @@ describe('Forecast COGS', () => {
 
 
             // Unit Cost Setup
-            if (cog.level === 'Level 1' && cog.type_of_cost === 'cost per unit sold') {
+            if (cog.level === 'Level 1') {
                // Set Unit Cost info for the 1st month
                if (cog.unit_cost_1) {
                   cy.editTableCell(1, 1, cog.unit_cost_1);

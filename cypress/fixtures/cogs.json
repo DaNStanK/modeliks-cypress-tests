@@ -31,9 +31,21 @@
          "uc_bu2_subunit2_1": 7,
          "uc_bu2_subunit1_12": 1000,
          "uc_bu2_subunit1_13": 88,
-         "uc_bu2_subunit1_24": 6.0,
+         "uc_bu2_subunit1_24": 6.0
+      },
+      {
+         "id": 3,
+         "type_name": "COGS % specific L1",
+         "relation": "Service Revenue L3",
+         "type_of_cost": "% of specific revenue stream",
+         "level": "Level 1",
+         "methodology": "Revenue",
+         "unit_cost_1": 40,
+         "unit_cost_12": 80,
+         "unit_cost_13": 59.9,
+         "unit_cost_24": 40,
          "comments": {
-            "id": 3,
+            "id": 4,
             "type_name": "COGS % specific L1",
             "relation": "Service Revenue L3",
             "type_of_cost": "% of total revenue",
