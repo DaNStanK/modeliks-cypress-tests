@@ -447,3 +447,21 @@ Cypress.Commands.add('defaultTableView', () => {
    cy.get('div.table-menu div[aria-label="!!Default table view"]')
       .click();
 });
+
+// Expand row
+Cypress.Commands.add('expandRow', (rowTitle) => {
+   // Validate input
+   if (!rowTitle || typeof rowTitle !== 'string') {
+      throw new Error('Invalid or missing rowTitle. Ensure the value is defined and is a string.');
+   }
+
+   // Expand the specified row
+   cy.get('table tbody tr') // Get all rows in the table
+      .contains(rowTitle) // Find the row with the row title
+      .closest('tr') // Get the closest tr element
+      .should('exist') // Ensure the row exists
+      .find('td') // Find all td elements within the row
+      .eq(0) // Select the first td element
+      .find('svg.cursor-pointer') // Find the svg element with the cursor-pointer class
+      .click(); // Click to expand the row
+});
