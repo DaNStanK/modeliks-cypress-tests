@@ -43,19 +43,28 @@
          "unit_cost_1": 40,
          "unit_cost_12": 80,
          "unit_cost_13": 59.9,
-         "unit_cost_24": 40,
-         "comments": {
-            "id": 4,
-            "type_name": "COGS % specific L1",
-            "relation": "Service Revenue L3",
-            "type_of_cost": "% of total revenue",
-            "level": "Level 1",
-            "methodology": "Revenue",
-            "unit_cost_1": 40,
-            "unit_cost_12": 80,
-            "unit_cost_13": 7.8,
-            "unit_cost_24": 59.9
-         }
+         "unit_cost_24": 40
+      },
+      {
+         "id": 4,
+         "type_name": "COGS % specific L3",
+         "relation": "Service Revenue L3",
+         "type_of_cost": "% of specific revenue stream",
+         "level": "SU",
+         "methodology": "do not allocate",
+         "uc_company_12": 20.94,
+         "uc_company_13": 31.5,
+         "uc_company_24": 21.64,
+         "uc_bu1_12": 20.16,
+         "uc_bu1_13": 21.53,
+         "uc_bu1_24": 20.13,
+         "uc_bu1_subunit1_1": 20,
+         "uc_bu1_subunit2_1": 30,
+         "uc_bu2_subunit1_1": 40,
+         "uc_bu2_subunit2_1": 50,
+         "uc_bu2_subunit1_12": 1.0,
+         "uc_bu2_subunit1_13": 36.75,
+         "uc_bu2_subunit1_24": 40
       }
    ]
 }

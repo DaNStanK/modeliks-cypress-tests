@@ -117,7 +117,7 @@ describe('Forecast COGS', () => {
                }
             }
 
-            if (cog.level === 'SU' && cog.type_of_cost === 'cost per unit sold') {
+            if (cog.level === 'SU') {
                // Set subunit 1 for business unit 1 info for the 1st month
                if (cog.uc_bu1_subunit1_1) {
                   cy.editTableCell(2, 1, cog.uc_bu1_subunit1_1);
