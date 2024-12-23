@@ -42,11 +42,15 @@ Cypress.Commands.add('selectTypeOfCost', (type) => {
 
 
    // Check the type of cost checkbox if not already checked
-   cy.get('input[type="checkbox"]')
+   cy.get('div.flex.flex-col.gap-4 div.flex.flex-col.gap-4')
+      .eq(1)
+      .find('label input[role="checkbox"]')
       .eq(adjustedType)
       .then(($checkbox) => {
          if (!$checkbox.prop('checked')) {
-            cy.get('input[type="checkbox"]')
+            cy.get('div.flex.flex-col.gap-4 div.flex.flex-col.gap-4')
+               .eq(1)
+               .find('label input[role="checkbox"]')
                .eq(adjustedType)
                .check({ force: true });
          }
