@@ -84,25 +84,25 @@ describe('Forecast COGS', () => {
             if (cog.level === 'Level 1') {
                // Set Unit Cost info for the 1st month
                if (cog.unit_cost_1) {
-                  cy.editTableCell(1, 1, cog.unit_cost_1);
-                  cy.checkCellValue(1, 1, cog.unit_cost_1);
-                  cy.applyToAllFields(1, 1);
+                  cy.editTableCell(1, 1, cog.unit_cost_1); //row, month, value
+                  cy.checkCellValue(1, 1, cog.unit_cost_1); //row, month, value
+                  cy.applyToAllFields(1, 1); //row, month, value
                } else {
                   throw new Error('Unit cost for the 1st month is missing');
                }
 
                // Set Unit cost info for the 12th month
                if (cog.unit_cost_12) {
-                  cy.editTableCell(1, 12, cog.unit_cost_12);
-                  cy.checkCellValue(1, 12, cog.unit_cost_12);
+                  cy.editTableCell(1, 12, cog.unit_cost_12); //row, month, value
+                  cy.checkCellValue(1, 12, cog.unit_cost_12); //row, month, value
                } else {
                   throw new Error('Unit cost for the 12th month is missing');
                }
 
                // Set Unit cost info for 24th month
                if (cog.unit_cost_24) {
-                  cy.editTableCell(1, 24, cog.unit_cost_24);
-                  cy.checkCellValue(1, 24, cog.unit_cost_24);
+                  cy.editTableCell(1, 24, cog.unit_cost_24); //row, month, value
+                  cy.checkCellValue(1, 24, cog.unit_cost_24); //row, month, value
                } else {
                   throw new Error('Unit cost for the 24th month is missing');
                }
@@ -111,53 +111,54 @@ describe('Forecast COGS', () => {
                cy.increaseDecimals();
 
                if (cog.unit_cost_13) {
-                  cy.checkCellValue(1, 13, cog.unit_cost_13);
+                  cy.checkCellValue(1, 13, cog.unit_cost_13); //row, month, value
                } else {
                   throw new Error('Unit cost for the 13th month is missing');
                }
             }
 
+            // Unit Cost Setup
             if (cog.level === 'SU') {
                // Set subunit 1 for business unit 1 info for the 1st month
                if (cog.uc_bu1_subunit1_1) {
-                  cy.editTableCell(2, 1, cog.uc_bu1_subunit1_1);
-                  cy.checkCogsCellValue(2, 1, cog.uc_bu1_subunit1_1);
-                  cy.applyToAllFields(2, 1);
+                  cy.editTableCell(2, 1, cog.uc_bu1_subunit1_1); //row, month, value
+                  cy.checkCogsCellValue(2, 1, cog.uc_bu1_subunit1_1); //row, month, value
+                  cy.applyToAllFields(2, 1); //row, month, value
                } else {
                   throw new Error('Subunit 1 cost for business unit 1 for the 1st month is missing');
                }
 
                // Set subunit 2 for business unit 1 info for the 1st month
                if (cog.uc_bu1_subunit2_1) {
-                  cy.editTableCell(3, 1, cog.uc_bu1_subunit2_1);
-                  cy.checkCogsCellValue(3, 1, cog.uc_bu1_subunit2_1);
-                  cy.applyToAllFields(3, 1);
+                  cy.editTableCell(3, 1, cog.uc_bu1_subunit2_1); //row, month, value
+                  cy.checkCogsCellValue(3, 1, cog.uc_bu1_subunit2_1); //row, month, value
+                  cy.applyToAllFields(3, 1); //row, month, value
                } else {
                   throw new Error('Subunit 2 cost for business unit 1 for the 1st month is missing');
                }
 
                // Set subunit 1 for business unit 2 info for the 1st month
                if (cog.uc_bu2_subunit1_1) {
-                  cy.editTableCell(5, 1, cog.uc_bu2_subunit1_1);
-                  cy.checkCogsCellValue(5, 1, cog.uc_bu2_subunit1_1);
-                  cy.applyToAllFields(5, 1);
+                  cy.editTableCell(5, 1, cog.uc_bu2_subunit1_1); //row, month, value
+                  cy.checkCogsCellValue(5, 1, cog.uc_bu2_subunit1_1); //row, month, value
+                  cy.applyToAllFields(5, 1); //row, month, value
                } else {
                   throw new Error('Subunit 1 cost for business unit 2 for the 1st month is missing');
                }
 
                // Set subunit 1 for business unit 2 info for the 12th month
                if (cog.uc_bu2_subunit1_12) {
-                  cy.editTableCell(5, 12, cog.uc_bu2_subunit1_12);
-                  cy.checkCogsCellValue(5, 12, cog.uc_bu2_subunit1_12);
+                  cy.editTableCell(5, 12, cog.uc_bu2_subunit1_12); //row, month, value
+                  cy.checkCogsCellValue(5, 12, cog.uc_bu2_subunit1_12); //row, month, value
                } else {
                   throw new Error('Subunit 1 cost for business unit 2 for the 12th month is missing');
                }
 
                // Set subunit 2 for business unit 2 info for the 1st month
                if (cog.uc_bu2_subunit2_1) {
-                  cy.editTableCell(6, 1, cog.uc_bu2_subunit2_1);
-                  cy.checkCogsCellValue(6, 1, cog.uc_bu2_subunit2_1);
-                  cy.applyToAllFields(6, 1);
+                  cy.editTableCell(6, 1, cog.uc_bu2_subunit2_1); //row, month, value
+                  cy.checkCogsCellValue(6, 1, cog.uc_bu2_subunit2_1); //row, month, value
+                  cy.applyToAllFields(6, 1); //row, month, value
                } else {
                   throw new Error('Subunit 2 cost for business unit 2 for the 1st month is missing');
                }
@@ -167,63 +168,63 @@ describe('Forecast COGS', () => {
 
                // Validate company unit price value for the 12th month if provided
                if (cog.uc_company_12) {
-                  cy.checkCogsCellValue(0, 12, cog.uc_company_12);
+                  cy.checkCogsCellValue(0, 12, cog.uc_company_12); //row, month, value
                } else {
                   throw new Error('Company unit price for the 12th month is missing');
                }
 
                // Validate company unit price value for the 13th month if provided
                if (cog.uc_company_13) {
-                  cy.checkCogsCellValue(0, 13, cog.uc_company_13);
+                  cy.checkCogsCellValue(0, 13, cog.uc_company_13); //row, month, value
                } else {
                   throw new Error('Company unit price for the 13th month is missing');
                }
 
                // Validate company unit price value for the 24th month if provided
                if (cog.uc_company_24) {
-                  cy.checkCogsCellValue(0, 24, cog.uc_company_24);
+                  cy.checkCogsCellValue(0, 24, cog.uc_company_24); //row, month, value
                } else {
                   throw new Error('Company unit price for the 24th month is missing');
                }
 
                // Validate business unit 1 price value for the 12th month if provided
                if (cog.uc_bu1_12) {
-                  cy.checkCogsCellValue(1, 12, cog.uc_bu1_12);
+                  cy.checkCogsCellValue(1, 12, cog.uc_bu1_12); //row, month, value
                } else {
                   throw new Error('Company business unit 1 price for the 12th month is missing');
                }
 
                // Validate business unit 1 price value for the 13th month if provided
                if (cog.uc_bu1_13) {
-                  cy.checkCogsCellValue(1, 13, cog.uc_bu1_13);
+                  cy.checkCogsCellValue(1, 13, cog.uc_bu1_13); //row, month, value
                } else {
                   throw new Error('Company business unit 1 price for the 13th month is missing');
                }
 
                // Validate business unit 1 price value for the 24th month if provided
                if (cog.uc_bu1_24) {
-                  cy.checkCogsCellValue(1, 24, cog.uc_bu1_24);
+                  cy.checkCogsCellValue(1, 24, cog.uc_bu1_24); //row, month, value
                } else {
                   throw new Error('Company business unit 1 price for the 24th month is missing');
                }
 
                // Validate subunit 1 of business unit 2 price value for the 12th month if provided
                if (cog.uc_bu2_subunit1_12) {
-                  cy.checkCogsCellValue(5, 12, cog.uc_bu2_subunit1_12);
+                  cy.checkCogsCellValue(5, 12, cog.uc_bu2_subunit1_12); //row, month, value
                } else {
                   throw new Error('Company subunit 1 of business unit 2 price for the 12th month is missing');
                }
 
                // Validate subunit 1 of business unit 2 price value for the 13th month if provided
                if (cog.uc_bu2_subunit1_13) {
-                  cy.checkCogsCellValue(5, 13, cog.uc_bu2_subunit1_13);
+                  cy.checkCogsCellValue(5, 13, cog.uc_bu2_subunit1_13); //row, month, value
                } else {
                   throw new Error('Company subunit 1 of business unit 2 price for the 13th month is missing');
                }
 
                // Validate subunit 1 of business unit 2 price value for the 24th month if provided
                if (cog.uc_bu2_subunit1_24) {
-                  cy.checkCogsCellValue(5, 24, cog.uc_bu2_subunit1_24);
+                  cy.checkCogsCellValue(5, 24, cog.uc_bu2_subunit1_24); //row, month, value
                } else {
                   throw new Error('Company subunit 1 of business unit 2 price for the 24th month is missing');
                }
