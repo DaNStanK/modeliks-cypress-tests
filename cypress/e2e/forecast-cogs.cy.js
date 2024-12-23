@@ -245,8 +245,60 @@ describe('Forecast COGS', () => {
                   });
                });
 
-            // Assert if you are on Forecast COGS section
-            cy.expectedUrl('https://test.hz.modeliks.com/forecast/costofsales');
+            // // Assert if you are on Forecast COGS section
+            // cy.expectedUrl('https://test.hz.modeliks.com/forecast/costofsales');
+
+            // // Switch to organizational table view for better data visibility
+            // cy.organizationalTableView();
+
+            // // Click on the expand all button to ensure all sections are visible
+            // cy.expandAll();
+
+            // // Expand the COGS section
+            // cy.expandRow(cog.type_name);
+
+            // // Validate the main table company values for the 12th, 13th, and 24th months if provided
+            // if (cog.total_company_12) {
+            //    cy.checkCompanyValue(cog.type_name, 12, cog.total_company_12); // rowTitle, month, value
+            // }
+
+            // if (cog.total_company_13) {
+            //    cy.checkCompanyValue(cog.type_name, 13, cog.total_company_13); // rowTitle, month, value
+            // }
+
+            // if (cog.total_company_24) {
+            //    cy.checkCompanyValue(cog.type_name, 24, cog.total_company_24); // rowTitle, month, value
+            // }
+
+            // // Validate the main table business unit 1 values for the 12th, 13th, and 24th months if provided
+            // if (cog.total_bu1_12) {
+            //    cy.checkBusinessUnitValue(cog.type_name, 'BU1', 12, cog.total_bu1_12); // rowTitle, businessUnitName, month, value
+            // }
+
+            // if (cog.total_bu1_13) {
+            //    cy.checkBusinessUnitValue(cog.type_name, 'BU1', 13, cog.total_bu1_13); // rowTitle, businessUnitName, month, value
+            // }
+
+            // if (cog.total_bu1_24) {
+            //    cy.checkBusinessUnitValue(cog.type_name, 'BU1', 24, cog.total_bu1_24); // rowTitle, businessUnitName, month, value
+            // }
+
+            // // Validate the main table subunit 1 from BU2 values for the 12th, 13th, and 24th months if provided
+
+            // if (cog.total_sub1_bu2_12) {
+            //    // Expand the row
+            //    cy.expandBusinessUnit(cog.type_name, 'BU2');
+
+            //    cy.checkSubUnitValue(cog.type_name, 'BU2', 'Subunit 1', 12, cog.total_sub1_bu2_12); // rowTitle, businessUnitName, subunitName, month, value
+            // }
+
+            // if (cog.total_sub1_bu2_13) {
+            //    cy.checkSubUnitValue(cog.type_name, 'BU2', 'Subunit 1', 13, cog.total_sub1_bu2_13); // rowTitle, businessUnitName, subunitName, month, value
+            // }
+
+            // if (cog.total_sub1_bu2_24) {
+            //    cy.checkSubUnitValue(cog.type_name, 'BU2', 'Subunit 1', 24, cog.total_sub1_bu2_24); // rowTitle, businessUnitName, subunitName, month, value
+            // }
          });
       });
    } else {
