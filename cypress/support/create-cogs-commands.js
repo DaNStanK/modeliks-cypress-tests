@@ -57,8 +57,63 @@ Cypress.Commands.add('selectTypeOfCost', (type) => {
       });
 });
 
-// Default table view
-Cypress.Commands.add('checkMainTableValue', (rowTitle, cellIndex, value) => {
+// Find the COGS in the table
+Cypress.Commands.add('findCogs', (cogsName) => {
+   // Validate input
+   if (cogsName == null || typeof cogsName !== 'string') {
+      throw new Error('Invalid or missing COGS name. Ensure the COGS name is populated as a parameter in the function and is a string.');
+   }
+
+   // Find the COGS in the table
+   cy.get('table tbody tr')
+      .contains(cogsName)
+      .closest('tr')
+      .should('exist');
+});
+
+// Find business unit of the COGS in the table
+Cypress.Commands.add('findBusinessUnit', (cogsName, buName) => {
+   // Validate input
+   if (cogsName == null || typeof cogsName !== 'string') {
+      throw new Error('Invalid or missing COGS name. Ensure the COGS name is populated as a parameter in the function and is a string.');
+   }
+   if (cogsName == null || typeof cogsName !== 'string') {
+      throw new Error('Invalid or missing business unit name. Ensure the business unit name is populated as a parameter in the function and is a string.');
+   }
+
+   // Find the COGS in the table
+   cy.findCogs(cogsName)
+      .nextAll() // Get all subsequent siblings
+      .filter(index => index < 2) // Get the first two siblings
+      .contains(buName) // Find the row with the business unit row title
+      .closest('tr') // Find the row with the row title
+      .should('exist'); // Ensure the row exists
+});
+
+// Find subunit of a business unit from COGS in the table
+Cypress.Commands.add('findSubUnit', (cogsName, buName, suName) => {
+   // Validate input
+   if (cogsName == null || typeof cogsName !== 'string') {
+      throw new Error('Invalid or missing COGS name. Ensure the COGS name is populated as a parameter in the function and is a string.');
+   }
+   if (cogsName == null || typeof cogsName !== 'string') {
+      throw new Error('Invalid or missing business unit name. Ensure the business unit name is populated as a parameter in the function and is a string.');
+   }
+   if (suName == null || typeof suName !== 'string') {
+      throw new Error('Invalid or missing subunit name. Ensure the subunit name is populated as a parameter in the function and is a string.');
+   }
+
+   // Find the COGS in the table
+   cy.findBusinessUnit(cogsName, buName)
+      .nextAll() // Get all subsequent siblings
+      .filter(index => index < 2) // Get the first two siblings
+      .contains(suName) // Find the row with the business unit row title
+      .closest('tr') // Find the row with the row title
+      .should('exist'); // Ensure the row exists
+});
+
+// Check the company value
+Cypress.Commands.add('checkCompanyValue', (rowTitle, cellIndex, value) => {
    // Validate inputs
    if (rowTitle == null || typeof rowTitle !== 'string') {
       throw new Error('Invalid or missing row title. Ensure the row title is populated as a parameter in the function and is a string.');
@@ -73,11 +128,85 @@ Cypress.Commands.add('checkMainTableValue', (rowTitle, cellIndex, value) => {
    // Determine cell index (accounting for different table structures)
    const adjustedCellIndex = cellIndex <= 13 ? cellIndex : cellIndex - 10;
 
-   // Check cell value of the main table
-   cy.get('table tbody tr') // Get all rows in the table
-      .contains(rowTitle) // Find the row (or child element within the row) that contains the rowTitle
-      .closest('tr') // Get the closest tr element
+
+   cy.findCogs(rowTitle)
       .find('td') // Find all td elements within the row
-      .eq(adjustedCellIndex) // Get the td element at the adjusted cell index
-      .should('contain', Number(value).toLocaleString()); // Assert that the td element contains the expected value
+      .eq(adjustedCellIndex) // Target the desired cell in the row
+      .should('contain', Number(value).toLocaleString()); // Assert the cell's value
+
 });
+
+// Check the business unit value
+Cypress.Commands.add('checkBusinessUnitValue', (rowTitle, buName, cellIndex, value) => {
+   // Validate inputs
+   if (rowTitle == null || typeof rowTitle !== 'string') {
+      throw new Error('Invalid or missing row title. Ensure the row title is populated as a parameter in the function and is a string.');
+   }
+   if (buName == null || typeof buName !== 'string') {
+      throw new Error('Invalid or missing business unit name. Ensure the value is populated as a parameter in the function and is a string.');
+   }
+   if (cellIndex == null || typeof cellIndex !== 'number') {
+      throw new Error('Invalid or missing cell index. Ensure the cell index is populated as a parameter in the function and is a number.');
+   }
+   if (value == null || typeof value !== 'number') {
+      throw new Error('Invalid or missing value. Ensure the value is populated as a parameter in the function and is a number.');
+   }
+
+   // Determine cell index (accounting for different table structures)
+   const adjustedCellIndex = cellIndex <= 13 ? cellIndex : cellIndex - 10;
+
+   cy.findBusinessUnit(rowTitle, buName)
+      .find('td') // Find all td elements within the row
+      .eq(adjustedCellIndex) // Target the desired cell in the row
+      .should('contain', Number(value).toLocaleString()); // Assert the cell's value
+
+});
+
+// Check the business unit value
+Cypress.Commands.add('checkSubUnitValue', (rowTitle, buName, suName, cellIndex, value) => {
+   // Validate inputs
+   if (rowTitle == null || typeof rowTitle !== 'string') {
+      throw new Error('Invalid or missing row title. Ensure the row title is populated as a parameter in the function and is a string.');
+   }
+   if (buName == null || typeof buName !== 'string') {
+      throw new Error('Invalid or missing business unit name. Ensure the value is populated as a parameter in the function and is a string.');
+   }
+   if (suName == null || typeof suName !== 'string') {
+      throw new Error('Invalid or missing subunit name. Ensure the value is populated as a parameter in the function and is a string.');
+   }
+   if (cellIndex == null || typeof cellIndex !== 'number') {
+      throw new Error('Invalid or missing cell index. Ensure the cell index is populated as a parameter in the function and is a number.');
+   }
+   if (value == null || typeof value !== 'number') {
+      throw new Error('Invalid or missing value. Ensure the value is populated as a parameter in the function and is a number.');
+   }
+
+   // Determine cell index (accounting for different table structures)
+   const adjustedCellIndex = cellIndex <= 13 ? cellIndex : cellIndex - 10;
+
+   // Check the value
+   cy.findSubUnit(rowTitle, buName, suName)
+      .find('td') // Find all td elements within the row
+      .eq(adjustedCellIndex) // Target the desired cell in the row
+      .should('contain', Number(value).toLocaleString()); // Assert the cell's value
+
+});
+
+// Expand business unit row
+Cypress.Commands.add('expandBusinessUnit', (rowTitle, buName) => {
+   // Validate inputs
+   if (rowTitle == null || typeof rowTitle !== 'string') {
+      throw new Error('Invalid or missing row title. Ensure the row title is populated as a parameter in the function and is a string.');
+   }
+   if (buName == null || typeof buName !== 'string') {
+      throw new Error('Invalid or missing business unit name. Ensure the value is populated as a parameter in the function and is a string.');
+   }
+
+   // Expand the row
+   cy.findBusinessUnit(rowTitle, buName)
+      .find('td') // Find all td elements within the row
+      .eq(0) // Select the first td element
+      .find('svg.cursor-pointer') // Find the svg element with the cursor-pointer class
+      .click(); // Click to expand the row
+});
+
