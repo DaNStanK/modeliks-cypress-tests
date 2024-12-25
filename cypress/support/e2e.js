@@ -21,6 +21,7 @@ import './create-revenues-commands';
 import './delete-revenues-commands';
 import './login-commands';
 import './create-cogs-commands';
+import './create-employees';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
