@@ -1,0 +1,37 @@
+{
+   "tests": [
+      {
+         "section": "Employees",
+               "section_url": "https://test.hz.modeliks.com/forecast/employees",
+               "create_button": "Add Employees",
+               "burden_rate_button": "Burden Rate",
+               "type": "New Employees",
+               "steps": [
+                  {
+                     "screen": "Burden Rate",
+                     "ratio": 20
+                  },
+                  {
+                     "screen": "Details",
+                     "type_name": "Employee $ value L3",
+                     "function": "General and administrative",
+                     "salary_type": "$ value per employee",
+                     "status": "Employed by you"
+                  },
+                  {
+                     "screen": "Advance Settings",
+                     "level": "SU",
+                     "methodology": "do not allocate"
+                  },
+                  {
+                     "screen": "Unit Sales",
+                     "sales": [
+                        {
+                           "price": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 30, 7.8, 40 ]
+                        }
+                     ]
+                  }
+               ]
+      }
+   ]
+}
