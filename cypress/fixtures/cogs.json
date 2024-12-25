@@ -1,85 +1,102 @@
 {
-   "cogs": [
+   "tests": [
       {
-         "id": 1,
-         "type_name": "COGS $ cost L1",
-         "relation": "Service Revenue L3",
-         "type_of_cost": "cost per unit sold",
-         "level": "Level 1",
-         "methodology": "do not allocate",
-         "unit_cost_1": 4,
-         "unit_cost_12": 30,
-         "unit_cost_13": 7.8,
-         "unit_cost_24": 40
-      },
-      {
-         "id": 2,
-         "type_name": "COGS $ cost L3",
-         "relation": "Service Revenue L3",
-         "type_of_cost": "cost per unit sold",
-         "level": "SU",
-         "methodology": "do not allocate",
-         "uc_company_12": 162.0,
-         "uc_company_13": 29.0,
-         "uc_company_24": 4.9,
-         "uc_bu1_12": 4.2,
-         "uc_bu1_13": 4.5,
-         "uc_bu1_24": 4.1,
-         "uc_bu1_subunit1_1": 4,
-         "uc_bu1_subunit2_1": 5,
-         "uc_bu2_subunit1_1": 6,
-         "uc_bu2_subunit2_1": 7,
-         "uc_bu2_subunit1_12": 1000,
-         "uc_bu2_subunit1_13": 88,
-         "uc_bu2_subunit1_24": 6.0,
-         "total_company_12": 307800,
-         "total_company_13": 373800,
-         "total_company_24": 127200
-      },
-      {
-         "id": 3,
-         "type_name": "COGS % specific L1",
-         "relation": "Service Revenue L3",
-         "type_of_cost": "% of specific revenue stream",
-         "level": "Level 1",
-         "methodology": "Revenue",
-         "unit_cost_1": 40,
-         "unit_cost_12": 80,
-         "unit_cost_13": 59.9,
-         "unit_cost_24": 40,
-         "total_company_12": 43760,
-         "total_company_13": 65760,
-         "total_company_24": 32560
-      },
-      {
-         "id": 4,
-         "type_name": "COGS % specific L3",
-         "relation": "Service Revenue L3",
-         "type_of_cost": "% of specific revenue stream",
-         "level": "SU",
-         "methodology": "do not allocate",
-         "uc_company_12": 20.94,
-         "uc_company_13": 31.5,
-         "uc_company_24": 21.64,
-         "uc_bu1_12": 20.16,
-         "uc_bu1_13": 21.53,
-         "uc_bu1_24": 20.13,
-         "uc_bu1_subunit1_1": 20,
-         "uc_bu1_subunit2_1": 30,
-         "uc_bu2_subunit1_1": 40,
-         "uc_bu2_subunit2_1": 50,
-         "uc_bu2_subunit1_12": 1.0,
-         "uc_bu2_subunit1_13": 36.75,
-         "uc_bu2_subunit1_24": 40,
-         "total_company_12": 11455,
-         "total_company_13": 34555,
-         "total_company_24": 174480,
-         "total_bu1_12": 10240,
-         "total_bu1_13": 13540,
-         "total_bu1_24": 152880,
-         "total_sub1_bu2_12": 15,
-         "total_sub1_bu2_13": 6615,
-         "total_sub1_bu2_24": 7200
+         "section": "Cost of Goods Sold",
+         "section_url": "https://test.hz.modeliks.com/forecast/costofsales",
+         "create_button": "Add Cost of Goods Sold",
+         "type": "New COGS",
+         "steps": [
+            {
+               "screen": "Details",
+               "type_name": "COGS $ cost L1",
+               "relation": "Service Revenue L3",
+               "type_of_cost": "cost per unit sold"
+            },
+            {
+               "screen": "Advance Settings",
+               "level": "Level 1",
+               "methodology": "do not allocate"
+            },
+            {
+               "screen": "Unit Sales",
+               "sales": [
+                  {
+                     "price": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 30, 7.8, 40 ]
+                  }
+               ]
+            }
+         ],
+         "comment": [
+            {
+               "id": 2,
+               "type_name": "COGS $ cost L3",
+               "relation": "Service Revenue L3",
+               "type_of_cost": "cost per unit sold",
+               "level": "SU",
+               "methodology": "do not allocate",
+               "uc_company_12": 162.0,
+               "uc_company_13": 29.0,
+               "uc_company_24": 4.9,
+               "uc_bu1_12": 4.2,
+               "uc_bu1_13": 4.5,
+               "uc_bu1_24": 4.1,
+               "uc_bu1_subunit1_1": 4,
+               "uc_bu1_subunit2_1": 5,
+               "uc_bu2_subunit1_1": 6,
+               "uc_bu2_subunit2_1": 7,
+               "uc_bu2_subunit1_12": 1000,
+               "uc_bu2_subunit1_13": 88,
+               "uc_bu2_subunit1_24": 6.0,
+               "total_company_12": 307800,
+               "total_company_13": 373800,
+               "total_company_24": 127200
+            },
+            {
+               "id": 3,
+               "type_name": "COGS % specific L1",
+               "relation": "Service Revenue L3",
+               "type_of_cost": "% of specific revenue stream",
+               "level": "Level 1",
+               "methodology": "Revenue",
+               "unit_cost_1": 40,
+               "unit_cost_12": 80,
+               "unit_cost_13": 59.9,
+               "unit_cost_24": 40,
+               "total_company_12": 43760,
+               "total_company_13": 65760,
+               "total_company_24": 32560
+            },
+            {
+               "id": 4,
+               "type_name": "COGS % specific L3",
+               "relation": "Service Revenue L3",
+               "type_of_cost": "% of specific revenue stream",
+               "level": "SU",
+               "methodology": "do not allocate",
+               "uc_company_12": 20.94,
+               "uc_company_13": 31.5,
+               "uc_company_24": 21.64,
+               "uc_bu1_12": 20.16,
+               "uc_bu1_13": 21.53,
+               "uc_bu1_24": 20.13,
+               "uc_bu1_subunit1_1": 20,
+               "uc_bu1_subunit2_1": 30,
+               "uc_bu2_subunit1_1": 40,
+               "uc_bu2_subunit2_1": 50,
+               "uc_bu2_subunit1_12": 1.0,
+               "uc_bu2_subunit1_13": 36.75,
+               "uc_bu2_subunit1_24": 40,
+               "total_company_12": 11455,
+               "total_company_13": 34555,
+               "total_company_24": 174480,
+               "total_bu1_12": 10240,
+               "total_bu1_13": 13540,
+               "total_bu1_24": 152880,
+               "total_sub1_bu2_12": 15,
+               "total_sub1_bu2_13": 6615,
+               "total_sub1_bu2_24": 7200
+            }
+         ]
       }
    ]
 }
