@@ -23,9 +23,9 @@ Cypress.Commands.add('clickButton', (buttonName) => {
 
    // Find the button by its text and click it
    cy.get('button')
-      .contains(buttonName)
-      .closest('button')
-      .click();
+   .contains(buttonName)
+   .closest('button')
+   .click();
 });
 
 // Assert URL

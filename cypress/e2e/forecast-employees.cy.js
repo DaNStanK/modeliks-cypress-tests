@@ -67,6 +67,31 @@ describe("Forecast Employees", () => {
                throw new Error('Employee status is missing');
             }
 
+            // Select advance settings
+            cy.chooseAdvanceSettings();
+
+            // Choose planning level
+            if (advanceSettings.level) {
+               cy.choosePlanningLevel(advanceSettings.level);
+            } else {
+               throw new Error('Planning level is missing');
+            }
+
+            // Set allocation methodology if planning level is not Level 3 - SU
+            if (advanceSettings.level !== 'SU') {
+               if (advanceSettings.methodology) {
+                  cy.setAllocationMethodology(advanceSettings.methodology);
+               } else {
+                  throw new Error('Allocation methodology is missing');
+               }
+            }
+
+            // Click save button in the advanced settings
+               cy.clickButton('Save')
+
+            // // Click next button and continue to unit sales info section
+               cy.clickButton('Next');
+
 
          }
        });
