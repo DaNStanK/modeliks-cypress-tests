@@ -25,10 +25,34 @@
                      "methodology": "do not allocate"
                   },
                   {
-                     "screen": "Unit Sales",
-                     "sales_prices": [
+                     "screen": "Number of employees",
+                     "employee": [
                         {
-                           "company": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 30, 7.8, 40 ]
+                           "per_month": [
+                              {
+                                 "company": [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 30, 7.8, 40 ]
+                              }
+                           ]
+                        },
+                        {
+                           "at_start_company": [
+                              {
+                                 "company": []
+                              }
+                           ]
+                        }
+                     ],
+                     "average": []
+                  },
+                  {
+                     "screen": "Cost per employees",
+                     "employee": [
+                        {
+                           "per_month": [
+                              {
+                                 "company": [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 30, 7.8, 40 ]
+                              }
+                           ] 
                         }
                      ]
                   }
