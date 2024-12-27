@@ -50,6 +50,13 @@ describe("Forecast Employees", () => {
                 throw new Error('Employee salary type is missing');
              }
              
+             // Choose a specific revenue stream
+             if (details.specific_revenue) {
+                cy.setRevenueOnlyStream(details.specific_revenue);
+             } else {
+                throw new Error('Employee specific revenue stream is missing');
+             }
+             
              // Choose employee status
              if (details.status) {
                 cy.setEmployeeStatus(details.status);

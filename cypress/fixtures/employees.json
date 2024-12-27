@@ -15,7 +15,8 @@
                      "screen": "Details",
                      "type_name": "Employee $ value L3",
                      "function": "General and administrative",
-                     "salary_type": "$ value per employee",
+                     "salary_type": "% of specific revenue stream",
+                     "specific_revenue": "RevenueOnly Revenue L2",
                      "status": "Employed by you"
                   },
                   {
