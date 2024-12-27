@@ -51,6 +51,30 @@ Cypress.Commands.add("setEmployeeSalaryType", (employeeSalaryType) => {
       .check({ force: true });
 });
 
+// Custom Cypress command to set the employee revenue only stream
+Cypress.Commands.add("setRevenueOnlyStream", (revenueOnlyStream) => {
+   // Validate that revenueOnlyStream is a non-empty string
+   if (typeof revenueOnlyStream !== 'string' || revenueOnlyStream.trim() === '') {
+      throw new Error('Invalid employee revenue only stream. It must be a non-empty string.');
+   }
+
+   // Open the dropdown menu
+   cy.get('div[role="dialog"] div.dropdown.relative button')
+      .click({ force: true });
+
+   // Find the element for the revenue only stream and click it
+   cy.get('div.absolute div.fixed div.cursor-pointer')
+      .find('span')
+      .contains(revenueOnlyStream)
+      .should('be.visible')
+      .closest('div.cursor-pointer')
+      .click({ force: true });
+
+   // Verify that the selected revenue only stream is displayed correctly
+   cy.get('div[role="dialog"] div.dropdown.relative span.px-1.flex.text-grey-dark-3.text-14')
+      .should('have.text', revenueOnlyStream);
+});
+
 // Custom Cypress command to set the employee status type in the input field
 Cypress.Commands.add("setEmployeeStatus", (employeeStatus) => {
    // Validate that employee status is a non-empty string
