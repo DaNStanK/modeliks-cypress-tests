@@ -48,21 +48,24 @@ describe("Forecast Employees", () => {
                 cy.setEmployeeSalaryType(details.salary_type);
              } else {
                 throw new Error('Employee salary type is missing');
-             }
+             }             
              
-             // Choose a specific revenue stream
-             if (details.specific_revenue) {
-                cy.setRevenueOnlyStream(details.specific_revenue);
-             } else {
-                throw new Error('Employee specific revenue stream is missing');
-             }
-             
-             // Choose employee status
-             if (details.status) {
-                cy.setEmployeeStatus(details.status);
-             } else {
-                throw new Error('Employee status is missing');
-             }
+             // Check if the specific revenue is % of specific revenue stream
+             if(details.salary_type === "% of specific revenue stream") {
+                // Choose a specific revenue stream
+                if (details.specific_revenue) {
+                   cy.setRevenueOnlyStream(details.specific_revenue);
+                } else {
+                   throw new Error('Employee specific revenue stream is missing');
+                }
+            }
+            
+            // Choose employee status
+            if (details.status) {
+               cy.setEmployeeStatus(details.status);
+            } else {
+               throw new Error('Employee status is missing');
+            }
 
 
          }
