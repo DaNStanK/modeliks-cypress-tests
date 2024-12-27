@@ -28,6 +28,112 @@ describe('Forecast / Revenues Module', () => {
     //   })
   });
 
+  it.only(`Should be able to create blank Product Sales Revenue`, () => {
+    // Assert if you are on Forecast revenues section
+    cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+
+    cy.wait(1000);
+
+    // Click on Add Revenue Stream
+    cy.clickButton('Add Revenue Stream');
+
+    // Populate Revenue Name input field
+    cy.setRevenueName('Blank Product Sales Revenue');
+
+    // Choose the type of revenue
+    cy.chooseRevenueType(0);
+
+    // Click next button and continue to unit sales info section
+    cy.clickButton('Next');
+
+    // Click next button and continue to unit sales info section
+    cy.clickButton('Next');
+
+    // Click save and close button and continue to unit sales info section
+    cy.clickButton('Save & Close');
+  });
+  
+  it.only(`Should be able to create blank Service Revenue`, () => {
+    // Assert if you are on Forecast revenues section
+    cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+
+    cy.wait(1000);
+
+    // Click on Add Revenue Stream
+    cy.clickButton('Add Revenue Stream');
+
+    // Populate Revenue Name input field
+    cy.setRevenueName('Blank Service Revenue');
+
+    // Choose the type of revenue
+    cy.chooseRevenueType(1);
+
+    // Click next button and continue to unit sales info section
+    cy.clickButton('Next');
+
+    // Click next button and continue to unit sales info section
+    cy.clickButton('Next');
+
+    // Click save and close button and continue to unit sales info section
+    cy.clickButton('Save & Close');
+  });
+  
+  it.only(`Should be able to create blank Subscription Revenue`, () => {
+    // Assert if you are on Forecast revenues section
+    cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+
+    cy.wait(1000);
+
+    // Click on Add Revenue Stream
+    cy.clickButton('Add Revenue Stream');
+
+    // Populate Revenue Name input field
+    cy.setRevenueName('Blank Subscription Revenue');
+
+    // Choose the type of revenue
+    cy.chooseRevenueType(2);
+
+    // Enter subscription plan name
+    cy.get('input[placeholder="!!Enter name for your subscription plan"]').type('Subscription plan test name');
+
+    // Click next button and continue to signups section
+    cy.clickButton('Next');
+
+    // Click next button and continue to chun rate section
+    cy.clickButton('Next');
+
+    // Click next button and continue to refund section
+    cy.clickButton('Next');
+
+    // Click next button and continue to subscription price section
+    cy.clickButton('Next');
+
+    // Click save and close button
+    cy.clickButton('Save & Close');
+  });
+  
+  it.only(`Should be able to create blank Revenue only`, () => {
+    // Assert if you are on Forecast revenues section
+    cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+
+    cy.wait(1000);
+
+    // Click on Add Revenue Stream
+    cy.clickButton('Add Revenue Stream');
+
+    // Populate Revenue Name input field
+    cy.setRevenueName('Blank Revenue Only');
+
+    // Choose the type of revenue
+    cy.chooseRevenueType(3);
+
+    // Click next button and continue to unit sales info section
+    cy.clickButton('Next');
+
+    // Click save and close button and continue to unit sales info section
+    cy.clickButton('Save & Close');
+  });
+
   // Check if revenue only data is missing
   if (revenue_only && revenue_only.length > 0) {
     revenue_only.forEach(product => {
