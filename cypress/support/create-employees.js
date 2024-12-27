@@ -37,7 +37,7 @@ Cypress.Commands.add("setEmployeeFunction", (employeeFunction) => {
 Cypress.Commands.add("setEmployeeSalaryType", (employeeSalaryType) => {
    // Validate that employee salary type is a non-empty string
    if (typeof employeeSalaryType !== 'string' || employeeSalaryType.trim() === '') {
-      throw new Error('Invalid employee function. It must be a non-empty string.');
+      throw new Error('Invalid employee salary type. It must be a non-empty string.');
    }
 
    // Find the input field for the employee salary type and check the provided type
@@ -49,4 +49,28 @@ Cypress.Commands.add("setEmployeeSalaryType", (employeeSalaryType) => {
       .closest('label')
       .find('input[type="checkbox"]')
       .check({ force: true });
+});
+
+// Custom Cypress command to set the employee status type in the input field
+Cypress.Commands.add("setEmployeeStatus", (employeeStatus) => {
+   // Validate that employee status is a non-empty string
+   if (typeof employeeStatus !== 'string' || employeeStatus.trim() === '') {
+      throw new Error('Invalid employee status. It must be a non-empty string.');
+   }
+
+   // Find the input field for the employee status type and check the provided type
+   cy.get('div[role="dialog"] span')
+      .contains('Employment status')
+      .closest('div')
+      .find('div label')
+      .contains(employeeStatus)
+      .closest('label')
+      .find('input[type="checkbox"]')
+      .check({ force: true });
+});
+
+//Find cell
+Cypress.Commands.add("locateCell", (cellValue) => {
+   // Find the cell with the provided value
+   cy.get('.scdi_info_dialog_div table tbody tr span[sx="[object Object]"]')
 });
