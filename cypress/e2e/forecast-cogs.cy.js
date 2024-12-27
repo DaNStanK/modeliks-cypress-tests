@@ -84,6 +84,14 @@ describe('Forecast COGS', () => {
                //                    UNIT COST SETUP                  \\
                //  *************************************************  \\
 
+
+               // cy.get('.scdi_info_dialog_div * table')
+               //    .eq(0) 
+               //    .find('tbody tr.text-xs.group.false')
+               //    .eq(0)
+               //    .find('td');
+
+
                // Check the unit cost setup level
                if (advanceSettings.level === 'Level 1') {
                   // // Set Unit Cost info
