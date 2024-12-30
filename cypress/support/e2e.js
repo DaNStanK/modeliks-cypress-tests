@@ -18,11 +18,12 @@ import './global-commands';
 import "./organizational-structure";
 import './forecast-commands';
 import './create-revenues-commands';
-import './delete-revenues-commands';
 import './login-commands';
 import './create-cogs-commands';
 import './create-employees';
 import './create-expense';
+import './create-financing-commands';
+import './create-taxes';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
