@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe("Forecast Employees", () => {
+describe("Forecast Expenses", () => {
   beforeEach(() => {
     // Login the user
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
