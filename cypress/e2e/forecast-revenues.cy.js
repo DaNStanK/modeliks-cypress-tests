@@ -9,7 +9,7 @@ const {
   revenue_only
 } = revenues.revenues_type;
 
-describe('Forecast / Revenues Module', () => {
+describe('Forecast Revenues', () => {
   beforeEach(() => {
     // Login the user
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
