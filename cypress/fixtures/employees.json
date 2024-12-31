@@ -2,68 +2,80 @@
    "tests": [
       {
          "section": "Employees",
-               "section_url": "https://test.hz.modeliks.com/forecast/employees",
-               "create_button": "Add Employees",
-               "burden_rate_button": "Burden Rate",
-               "type": "New Employees",
-               "steps": [
+         "section_url": "https://test.hz.modeliks.com/forecast/employees",
+         "create_button": "Add Employees",
+         "burden_rate_button": "Burden Rate",
+         "type": "New Employees",
+         "screens": [
+            {
+               "screen": "Burden Rate",
+               "ratio": 20
+            },
+            {
+               "screen": "Details",
+               "type_name": "Employee $ value L3",
+               "function": "General and administrative",
+               "salary_type": "$ value per employee",
+               "specific_revenue": "Service Revenue L3",
+               "status": "Employed by you"
+            },
+            {
+               "screen": "Advance Settings",
+               "level": "SU",
+               "methodology": "do not allocate"
+            },
+            {
+               "screen": "Number of employees",
+               "tables": [
                   {
-                     "screen": "Burden Rate",
-                     "ratio": 20
-                  },
-                  {
-                     "screen": "Details",
-                     "type_name": "Employee $ value L3",
-                     "function": "General and administrative",
-                     "salary_type": "$ value per employee",
-                     "specific_revenue": "Service Revenue L3",
-                     "status": "Employed by you"
-                  },
-                  {
-                     "screen": "Advance Settings",
-                     "level": "SU",
-                     "methodology": "do not allocate"
-                  },
-                  {
-                     "screen": "Number of employees",
-                     "employee": [
+                     "name": "Number of employees",
+                     "value_per_month": [
                         {
-                           "per_month": [
-                              {
-                                 "company": [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 30, 7.8, 40 ]
-                              },
-                              {
-                                 "bu1": [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 30, 7.8, 40 ]
-                              },
-                              {
-                                 "bu2": [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 30, 7.8, 40 ]
-                              }
-                           ]
+                           "company": [ 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22 ]
                         },
                         {
-                           "average": []
+                           "bu1": [ 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9 ]
+                        },
+                        {
+                           "su1_bu1": [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ]
+                        },
+                        {
+                           "su2_bu1": [ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 ]
+                        },
+                        {
+                           "bu2": [ 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13 ]
+                        },
+                        {
+                           "su1_bu2": [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ]
+                        },
+                        {
+                           "su2_bu2": [ 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7 ]
                         }
                      ],
-                     "at_start": [
-                           {
-                              "company": []
-                           }
-                     ]
-                     
+                     "average": [ ]
                   },
                   {
-                     "screen": "Cost per employees",
-                     "employee": [
-                        {
-                           "per_month": [
-                              {
-                                 "company": [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 30, 7.8, 40 ]
-                              }
-                           ] 
-                        }
-                     ]
+                     "name": "Number of employees at start",
+                     "number_of_employees": [ 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 3273, 3273, 3273 ]
                   }
                ]
+            },
+            {
+               "screen": "Cost per employees",
+               "employee": [
+                  {
+                     "per_month": [
+                        {
+                           "company": [ 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 3273, 3273, 3273 ]
+                        }
+                     ]
+                  },
+                  {
+                     "average": [ ]
+                  }
+               ]
+            }
+         ]
       }
    ]
 }
