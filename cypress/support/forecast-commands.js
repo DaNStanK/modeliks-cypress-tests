@@ -135,6 +135,55 @@ Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
    });
 });
 
+
+// Set or assert the value in a specific table cell
+Cypress.Commands.add('setOrAssertValue', (rowIndex, cellIndex, value) => {
+   // Validate inputs
+   if (rowIndex == null || rowIndex < 0) {
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cellIndex == null || cellIndex < 0) {
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+   if (value == null || (typeof value !== 'number' && typeof value !== 'string')) {
+      throw new Error('Invalid or missing value. Ensure the value is defined and is a number or string.');
+   }
+
+   // Target the specific cell
+   cy.get('.scdi_info_dialog_div * table tbody tr')
+     .eq(rowIndex) // Target row by index
+     .find('td')
+     .eq(cellIndex) // Target cell by index
+     .dblclick()
+     .then(($cell) => {
+       // Check if input exists
+       if ($cell.find('input').length > 0) {
+         // Input exists, set the value
+         cy.wrap($cell)
+           .find('input')
+           .clear()
+           .type(value)
+           .then(() => {
+            // Click outside to remove focus and save the value
+               cy.get('body').click();
+            })
+           .then(() => {
+               // Assert the input retains the correct value
+               cy.wrap($cell)
+               .find('input')
+               .should('have.value', value.toString());
+            }); // Assert input has the correct value
+       } else {
+         // Input doesn't exist, assert the value in the span
+         cy.wrap($cell)
+           .find('span.text-right')
+           .invoke('text') // Get the text of the span
+           .then((text) => text.trim().replace(/\u00A0/g, '')) // Normalize by removing &nbsp; and trimming
+           .should('equal', value.toString()); // Assert normalized text matches the expected value
+       }
+     });
+});
+
 // Check revenue table fields value
 Cypress.Commands.add('checkCellValue', (rowIndex, cellIndex, value) => {
    // Validate inputs
