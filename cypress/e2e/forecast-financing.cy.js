@@ -6,7 +6,7 @@ describe("Forecast Financing", () => {
      cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
    });
  
-    it.only(`Should be able to create blank Financing L1`, () => {
+    it(`Should be able to create blank Financing L1`, () => {
        // Assert if you are on Forecast revenues section
        cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
  
@@ -43,7 +43,7 @@ describe("Forecast Financing", () => {
        cy.clickButton('Save & Close');
     });
  
-    it.only(`Should be able to create blank Financing L2`, () => {
+    it(`Should be able to create blank Financing L2`, () => {
        // Assert if you are on Forecast revenues section
        cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
  
@@ -80,7 +80,7 @@ describe("Forecast Financing", () => {
        cy.clickButton('Save & Close');
     });
  
-    it.only(`Should be able to create blank Financing L3`, () => {
+    it(`Should be able to create blank Financing L3`, () => {
        // Assert if you are on Forecast revenues section
        cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
  
@@ -94,9 +94,6 @@ describe("Forecast Financing", () => {
  
        // Populate expenses name input field
        cy.setRevenueName('Blank Financing L1');
-
-       // Set interest rate
-       cy.setInterestRate(10)
  
         // Select advance settings
         cy.chooseAdvanceSettings();
@@ -106,7 +103,12 @@ describe("Forecast Financing", () => {
  
         // Click save button in the advanced settings
         cy.clickButton('Save');
+
+        cy.setInterestRate(10)
                 
+       // Click next button
+       cy.clickButton('Next');
+ 
        // Click next button
        cy.clickButton('Next');
  
