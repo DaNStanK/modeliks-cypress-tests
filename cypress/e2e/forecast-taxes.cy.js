@@ -35,8 +35,7 @@ describe("Forecast Taxes", () => {
          .eq(1)
          .find('button')
          .contains('Save')
-         .closest('button')
-         .click({ force: true });
+         .click();
  
       // Click save and close button
       cy.clickButton('Save & Close');
@@ -141,13 +140,11 @@ describe("Forecast Taxes", () => {
      cy.choosePlanningLevel('Level 1');
 
      // Click save button in the advanced settings
-     cy.clickButton('Save');
-
-     // Click next button
-      cy.clickButton('Next');
-       
-     // Click next button
-     cy.clickButton('Next');
+     cy.get('div.MuiDialogActions-root.MuiDialogActions-spacing')
+     .eq(1)
+     .find('button')
+     .contains('Save')
+     .click();
 
      // Click save and close button
      cy.clickButton('Save & Close');
@@ -252,13 +249,11 @@ describe("Forecast Taxes", () => {
      cy.choosePlanningLevel('Level 1');
 
      // Click save button in the advanced settings
-     cy.clickButton('Save');
-
-     // Click next button
-      cy.clickButton('Next');
-       
-     // Click next button
-     cy.clickButton('Next');
+     cy.get('div.MuiDialogActions-root.MuiDialogActions-spacing')
+     .eq(1)
+     .find('button')
+     .contains('Save')
+     .click();
 
      // Click save and close button
      cy.clickButton('Save & Close');
