@@ -6,7 +6,7 @@ describe("Forecast Taxes", () => {
      cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
    });
  
-    it(`Should be able to create blank Income Tax L1`, () => {
+    it.only(`Should be able to create blank Income Tax L1`, () => {
        // Assert if you are on Forecast revenues section
        cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
  
@@ -116,7 +116,7 @@ describe("Forecast Taxes", () => {
       cy.clickButton('Save & Close');
     });
      
-    it(`Should be able to create blank Sales Tax L1`, () => {
+    it.only(`Should be able to create blank Sales Tax L1`, () => {
       // Assert if you are on Forecast revenues section
       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
@@ -227,7 +227,7 @@ describe("Forecast Taxes", () => {
      cy.clickButton('Save & Close');
    });
        
-   it(`Should be able to create blank VAT L1`, () => {
+   it.only(`Should be able to create blank VAT L1`, () => {
       // Assert if you are on Forecast revenues section
       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
