@@ -6,7 +6,7 @@ describe("Forecast Assets", () => {
      cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
    });
  
-    it.only(`Should be able to create blank Assets L1`, () => {
+    it(`Should be able to create blank Assets L1`, () => {
        // Assert if you are on Forecast revenues section
        cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
  
@@ -28,16 +28,17 @@ describe("Forecast Assets", () => {
         cy.choosePlanningLevel('Level 1');
  
         // Click save button in the advanced settings
-        cy.clickButton('Save');
+        cy.get('div.MuiDialogActions-root.MuiDialogActions-spacing')
+         .eq(1)
+         .find('button')
+         .contains('Save')
+         .click();
  
        // Click next button
-       cy.clickButton('Next');
- 
-       // Click save and close button
-       cy.clickButton('Save & Close');
+       cy.clickButton('Save');
     });
  
-    it.only(`Should be able to create blank Assets L2`, () => {
+    it(`Should be able to create blank Assets L2`, () => {
        // Assert if you are on Forecast revenues section
        cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
  
@@ -57,9 +58,13 @@ describe("Forecast Assets", () => {
  
         // Choose planning level
         cy.choosePlanningLevel('BU');
- 
+
         // Click save button in the advanced settings
-        cy.clickButton('Save');
+        cy.get('div.MuiDialogActions-root.MuiDialogActions-spacing')
+         .eq(1)
+         .find('button')
+         .contains('Save')
+         .click();
  
        // Click next button
        cy.clickButton('Next');
@@ -68,7 +73,7 @@ describe("Forecast Assets", () => {
        cy.clickButton('Save & Close');
     });
  
-    it.only(`Should be able to create blank Assets L3`, () => {
+    it(`Should be able to create blank Assets L3`, () => {
        // Assert if you are on Forecast revenues section
        cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
  
@@ -90,7 +95,11 @@ describe("Forecast Assets", () => {
         cy.choosePlanningLevel('SU');
  
         // Click save button in the advanced settings
-        cy.clickButton('Save');
+        cy.get('div.MuiDialogActions-root.MuiDialogActions-spacing')
+         .eq(1)
+         .find('button')
+         .contains('Save')
+         .click();
  
        // Click next button
        cy.clickButton('Next');
