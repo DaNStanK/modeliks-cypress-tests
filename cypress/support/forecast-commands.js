@@ -162,17 +162,9 @@ Cypress.Commands.add('setOrAssertValue', (rowIndex, cellIndex, value) => {
          cy.wrap($cell)
            .find('input')
            .clear()
-           .type(value)
-           .then(() => {
-            // Click outside to remove focus and save the value
-               cy.get('body').click();
-            })
-           .then(() => {
-               // Assert the input retains the correct value
-               cy.wrap($cell)
-               .find('input')
-               .should('have.value', value.toString());
-            }); // Assert input has the correct value
+           .type(value.toString())
+           .blur()
+           .should('have.value', value.toString()); // Assert the input retains the correct value
        } else {
          // Input doesn't exist, assert the value in the span
          cy.wrap($cell)
