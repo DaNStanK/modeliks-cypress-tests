@@ -9,6 +9,7 @@ module.exports = defineConfig({
       config.env.LOGIN_PASSWORD = process.env.MODELIKS_PASSWORD;
       return config;
     },
+    testIsolation: false,
     viewportWidth: 1920, // Set the default width of the viewport
     viewportHeight: 1080, // Set the default height of the viewport
     baseUrl: "https://test.hz.modeliks.com"
