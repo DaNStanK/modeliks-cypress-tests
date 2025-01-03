@@ -135,8 +135,61 @@ Cypress.Commands.add('editTableCell', (rowIndex, cellIndex, value) => {
    });
 });
 
+// Validate inputs for setOrAssertValue command
+Cypress.Commands.add('validateSetOrAssertValueInputs', (tableName, rowIndex, cellIndex, value) => {
+   if (!tableName || typeof tableName !== 'string') {
+      throw new Error('Invalid or missing tableName. Ensure the value is defined and is a string.');
+   }
+   if (rowIndex == null || rowIndex < 0) {
+      throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
+   }
+   if (cellIndex == null || cellIndex < 0) {
+      throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
+   }
+   if (value == null || (typeof value !== 'number' && typeof value !== 'string')) {
+      throw new Error('Invalid or missing value. Ensure the value is defined and is a number or string.');
+   }
+});
+
+// Find the specific cell in the table
+Cypress.Commands.add('findTableCell', (tableName, rowIndex, cellIndex) => {
+   return cy.get('.scdi_info_dialog_div table')
+      .contains(tableName)
+      .closest('table')
+      .find('tbody tr')
+      .eq(rowIndex) // Target row by index
+      .find('td')
+      .eq(cellIndex); // Target cell by index
+});
+
+// Set value in the cell if input exists
+Cypress.Commands.add('setValueInCell', ($cell, value) => {
+   cy.wrap($cell)
+      .find('input')
+      .invoke('val')
+      .then((inputValue) => {
+         if (inputValue !== value.toString()) {
+            cy.wrap($cell)
+               .find('input')
+               .clear()
+               .type(value)
+               .blur()
+               .should('have.value', value.toString()); // Assert the input retains the correct value
+         }
+      });
+});
+
+// Assert value in the cell if input does not exist
+Cypress.Commands.add('assertValueInCell', ($cell, value) => {
+   cy.wrap($cell)
+      .find('span.text-right')
+      .invoke('text') // Get the text of the span
+      .then((text) => text.trim().replace(/\u00A0/g, '').replace(/,/g, '')) // Normalize by removing &nbsp;, commas, and trimming
+      .should('equal', value.toString()); // Assert normalized text matches the expected value
+});
+
 // Set or assert the value in a specific table cell
-Cypress.Commands.add('setOrAssertValue', (tableName, rowIndex, cellIndex, value) => {
+Cypress.Commands.add('setOrAssertValue', (inputMethod, tableName, rowIndex, cellIndex, value) => {
    // Validate inputs
    if (!tableName || typeof tableName !== 'string') {
       throw new Error('Invalid or missing tableName. Ensure the value is defined and is a string.');
@@ -152,32 +205,19 @@ Cypress.Commands.add('setOrAssertValue', (tableName, rowIndex, cellIndex, value)
    }
 
    // Target the specific cell
-   cy.get('.scdi_info_dialog_div * table')
-      .contains(tableName)
-      .closest('table')
-      .find('tbody tr')
-      .eq(rowIndex) // Target row by index
-      .find('td')
-      .eq(cellIndex) // Target cell by index
-      .dblclick()
-      .then(($cell) => {
-         // Check if input exists
-         if ($cell.find('input').length > 0) {
-            // Input exists, set the value
-            cy.wrap($cell)
-               .find('input')
-               .clear()
-               .type(value.toString())
-               .blur()
-               .should('have.value', value.toString()); // Assert the input retains the correct value
-         } else {
-            // Input doesn't exist, assert the value in the span
-            cy.wrap($cell)
-               .find('span.text-right')
-               .invoke('text') // Get the text of the span
-               .then((text) => text.trim().replace(/\u00A0/g, '')) // Normalize by removing &nbsp; and trimming
-               .should('equal', value.toString()); // Assert normalized text matches the expected value
-         }
+   cy.findTableCell(tableName, rowIndex, cellIndex)
+      .then($cell => {
+         cy.wrap($cell)
+            .dblclick()
+            .then(($cell) => {
+               if (inputMethod === "Set") {
+                  if ($cell.find('input').length > 0) {
+                        cy.setValueInCell($cell, value);
+                  } else {
+                        cy.assertValueInCell($cell, value);
+                  }
+               }
+            });
       });
 });
 
