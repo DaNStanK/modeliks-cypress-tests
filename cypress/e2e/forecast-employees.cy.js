@@ -8,7 +8,7 @@ describe("Forecast Employees", () => {
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
   });
 
-  it.only(`Should be able to create blank Employees L1`, () => {
+  it(`Should be able to create blank Employees L1`, () => {
    // Assert if you are on Forecast revenues section
    cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
@@ -47,7 +47,7 @@ describe("Forecast Employees", () => {
    cy.clickButton('Save & Close');
 });
 
-  it.only(`Should be able to create blank Employees L2`, () => {
+  it(`Should be able to create blank Employees L2`, () => {
    // Assert if you are on Forecast revenues section
    cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
@@ -86,7 +86,7 @@ describe("Forecast Employees", () => {
    cy.clickButton('Save & Close');
 });
 
-  it.only(`Should be able to create blank Employees L3`, () => {
+  it(`Should be able to create blank Employees L3`, () => {
    // Assert if you are on Forecast revenues section
    cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
@@ -138,19 +138,39 @@ describe("Forecast Employees", () => {
       }
 
       const tableOfEmployees = numberOfEmployeesScreen.tables.find(table => table.name === "Number of employees");
+      const tableOfCostPerEmployees = costPerEmployeesScreen.tables.find(table => table.name === "Cost per employees");
+
       if (!tableOfEmployees) {
         throw new Error('Table of employees is missing');
       }
 
-      const companyValues = tableOfEmployees.value_per_month.find(value => value.hasOwnProperty('company'))?.company || [];
-      const bu1 = tableOfEmployees.value_per_month.find(value => value.hasOwnProperty('bu1'))?.bu1 || [];
-      const bu2 = tableOfEmployees.value_per_month.find(value => value.hasOwnProperty('bu2'))?.bu2 || [];
-      const su1Bu1Values = tableOfEmployees.value_per_month.find(value => value.hasOwnProperty('su1_bu1'))?.su1_bu1 || [];
-      const su2Bu1Values = tableOfEmployees.value_per_month.find(value => value.hasOwnProperty('su2_bu1'))?.su2_bu1 || [];
-      const su1Bu2Values = tableOfEmployees.value_per_month.find(value => value.hasOwnProperty('su1_bu2'))?.su1_bu2 || [];
-      const su2Bu2Values = tableOfEmployees.value_per_month.find(value => value.hasOwnProperty('su2_bu2'))?.su2_bu2 || [];
+      if (!tableOfCostPerEmployees) {
+        throw new Error('Table of cost per employees is missing');
+      }
 
-      it(`should be able to create ${test.type_name}`, () => {
+      const getTableValues = (table, key) => table.value_per_month.find(value => value.hasOwnProperty(key))?.[key] || [];
+
+      const tableOfEmployeesValues = {
+        company: getTableValues(tableOfEmployees, 'company'),
+        bu1: getTableValues(tableOfEmployees, 'bu1'),
+        bu2: getTableValues(tableOfEmployees, 'bu2'),
+        su1_bu1: getTableValues(tableOfEmployees, 'su1_bu1'),
+        su2_bu1: getTableValues(tableOfEmployees, 'su2_bu1'),
+        su1_bu2: getTableValues(tableOfEmployees, 'su1_bu2'),
+        su2_bu2: getTableValues(tableOfEmployees, 'su2_bu2')
+      };
+
+      const tableOfCostPerEmployeesValues = {
+        company: getTableValues(tableOfCostPerEmployees, 'company'),
+        bu1: getTableValues(tableOfCostPerEmployees, 'bu1'),
+        bu2: getTableValues(tableOfCostPerEmployees, 'bu2'),
+        su1_bu1: getTableValues(tableOfCostPerEmployees, 'su1_bu1'),
+        su2_bu1: getTableValues(tableOfCostPerEmployees, 'su2_bu1'),
+        su1_bu2: getTableValues(tableOfCostPerEmployees, 'su1_bu2'),
+        su2_bu2: getTableValues(tableOfCostPerEmployees, 'su2_bu2')
+      };
+
+      it.only(`should be able to create ${test.type_name}`, () => {
         cy.wait(500);
 
         // Click on the specified section
@@ -213,7 +233,7 @@ describe("Forecast Employees", () => {
           }
 
           // Set allocation methodology if planning level is not Level 3 - SU
-          if (advanceSettingsScreen.level !== 'SU') {
+          if (advanceSettingsScreen?.level !== 'SU') {
             if (advanceSettingsScreen?.methodology) {
               cy.setAllocationMethodology(advanceSettingsScreen.methodology);
             } else {
@@ -221,30 +241,179 @@ describe("Forecast Employees", () => {
             }
           }
 
-          // Click save button in the advanced settings
+          // Click save button in the advanced settings and continue in the details popup
           cy.clickButton('Save');
 
-          // Click next button
+          // Click next button and continue to number of employees subsection
           cy.clickButton('Next');
 
-          // Set or assert values for each planning level
-          const setOrAssertValues = (row, values) => {
-            values.forEach((value, index) => {
-              const cellIndex = index + 1;
-              cy.setOrAssertValue(row, cellIndex, value);
-            });
-          };
+          // Apply values on subunits - Level 3
+          if(advanceSettingsScreen?.level === "SU") {  
+            // // Check if subunit 1 from business unit 1 value for the table of employees is missing
+            // if(tableOfEmployeesValues.su1_bu1[0]) {
+            //   cy.setOrAssertValue(tableOfEmployees.name, 2, 1, tableOfEmployeesValues.su1_bu1[0]); // tableName, rowIndex, cellIndex, value
+            //   cy.applyToAllFieldsAllocation(tableOfEmployees.name, 2, 1); // row, month
+            // } else {
+            //   throw new Error('Subunit 1 of business unit 1 value for the first month is missing');
+            // }
 
-          setOrAssertValues(2, su1Bu1Values);
-          setOrAssertValues(3, su2Bu1Values);
-          setOrAssertValues(5, su1Bu2Values);
-          setOrAssertValues(6, su2Bu2Values);
-          setOrAssertValues(0, companyValues);
-          setOrAssertValues(1, bu1);
-          setOrAssertValues(4, bu2);
+            // // Check if subunit 2 from business unit 1 value for the table of employees is missing
+            // if(tableOfEmployeesValues.su2_bu1[0]) {
+            //   cy.setOrAssertValue(tableOfEmployees.name, 3, 1, tableOfEmployeesValues.su2_bu1[0]); // tableName, rowIndex, cellIndex, value
+            //   cy.applyToAllFieldsAllocation(tableOfEmployees.name, 3, 1); // row, month
+            // } else {
+            //   throw new Error('Subunit 2 of business unit 1 value for the first month is missing');
+            // }
 
-          // Click next button
-          cy.clickButton('Next');
+            // // Check if subunit 1 from business unit 2 value for the table of employees is missing
+            // if(tableOfEmployeesValues.su1_bu2[0]) {
+            //   cy.setOrAssertValue(tableOfEmployees.name, 5, 1, tableOfEmployeesValues.su1_bu2[0]); // tableName, rowIndex, cellIndex, value
+            //   cy.applyToAllFieldsAllocation(tableOfEmployees.name, 5, 1); // row, month
+            // } else {
+            //   throw new Error('Subunit 1 of business unit 2 value for the first month is missing');
+            // }
+            
+            // // Check if subunit 2 from business unit 2 value for the table of employees is missing
+            // if(tableOfEmployeesValues.su2_bu2[0]) {
+            //   cy.setOrAssertValue(tableOfEmployees.name, 6, 1, tableOfEmployeesValues.su2_bu2[0]); // tableName, rowIndex, cellIndex, value
+            //   cy.applyToAllFieldsAllocation(tableOfEmployees.name, 6, 1); // row, month
+            // } else {
+            //   throw new Error('Subunit 2 of business unit 2 value for the first month is missing');
+            // }
+            
+            // // Assert values of company in the number of employees table
+            // if(tableOfEmployeesValues.company.length > 0) {
+            //   // Assert the value for the 12th Month
+            //   cy.setOrAssertValue(tableOfEmployees.name, 0, 12, tableOfEmployeesValues.company[11]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the first year
+            //   cy.setOrAssertValue(tableOfEmployees.name, 0, 13, tableOfEmployeesValues.company[12]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the second year
+            //   cy.setOrAssertValue(tableOfEmployees.name, 0, 14, tableOfEmployeesValues.company[13]); // tableName, rowIndex, cellIndex, value
+
+            // }
+
+            // // Assert values of business unit 1 in the number of employees table
+            // if(tableOfEmployeesValues.bu1.length > 0) {
+            //   // Assert the value for the 12th Month
+            //   cy.setOrAssertValue(tableOfEmployees.name, 1, 12, tableOfEmployeesValues.bu1[11]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the first year
+            //   cy.setOrAssertValue(tableOfEmployees.name, 1, 13, tableOfEmployeesValues.bu1[12]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the second year
+            //   cy.setOrAssertValue(tableOfEmployees.name, 1, 14, tableOfEmployeesValues.bu1[13]); // tableName, rowIndex, cellIndex, value
+
+            // }
+
+            // // Assert values of subunit 1 from business unit 2 in the number of employees table
+            // if(tableOfEmployeesValues.su1_bu2.length > 0) {
+            //   // Assert the value for the 12th Month
+            //   cy.setOrAssertValue(tableOfEmployees.name, 5, 12, tableOfEmployeesValues.su1_bu2[11]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the first year
+            //   cy.setOrAssertValue(tableOfEmployees.name, 5, 13, tableOfEmployeesValues.su1_bu2[12]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the second year
+            //   cy.setOrAssertValue(tableOfEmployees.name, 5, 14, tableOfEmployeesValues.su1_bu2[13]); // tableName, rowIndex, cellIndex, value
+
+            // }
+
+            // // Click next button and continue to cost per employees subsection
+            // cy.clickButton('Next');
+
+            // // Check if subunit 1 from business unit 1 value for the table of cost per employees is missing
+            // if(tableOfCostPerEmployeesValues.su1_bu1[0]) {
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 2, 1, tableOfCostPerEmployeesValues.su1_bu1[0]); // tableName, rowIndex, cellIndex, value
+            //   cy.applyToAllFieldsAllocation(tableOfCostPerEmployees.name, 2, 1); // row, month
+            // } else {
+            //   throw new Error('Subunit 1 of business unit 1 value for the first month is missing');
+            // }
+
+            // // Check if subunit 2 from business unit 1 value for the table of cost per employees is missing
+            // if(tableOfCostPerEmployeesValues.su2_bu1[0]) {
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 3, 1, tableOfCostPerEmployeesValues.su2_bu1[0]); // tableName, rowIndex, cellIndex, value
+            //   cy.applyToAllFieldsAllocation(tableOfCostPerEmployees.name, 3, 1); // row, month
+            // } else {
+            //   throw new Error('Subunit 2 of business unit 1 value for the first month is missing');
+            // }
+
+            // // Check if subunit 1 from business unit 2 value for the table of cost per employees is missing
+            // if(tableOfCostPerEmployeesValues.su1_bu2[0]) {
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 5, 1, tableOfCostPerEmployeesValues.su1_bu2[0]); // tableName, rowIndex, cellIndex, value
+            //   cy.applyToAllFieldsAllocation(tableOfCostPerEmployees.name, 5, 1); // row, month
+            // } else {
+            //   throw new Error('Subunit 1 of business unit 2 value for the first month is missing');
+            // }
+
+            // // Check if subunit 2 from business unit 2 value for the table of cost per employees is missing
+            // if(tableOfCostPerEmployeesValues.su2_bu2[0]) {
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 6, 1, tableOfCostPerEmployeesValues.su2_bu2[0]); // tableName, rowIndex, cellIndex, value
+            //   cy.applyToAllFieldsAllocation(tableOfCostPerEmployees.name, 6, 1); // row, month
+            // } else {
+            //   throw new Error('Subunit 2 of business unit 2 value for the first month is missing');
+            // }
+
+                        
+            // // Assert values of company in the number of employees table
+            // if(tableOfCostPerEmployeesValues.company.length > 0) {
+            //   // Assert the value for the 12th Month
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 0, 12, tableOfCostPerEmployeesValues.company[11]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the first year
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 0, 13, tableOfCostPerEmployeesValues.company[12]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the second year
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 0, 14, tableOfCostPerEmployeesValues.company[13]); // tableName, rowIndex, cellIndex, value
+
+            // }
+
+            // // Assert values of business unit 1 in the number of employees table
+            // if(tableOfCostPerEmployeesValues.bu1.length > 0) {
+            //   // Assert the value for the 12th Month
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 1, 12, tableOfCostPerEmployeesValues.bu1[11]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the first year
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 1, 13, tableOfCostPerEmployeesValues.bu1[12]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the second year
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 1, 14, tableOfCostPerEmployeesValues.bu1[13]); // tableName, rowIndex, cellIndex, value
+
+            // }
+
+            // // Assert values of subunit 1 from business unit 2 in the number of employees table
+            // if(tableOfCostPerEmployeesValues.su1_bu2.length > 0) {
+            //   // Assert the value for the 12th Month
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 5, 12, tableOfCostPerEmployeesValues.su1_bu2[11]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the first year
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 5, 13, tableOfCostPerEmployeesValues.su1_bu2[12]); // tableName, rowIndex, cellIndex, value
+            //   // Assert the value for the second year
+            //   cy.setOrAssertValue(tableOfCostPerEmployees.name, 5, 14, tableOfCostPerEmployeesValues.su1_bu2[13]); // tableName, rowIndex, cellIndex, value
+            // }
+            
+            // Set or assert values for each planning level
+            const setOrAssertValues = (tableName, row, values) => {
+              values.forEach((value, index) => {
+                const cellIndex = index + 1;
+                cy.setOrAssertValue(tableName, row, cellIndex, value);
+              });
+            };
+
+            // Set or assert the cell values in the table of employees
+            setOrAssertValues(tableOfEmployees.name, 2, tableOfEmployeesValues.su1_bu1);
+            setOrAssertValues(tableOfEmployees.name, 3, tableOfEmployeesValues.su2_bu1);
+            setOrAssertValues(tableOfEmployees.name, 5, tableOfEmployeesValues.su1_bu2);
+            setOrAssertValues(tableOfEmployees.name, 6, tableOfEmployeesValues.su2_bu2);
+            setOrAssertValues(tableOfEmployees.name, 0, tableOfEmployeesValues.company);
+            setOrAssertValues(tableOfEmployees.name, 1, tableOfEmployeesValues.bu1);
+            setOrAssertValues(tableOfEmployees.name, 4, tableOfEmployeesValues.bu2);
+
+            // Click next button and continue to cost per employees subsection
+            cy.clickButton('Next');
+
+            // Set or assert the cell values in the table of cost per employee
+            setOrAssertValues(tableOfCostPerEmployees.name, 2, tableOfCostPerEmployeesValues.su1_bu1);
+            setOrAssertValues(tableOfCostPerEmployees.name, 3, tableOfCostPerEmployeesValues.su2_bu1);
+            setOrAssertValues(tableOfCostPerEmployees.name, 5, tableOfCostPerEmployeesValues.su1_bu2);
+            setOrAssertValues(tableOfCostPerEmployees.name, 6, tableOfCostPerEmployeesValues.su2_bu2);
+            setOrAssertValues(tableOfCostPerEmployees.name, 0, tableOfCostPerEmployeesValues.company);
+            setOrAssertValues(tableOfCostPerEmployees.name, 1, tableOfCostPerEmployeesValues.bu1);
+            setOrAssertValues(tableOfCostPerEmployees.name, 4, tableOfCostPerEmployeesValues.bu2);
+
+            // Click Save & Close button
+            cy.clickButton('Save & Close');
+          }
         }
       });
     });
