@@ -1,7 +1,11 @@
 /// <reference types="cypress" />
 
-describe("Forecast Taxes", () => {
-   beforeEach(() => {
+describe("Forecast Taxes blank tests", () => {
+   before(() => {
+    // Clear local storage, cookies, and tokens before starting tests
+    cy.clearLocalStorage();
+    cy.clearCookies();
+
      // Login the user
      cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
    });
@@ -43,7 +47,7 @@ describe("Forecast Taxes", () => {
  
     it(`Should be able to create blank Income Tax L2`, () => {
        // Assert if you are on Forecast revenues section
-       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+       cy.expectedUrl('https://test.hz.modeliks.com/forecast/taxes');
  
        // Click on Taxes section
        cy.clickButton('Taxes');
@@ -80,7 +84,7 @@ describe("Forecast Taxes", () => {
  
     it(`Should be able to create blank Income Tax L3`, () => {
        // Assert if you are on Forecast revenues section
-       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+       cy.expectedUrl('https://test.hz.modeliks.com/forecast/taxes');
  
        // Click on Taxes section
        cy.clickButton('Taxes');
@@ -117,7 +121,7 @@ describe("Forecast Taxes", () => {
      
     it.only(`Should be able to create blank Sales Tax L1`, () => {
       // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/taxes');
 
       // Click on Taxes section
       cy.clickButton('Taxes');
@@ -127,11 +131,11 @@ describe("Forecast Taxes", () => {
       // Click on Add Tax Stream button
       cy.clickButton('Add Tax');
 
-      // Populate expenses name input field
-      cy.setRevenueName('Blank Sales Tax L1');
-
       // Choose the type of tax
       cy.setTaxType('Sales Tax')
+      
+      // Populate expenses name input field
+      cy.setRevenueName('Blank Sales Tax L1');
 
      // Select advance settings
      cy.chooseAdvanceSettings();
@@ -152,7 +156,7 @@ describe("Forecast Taxes", () => {
      
     it(`Should be able to create blank Sales Tax L2`, () => {
       // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/taxes');
 
       // Click on Taxes section
       cy.clickButton('Taxes');
@@ -162,11 +166,11 @@ describe("Forecast Taxes", () => {
       // Click on Add Tax Stream button
       cy.clickButton('Add Tax');
 
-      // Populate expenses name input field
-      cy.setRevenueName('Blank Sales Tax L2');
-
       // Choose the type of tax
       cy.setTaxType('Sales Tax')
+      
+      // Populate expenses name input field
+      cy.setRevenueName('Blank Sales Tax L2');
 
      // Select advance settings
      cy.chooseAdvanceSettings();
@@ -189,7 +193,7 @@ describe("Forecast Taxes", () => {
      
     it(`Should be able to create blank Sales Tax L3`, () => {
       // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/taxes');
 
       // Click on Taxes section
       cy.clickButton('Taxes');
@@ -199,11 +203,11 @@ describe("Forecast Taxes", () => {
       // Click on Add Tax Stream button
       cy.clickButton('Add Tax');
 
-      // Populate expenses name input field
-      cy.setRevenueName('Blank Sales Tax L3');
-
       // Choose the type of tax
       cy.setTaxType('Sales Tax')
+      
+      // Populate expenses name input field
+      cy.setRevenueName('Blank Sales Tax L3');
 
      // Select advance settings
      cy.chooseAdvanceSettings();
@@ -226,7 +230,7 @@ describe("Forecast Taxes", () => {
        
    it.only(`Should be able to create blank VAT L1`, () => {
       // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/taxes');
 
       // Click on Taxes section
       cy.clickButton('Taxes');
@@ -236,11 +240,11 @@ describe("Forecast Taxes", () => {
       // Click on Add Tax Stream button
       cy.clickButton('Add Tax');
 
-      // Populate expenses name input field
-      cy.setRevenueName('Blank VAT L1');
-
       // Choose the type of tax
       cy.setTaxType('VAT')
+
+      // Populate expenses name input field
+      cy.setRevenueName('Blank VAT L1');
 
      // Select advance settings
      cy.chooseAdvanceSettings();
@@ -261,7 +265,7 @@ describe("Forecast Taxes", () => {
        
    it(`Should be able to create blank VAT L2`, () => {
       // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/taxes');
 
       // Click on Taxes section
       cy.clickButton('Taxes');
@@ -271,11 +275,10 @@ describe("Forecast Taxes", () => {
       // Click on Add Tax Stream button
       cy.clickButton('Add Tax');
 
-      // Populate expenses name input field
-      cy.setRevenueName('Blank VAT L2');
-
       // Choose the type of tax
       cy.setTaxType('VAT')
+      // Populate expenses name input field
+      cy.setRevenueName('Blank VAT L2');
 
      // Select advance settings
      cy.chooseAdvanceSettings();
@@ -298,7 +301,7 @@ describe("Forecast Taxes", () => {
        
    it(`Should be able to create blank VAT L3`, () => {
       // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/taxes');
 
       // Click on Taxes section
       cy.clickButton('Taxes');
@@ -308,11 +311,11 @@ describe("Forecast Taxes", () => {
       // Click on Add Tax Stream button
       cy.clickButton('Add Tax');
 
-      // Populate expenses name input field
-      cy.setRevenueName('Blank VAT L3');
-
       // Choose the type of tax
       cy.setTaxType('VAT')
+      
+      // Populate expenses name input field
+      cy.setRevenueName('Blank VAT L3');
 
      // Select advance settings
      cy.chooseAdvanceSettings();
