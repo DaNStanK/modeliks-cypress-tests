@@ -1,7 +1,11 @@
 /// <reference types="cypress" />
 
-describe("Forecast Assets", () => {
-   beforeEach(() => {
+describe("Forecast Assets blank tests", () => {
+   before(() => {
+      // Clear local storage, cookies, and tokens before starting tests
+     cy.clearLocalStorage();
+     cy.clearCookies();
+
      // Login the user
      cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
    });
@@ -40,7 +44,7 @@ describe("Forecast Assets", () => {
  
     it(`Should be able to create blank Assets L2`, () => {
        // Assert if you are on Forecast revenues section
-       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+       cy.expectedUrl('https://test.hz.modeliks.com/forecast/assets');
  
        // Click on expenses section
        cy.clickButton('Assets')
@@ -75,7 +79,7 @@ describe("Forecast Assets", () => {
  
     it(`Should be able to create blank Assets L3`, () => {
        // Assert if you are on Forecast revenues section
-       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+       cy.expectedUrl('https://test.hz.modeliks.com/forecast/assets');
  
        // Click on expenses section
        cy.clickButton('Assets')
