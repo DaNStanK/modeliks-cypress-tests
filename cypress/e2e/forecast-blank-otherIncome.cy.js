@@ -1,7 +1,11 @@
 /// <reference types="cypress" />
 
-describe("Forecast Other Incomes", () => {
-  beforeEach(() => {
+describe("Forecast Other Incomes blank tests", () => {
+  before(() => {
+    // Clear local storage, cookies, and tokens before starting tests
+    cy.clearLocalStorage();
+    cy.clearCookies();
+
     // Login the user
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
   });
@@ -38,14 +42,17 @@ describe("Forecast Other Incomes", () => {
    });
 
    it(`Should be able to create blank Other Income L2`, () => {
+      // // Assert if you are on Forecast revenues section
+      // cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      
+      // // Click on expenses section
+      // cy.clickButton('Other Income')
+      
+      // cy.wait(500);
+      
       // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
-
-      // Click on expenses section
-      cy.clickButton('Other Income')
-
-      cy.wait(500);
-
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/other_income');
+      
       // Click on Add Other Expenses Stream button
       cy.clickButton('Add Other Income');
 
@@ -69,13 +76,16 @@ describe("Forecast Other Incomes", () => {
    });
 
    it(`Should be able to create blank Other Income L3`, () => {
+      // // Assert if you are on Forecast revenues section
+      // cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      
+      // // Click on expenses section
+      // cy.clickButton('Other Income')
+      
+      // cy.wait(500);
+
       // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
-
-      // Click on expenses section
-      cy.clickButton('Other Income')
-
-      cy.wait(500);
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/other_income');
 
       // Click on Add Other Expenses Stream button
       cy.clickButton('Add Other Income');
