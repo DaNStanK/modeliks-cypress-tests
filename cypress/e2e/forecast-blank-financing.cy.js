@@ -1,9 +1,13 @@
 /// <reference types="cypress" />
 
-describe("Forecast Financing", () => {
-   beforeEach(() => {
-     // Login the user
-     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
+describe("Forecast Financing blank tests", () => {
+   before(() => {
+      // Clear local storage, cookies, and tokens before starting tests
+      cy.clearLocalStorage();
+      cy.clearCookies();
+
+      // Login the user
+      cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
    });
  
     it(`Should be able to create blank Financing L1`, () => {
@@ -44,13 +48,16 @@ describe("Forecast Financing", () => {
     });
  
     it(`Should be able to create blank Financing L2`, () => {
+      //  // Assert if you are on Forecast revenues section
+      //  cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+       
+      //  // Click on expenses section
+      //  cy.clickButton('Financing')
+       
+      //  cy.wait(500);
+       
        // Assert if you are on Forecast revenues section
-       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
- 
-       // Click on expenses section
-       cy.clickButton('Financing')
- 
-       cy.wait(500);
+       cy.expectedUrl('https://test.hz.modeliks.com/forecast/financing');
  
        // Click on Add Financing Stream button
        cy.clickButton('Add Financing');
@@ -81,13 +88,16 @@ describe("Forecast Financing", () => {
     });
  
     it(`Should be able to create blank Financing L3`, () => {
+      //  // Assert if you are on Forecast revenues section
+      //  cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+       
+      //  // Click on expenses section
+      //  cy.clickButton('Financing')
+       
+      //  cy.wait(500);
+       
        // Assert if you are on Forecast revenues section
-       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
- 
-       // Click on expenses section
-       cy.clickButton('Financing')
- 
-       cy.wait(500);
+       cy.expectedUrl('https://test.hz.modeliks.com/forecast/financing');
  
        // Click on Add Financing Stream button
        cy.clickButton('Add Financing');
