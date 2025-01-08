@@ -1,7 +1,11 @@
 /// <reference types="cypress" />
 
-describe("Forecast Other Expenses", () => {
-   beforeEach(() => {
+describe("Forecast Other Expenses blank tests", () => {
+   before(() => {
+     // Clear local storage, cookies, and tokens before starting tests
+     cy.clearLocalStorage();
+     cy.clearCookies();
+
      // Login the user
      cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
    });
@@ -38,13 +42,16 @@ describe("Forecast Other Expenses", () => {
     });
  
     it(`Should be able to create blank Other Expenses L2`, () => {
+      //  // Assert if you are on Forecast revenues section
+      //  cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+       
+      //  // Click on expenses section
+      //  cy.clickButton('Other Expenses')
+       
+      //  cy.wait(500);
+       
        // Assert if you are on Forecast revenues section
-       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
- 
-       // Click on expenses section
-       cy.clickButton('Other Expenses')
- 
-       cy.wait(500);
+       cy.expectedUrl('https://test.hz.modeliks.com/forecast/other_expenses');
  
        // Click on Add Other Expenses Stream Stream button
        cy.clickButton('Add Other Expenses Stream');
@@ -69,13 +76,16 @@ describe("Forecast Other Expenses", () => {
     });
  
     it(`Should be able to create blank Other Expenses L3`, () => {
+      //  // Assert if you are on Forecast revenues section
+      //  cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+       
+      //  // Click on expenses section
+      //  cy.clickButton('Other Expenses')
+       
+      //  cy.wait(500);
+       
        // Assert if you are on Forecast revenues section
-       cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
- 
-       // Click on expenses section
-       cy.clickButton('Other Expenses')
- 
-       cy.wait(500);
+       cy.expectedUrl('https://test.hz.modeliks.com/forecast/other_expenses');
  
        // Click on Add Other Expenses Stream Stream button
        cy.clickButton('Add Other Expenses Stream');
