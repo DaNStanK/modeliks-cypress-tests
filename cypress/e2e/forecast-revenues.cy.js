@@ -10,7 +10,11 @@ const {
 } = revenues.revenues_type;
 
 describe('Forecast Revenues', () => {
-  beforeEach(() => {
+  before(() => {
+    // Clear local storage, cookies, and tokens before starting tests
+    cy.clearLocalStorage();
+    cy.clearCookies();
+
     // Login the user
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
 
@@ -32,7 +36,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -66,7 +70,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -100,7 +104,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -134,7 +138,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -168,7 +172,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -202,7 +206,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -236,7 +240,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -279,7 +283,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -322,7 +326,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -365,7 +369,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -396,7 +400,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
@@ -427,7 +431,7 @@ describe('Forecast Revenues', () => {
     // Assert if you are on Forecast revenues section
     cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-    cy.wait(1000);
+    cy.wait(500);
 
     // Click on Add Revenue Stream
     cy.clickButton('Add Revenue Stream');
