@@ -190,16 +190,27 @@ Cypress.Commands.add('assertValueInCell', ($cell, value) => {
 
 // Set or assert the value in a specific table cell
 Cypress.Commands.add('setOrAssertValue', (inputMethod, tableName, rowIndex, cellIndex, value) => {
-   // Validate inputs
+   // Validate inputMethod
+   if (!inputMethod || typeof inputMethod !== 'string' || (inputMethod !== 'Set' && inputMethod !== 'Assert')) {
+      throw new Error('Invalid or missing inputMethod. Ensure the value is defined and is either "Set" or "Assert".');
+   }
+
+   // Validate tableName
    if (!tableName || typeof tableName !== 'string') {
       throw new Error('Invalid or missing tableName. Ensure the value is defined and is a string.');
    }
+
+   // Validate rowIndex
    if (rowIndex == null || rowIndex < 0) {
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
+
+   // Validate cellIndex
    if (cellIndex == null || cellIndex < 0) {
       throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
    }
+
+   // Validate value
    if (value == null || (typeof value !== 'number' && typeof value !== 'string')) {
       throw new Error('Invalid or missing value. Ensure the value is defined and is a number or string.');
    }
@@ -212,9 +223,9 @@ Cypress.Commands.add('setOrAssertValue', (inputMethod, tableName, rowIndex, cell
             .then(($cell) => {
                if (inputMethod === "Set") {
                   if ($cell.find('input').length > 0) {
-                        cy.setValueInCell($cell, value);
+                     cy.setValueInCell($cell, value);
                   } else {
-                        cy.assertValueInCell($cell, value);
+                     cy.assertValueInCell($cell, value);
                   }
                }
             });
