@@ -67,7 +67,7 @@ describe("Forecast Employees", () => {
         throw new Error('Table of cost per employees is missing');
       }
 
-      it(`Should be able to set the details section`, () => {
+      it(`Should be able to login and set the details section`, () => {
 
         // Visit forecast section
         cy.visit(`/forecast`);
