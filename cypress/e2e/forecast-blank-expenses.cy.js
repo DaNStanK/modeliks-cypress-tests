@@ -1,7 +1,11 @@
 /// <reference types="cypress" />
 
-describe("Forecast Expenses", () => {
-  beforeEach(() => {
+describe("Forecast Expenses blank tests", () => {
+  before(() => {
+    // Clear local storage, cookies, and tokens before starting tests
+    cy.clearLocalStorage();
+    cy.clearCookies();
+
     // Login the user
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
   });
@@ -38,13 +42,16 @@ describe("Forecast Expenses", () => {
    });
 
    it(`Should be able to create blank Expenses L2`, () => {
-      // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      // // Assert if you are on Forecast revenues section
+      // cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      
+      // // Click on expenses section
+      // cy.clickButton('Expenses')
+      
+      // cy.wait(500);
 
-      // Click on expenses section
-      cy.clickButton('Expenses')
-
-      cy.wait(500);
+      // Assert if you are on Expenses revenues section
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/expenses');
 
       // Click on Add Other Expenses Stream button
       cy.clickButton('Add Expense');
@@ -69,13 +76,16 @@ describe("Forecast Expenses", () => {
    });
 
    it(`Should be able to create blank Expenses L3`, () => {
-      // Assert if you are on Forecast revenues section
-      cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
+      // // Assert if you are on Forecast revenues section
+      // cy.expectedUrl('https://test.hz.modeliks.com/forecast/revenue');
 
-      // Click on expenses section
-      cy.clickButton('Expenses')
+      // // Click on expenses section
+      // cy.clickButton('Expenses')
 
-      cy.wait(500);
+      // cy.wait(500);
+
+      // Assert if you are on Expenses revenues section
+      cy.expectedUrl('https://test.hz.modeliks.com/forecast/expenses');
 
       // Click on Add Other Expenses Stream button
       cy.clickButton('Add Expense');
