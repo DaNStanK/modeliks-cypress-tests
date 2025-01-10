@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "blank-tests": "npx cypress run --spec 'cypress/e2e/**/*-blank-*.cy.js' --browser chrome",
+    "non-blank-tests": "npx cypress run --spec 'cypress/e2e/**/!(*-blank-*)*.cy.js' --browser chrome"
   },
   "keywords": [],
   "author": "",
