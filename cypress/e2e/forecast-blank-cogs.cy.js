@@ -50,7 +50,7 @@ describe('Forecast COGS blank tests', () => {
 
       //  cy.wait(500);
 
-      //  // Click on COGS section
+       // Click on COGS section
        cy.clickButton('Cost of Goods Sold');
 
        // Assert if you are on Forecast COGS section
@@ -84,8 +84,8 @@ describe('Forecast COGS blank tests', () => {
 
       //  cy.wait(500);
 
-      //  // Click on COGS section
-      //  cy.clickButton('Cost of Goods Sold');
+       // Click on COGS section
+       cy.clickButton('Cost of Goods Sold');
 
        // Assert if you are on Forecast COGS section
        cy.expectedUrl('https://test.hz.modeliks.com/forecast/costofsales');
