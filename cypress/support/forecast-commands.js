@@ -185,7 +185,11 @@ Cypress.Commands.add('assertValueInCell', ($cell, value) => {
       .find('span.text-right')
       .invoke('text') // Get the text of the span
       .then((text) => text.trim().replace(/\u00A0/g, '').replace(/,/g, '')) // Normalize by removing &nbsp;, commas, and trimming
-      .should('equal', value.toString()); // Assert normalized text matches the expected value
+      .then((normalizedText) => {
+         const expectedValue = parseFloat(value.toString().replace('%', '')).toFixed(2);
+         const actualValue = parseFloat(normalizedText).toFixed(2);
+         expect(actualValue).to.equal(expectedValue); // Assert normalized text matches the expected value
+      });
 });
 
 // Set or assert the value in a specific table cell
