@@ -10,6 +10,7 @@ module.exports = defineConfig({
       return config;
     },
     testIsolation: false,
+    numTestsKeptInMemory: 0,
     viewportWidth: 1920, // Set the default width of the viewport
     viewportHeight: 1080, // Set the default height of the viewport
     baseUrl: "https://test.hz.modeliks.com"
