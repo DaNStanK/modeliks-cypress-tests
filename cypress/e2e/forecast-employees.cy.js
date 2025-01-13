@@ -2,88 +2,74 @@
 
 import { tests } from "../fixtures/employees.json";
 
-describe("Forecast Employees", () => {
-  before(() => {
-    // Clear local storage, cookies, and tokens before starting tests
-    cy.clearLocalStorage();
-    cy.clearCookies();
+if (tests && tests.length > 0) {
+  tests.forEach(test => {
+    const detailsScreen = test.screens.find(step => step.screen === 'Details');
+    if (!detailsScreen) throw new Error('Details screen in JSON file is missing');
 
-    // Login the user
-    cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
+    const advanceSettingsScreen = test.screens.find(step => step.screen === 'Advance Settings');
+    if (!advanceSettingsScreen) throw new Error('Advance Settings screen in JSON file is missing');
 
-    // Visit forecast section
-    cy.visit(`/forecast`);
+    const numberOfEmployeesScreen = test.screens.find(t => t.screen === "Number of employees");
+    if (!numberOfEmployeesScreen) throw new Error('Number of employees screen in JSON file is missing');
 
-    // Wait the content to load
-    cy.wait(2000);
-  });
+    const costPerEmployeesScreen = test.screens.find(t => t.screen === "Cost per employees");
+    if (!costPerEmployeesScreen) throw new Error('Cost per employees screen in JSON file is missing');
 
-  if (tests && tests.length > 0) {
-    tests.forEach(test => {
-      const detailsScreen = test.screens.find(step => step.screen === 'Details');
-      if (!detailsScreen) throw new Error('Details screen in JSON file is missing');
+    const burdenRate = test.screens.find(step => step.screen === 'Burden Rate');
+    if (!burdenRate) throw new Error('Burden rate screen in JSON file is missing');
 
-      const advanceSettingsScreen = test.screens.find(step => step.screen === 'Advance Settings');
-      if (!advanceSettingsScreen) throw new Error('Advance Settings screen in JSON file is missing');
+    const tableOfEmployees = numberOfEmployeesScreen?.tables?.[0] || {};
+    const tableOfCostPerEmployees = costPerEmployeesScreen?.tables?.[0] || {};
 
-      const numberOfEmployeesScreen = test.screens.find(t => t.screen === "Number of employees");
-      if (!numberOfEmployeesScreen) throw new Error('Number of employees screen in JSON file is missing');
+    const getTableValues = (table, key) => table.value_per_month.find(value => value.hasOwnProperty(key))?.[key] || [];
 
-      const costPerEmployeesScreen = test.screens.find(t => t.screen === "Cost per employees");
-      if (!costPerEmployeesScreen) throw new Error('Cost per employees screen in JSON file is missing');
+    const tableOfEmployeesValues = tableOfEmployees ? {
+       company: getTableValues(tableOfEmployees, 'company') || [],
+       bu1: getTableValues(tableOfEmployees, 'bu1') || [],
+       bu2: getTableValues(tableOfEmployees, 'bu2') || [],
+       su1_bu1: getTableValues(tableOfEmployees, 'su1_bu1') || [],
+       su2_bu1: getTableValues(tableOfEmployees, 'su2_bu1') || [],
+       su1_bu2: getTableValues(tableOfEmployees, 'su1_bu2') || [],
+       su2_bu2: getTableValues(tableOfEmployees, 'su2_bu2') || []
+    } : {};
 
-      const burdenRate = test.screens.find(step => step.screen === 'Burden Rate');
-      if (!burdenRate) throw new Error('Burden rate screen in JSON file is missing');
+    const tableOfCostPerEmployeesValues = tableOfCostPerEmployees ? {
+       company: getTableValues(tableOfCostPerEmployees, 'company') || [],
+       bu1: getTableValues(tableOfCostPerEmployees, 'bu1') || [],
+       bu2: getTableValues(tableOfCostPerEmployees, 'bu2') || [],
+       su1_bu1: getTableValues(tableOfCostPerEmployees, 'su1_bu1') || [],
+       su2_bu1: getTableValues(tableOfCostPerEmployees, 'su2_bu1') || [],
+       su1_bu2: getTableValues(tableOfCostPerEmployees, 'su1_bu2') || [],
+       su2_bu2: getTableValues(tableOfCostPerEmployees, 'su2_bu2') || []
+    } : {};
 
-      const tableOfEmployees = numberOfEmployeesScreen?.tables?.[0] || {};
-      const tableOfCostPerEmployees = costPerEmployeesScreen?.tables?.[0] || {};
-
-      const getTableValues = (table, key) => table.value_per_month.find(value => value.hasOwnProperty(key))?.[key] || [];
-
-      const tableOfEmployeesValues = tableOfEmployees ? {
-         company: getTableValues(tableOfEmployees, 'company') || [],
-         bu1: getTableValues(tableOfEmployees, 'bu1') || [],
-         bu2: getTableValues(tableOfEmployees, 'bu2') || [],
-         su1_bu1: getTableValues(tableOfEmployees, 'su1_bu1') || [],
-         su2_bu1: getTableValues(tableOfEmployees, 'su2_bu1') || [],
-         su1_bu2: getTableValues(tableOfEmployees, 'su1_bu2') || [],
-         su2_bu2: getTableValues(tableOfEmployees, 'su2_bu2') || []
-      } : {};
-
-      const tableOfCostPerEmployeesValues = tableOfCostPerEmployees ? {
-         company: getTableValues(tableOfCostPerEmployees, 'company') || [],
-         bu1: getTableValues(tableOfCostPerEmployees, 'bu1') || [],
-         bu2: getTableValues(tableOfCostPerEmployees, 'bu2') || [],
-         su1_bu1: getTableValues(tableOfCostPerEmployees, 'su1_bu1') || [],
-         su2_bu1: getTableValues(tableOfCostPerEmployees, 'su2_bu1') || [],
-         su1_bu2: getTableValues(tableOfCostPerEmployees, 'su1_bu2') || [],
-         su2_bu2: getTableValues(tableOfCostPerEmployees, 'su2_bu2') || []
-      } : {};
-
-      const setOrAssertValues = (modeInput, tableName, rowIndex, values) => {
-         if (Array.isArray(values)) {
-           values.forEach((cellValue, index) => {
-             const cellIndex = index + 1;
-             cy.setOrAssertValue(modeInput, tableName, rowIndex, cellIndex, cellValue);
-           });
-         } else {
-           throw new Error('Values is not an array');
-         }
-       };
-
-      if (!numberOfEmployeesScreen) {
-        throw new Error('Number of employees screen is missing');
-      }
-      
-      if (!tableOfEmployees) {
-        throw new Error('Table of employees is missing');
-      }
-
-      if (!tableOfCostPerEmployees) {
-        throw new Error('Table of cost per employees is missing');
-      }
+    const setOrAssertValues = (modeInput, tableName, rowIndex, values) => {
+       if (Array.isArray(values)) {
+         values.forEach((cellValue, index) => {
+           const cellIndex = index + 1;
+           cy.setOrAssertValue(modeInput, tableName, rowIndex, cellIndex, cellValue);
+         });
+       } else {
+         throw new Error('Values is not an array');
+       }
+     };
+    describe(`Forecast Employee - ${detailsScreen.type_name}` , () => {
+      before(() => {
+        // Clear local storage, cookies, and tokens before starting tests
+        cy.clearLocalStorage();
+        
+        // Login the user
+        cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
+      });
 
       it(`Should be able set the details section`, () => {
+        // Visit forecast section
+        cy.visit(`/forecast`);
+        
+        // Wait the content to load
+        cy.wait(2000);
+
         // Click on the specified section
         cy.clickButton(test.section);
         
@@ -136,79 +122,92 @@ describe("Forecast Employees", () => {
       });
 
       it('Should be able to choose and set the advance settings', () => {
-         // Select advance settings
-         cy.chooseAdvanceSettings();
+        // Select advance settings
+        cy.chooseAdvanceSettings();
          
-         // Choose planning level
-         if (advanceSettingsScreen?.level) {
-            cy.choosePlanningLevel(advanceSettingsScreen.level);
-          } else {
-            throw new Error('Planning level is missing');
-          }
+        // Choose planning level
+        if (advanceSettingsScreen?.level) {
+          cy.choosePlanningLevel(advanceSettingsScreen.level);
+        } else {
+          throw new Error('Planning level is missing');
+        }
    
-         // Click save button in the advanced settings and continue in the details popup
-         cy.clickButton('Save');
+        // Click save button in the advanced settings and continue in the details popup
+        cy.clickButton('Save');
 
-         cy.clickButton('Next');
+        cy.clickButton('Next');
       });
 
       if (tableOfEmployees.value_per_month.length > 0) {
-        it(`Should be able to set and check the number of employees table for ${detailsScreen.type_name}`, () => { 
-            // Set or assert the cell values in the table of employees        
-            setOrAssertValues("Set", tableOfEmployees.name, 2, tableOfEmployeesValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
-            setOrAssertValues("Assert", tableOfEmployees.name, 2, tableOfEmployeesValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
+        it(`Should be able to set and check the number of employees table for ${detailsScreen.type_name}`, () => {
+          // Set or assert the cell values in the table of employees        
+          setOrAssertValues("Set", tableOfEmployees.name, 2, tableOfEmployeesValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfEmployees.name, 2, tableOfEmployeesValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
             
-            setOrAssertValues("Set", tableOfEmployees.name, 3, tableOfEmployeesValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
-            setOrAssertValues("Assert", tableOfEmployees.name, 3, tableOfEmployeesValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Set", tableOfEmployees.name, 3, tableOfEmployeesValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfEmployees.name, 3, tableOfEmployeesValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
           
-            setOrAssertValues("Set", tableOfEmployees.name, 5, tableOfEmployeesValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
-            setOrAssertValues("Assert", tableOfEmployees.name, 5, tableOfEmployeesValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Set", tableOfEmployees.name, 5, tableOfEmployeesValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfEmployees.name, 5, tableOfEmployeesValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
           
-            setOrAssertValues("Set", tableOfEmployees.name, 6, tableOfEmployeesValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
-            setOrAssertValues("Assert", tableOfEmployees.name, 6, tableOfEmployeesValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Set", tableOfEmployees.name, 6, tableOfEmployeesValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfEmployees.name, 6, tableOfEmployeesValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
             
-            setOrAssertValues("Assert", tableOfEmployees.name, 0, tableOfEmployeesValues.company); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfEmployees.name, 0, tableOfEmployeesValues.company); // modeInput, tableName, rowIndex, cellValue
             
-            setOrAssertValues("Assert", tableOfEmployees.name, 1, tableOfEmployeesValues.bu1); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfEmployees.name, 1, tableOfEmployeesValues.bu1); // modeInput, tableName, rowIndex, cellValue
             
-            setOrAssertValues("Assert", tableOfEmployees.name, 4, tableOfEmployeesValues.bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfEmployees.name, 4, tableOfEmployeesValues.bu2); // modeInput, tableName, rowIndex, cellValue
+
+          console.log("table of cost per employees length: ", tableOfCostPerEmployees?.value_per_month.length);
       
             
-            if (tableOfCostPerEmployees?.value_per_month && tableOfCostPerEmployees?.value_per_month.length < 1) {
-              // Click next button and continue to cost per employees subsection
-              cy.clickButton('Next');
-            } else {
-              // Click Save & Close button
-              cy.clickButton('Save & Close');
-            }
+          if (tableOfCostPerEmployees?.value_per_month.length == 0) {
+            // Click next button and continue to cost per employees subsection
+            cy.clickButton('Save & Close');
+
+            cy.intercept('POST', 'api/chart_of_accounts').as('cOa');
+
+            cy.wait('@cOa')
+              .its('response.statusCode')
+              .should('eq', 200);
+          } else {
+            // Click Save & Close button
+            cy.clickButton('Next');
+          }
         });
       }
 
       if (tableOfCostPerEmployees.value_per_month.length > 0) {
-        it(`Should be able to set and check the cost per employees table for ${detailsScreen.type_name}`, () => {
-           // Set or assert the cell values in the table of cost per employee
-           setOrAssertValues("Set", tableOfCostPerEmployees.name, 2, tableOfCostPerEmployeesValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
-           setOrAssertValues("Assert", tableOfCostPerEmployees.name, 2, tableOfCostPerEmployeesValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
+        it(`Should be able to set and check the cost per employees table for ${detailsScreen.type_name}`, () => {  // Set or assert the cell values in the table of cost per employee
+          setOrAssertValues("Set", tableOfCostPerEmployees.name, 2, tableOfCostPerEmployeesValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfCostPerEmployees.name, 2, tableOfCostPerEmployeesValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
            
-           setOrAssertValues("Set", tableOfCostPerEmployees.name, 3, tableOfCostPerEmployeesValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
-           setOrAssertValues("Assert", tableOfCostPerEmployees.name, 3, tableOfCostPerEmployeesValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Set", tableOfCostPerEmployees.name, 3, tableOfCostPerEmployeesValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfCostPerEmployees.name, 3, tableOfCostPerEmployeesValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
            
-           setOrAssertValues("Set", tableOfCostPerEmployees.name, 5, tableOfCostPerEmployeesValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
-           setOrAssertValues("Assert", tableOfCostPerEmployees.name, 5, tableOfCostPerEmployeesValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Set", tableOfCostPerEmployees.name, 5, tableOfCostPerEmployeesValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfCostPerEmployees.name, 5, tableOfCostPerEmployeesValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
            
-           setOrAssertValues("Set", tableOfCostPerEmployees.name, 6, tableOfCostPerEmployeesValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
-           setOrAssertValues("Assert", tableOfCostPerEmployees.name, 6, tableOfCostPerEmployeesValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Set", tableOfCostPerEmployees.name, 6, tableOfCostPerEmployeesValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfCostPerEmployees.name, 6, tableOfCostPerEmployeesValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
   
-           setOrAssertValues("Assert", tableOfCostPerEmployees.name, 0, tableOfCostPerEmployeesValues.company); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfCostPerEmployees.name, 0, tableOfCostPerEmployeesValues.company); // modeInput, tableName, rowIndex, cellValue
           
-           setOrAssertValues("Assert", tableOfCostPerEmployees.name, 1, tableOfCostPerEmployeesValues.bu1); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfCostPerEmployees.name, 1, tableOfCostPerEmployeesValues.bu1); // modeInput, tableName, rowIndex, cellValue
           
-           setOrAssertValues("Assert", tableOfCostPerEmployees.name, 4, tableOfCostPerEmployeesValues.bu2); // modeInput, tableName, rowIndex, cellValue
+          setOrAssertValues("Assert", tableOfCostPerEmployees.name, 4, tableOfCostPerEmployeesValues.bu2); // modeInput, tableName, rowIndex, cellValue
      
-           // Click Save & Close button
-           cy.clickButton('Save & Close');
+          // Click Save & Close button
+          cy.clickButton('Save & Close');
+
+          cy.intercept('POST', 'api/chart_of_accounts').as('cOa');
+
+          cy.wait('@cOa')
+            .its('response.statusCode')
+            .should('eq', 200);
         });
       }
     });
-  }
-});
+  });
+}
