@@ -40,3 +40,13 @@ Cypress.Commands.add('expectedUrl', (url) => {
    cy.url()
       .should('eq', url);
 });
+
+// Custom command to clear Cypress memory between iterations
+Cypress.Commands.add('clearMemory', () => {
+   // Reset snapshots and commands to release memory
+   Cypress.state('activeSessions', {}); // Clears session data
+   Cypress.state('tests', []); // Clears test references
+   Cypress.state('queues', []); // Clears command queues
+ });
+ 
+ 
