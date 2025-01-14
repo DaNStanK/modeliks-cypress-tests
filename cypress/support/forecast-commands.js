@@ -2,6 +2,19 @@
 
 import { company } from "../fixtures/company.json";
 
+// Populate Revenue Name input field
+Cypress.Commands.add('setStreamName', (streamName) => {
+   // Validate input
+   if (streamName == null || typeof streamName !== 'string') {
+      throw new Error('Invalid or missing stream name. Ensure the stream name is populated as a parameter in the function and is a string.');
+   }
+
+   // Populate stream Name input field
+   cy.get('input[name="streamName"]')
+      .clear() // Clear any existing value
+      .type(streamName); // Type the new stream name
+});
+
 // Select advance settings
 Cypress.Commands.add('chooseAdvanceSettings', () => {
    // Find and click the "Advance settings" button
@@ -62,26 +75,30 @@ Cypress.Commands.add('setAllocationMethodology', (methodology) => {
 });
 
 // Click on apply to all fields button 
-Cypress.Commands.add('applyToAllFields', (row, month) => {
+Cypress.Commands.add('applyToAllFields', (tableName, rowIndex, cellIndex) => {
    // Validate inputs
-   if (row == null || row < 0) {
+   if (rowIndex == null || rowIndex < 0) {
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
-   if (month == null || month < 0) {
+   if (cellIndex == null || cellIndex < 0) {
       throw new Error('Invalid or missing cellIndex. Ensure the value is defined and non-negative.');
    }
 
-   // Adjust month index if necessary
-   const adjustedMonth = month > 13 ? month - 10 : month + 1;
+   cy.findTableCell(tableName, rowIndex, cellIndex)
+      .find('div.autofill_container .m-round-button')
+      .click({ force: true })
 
-   // Determine row index based on the number of rows
-   cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false').then(rows => {
-      const rowIndex = rows.length <= 2 ? 0 : row;
+   // // Adjust month index if necessary
+   // const adjustedMonth = cellIndex > 13 ? cellIndex - 10 : cellIndex + 1;
 
-      // Click the apply button in the specified cell
-      cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex=${rowIndex}] td:nth-of-type(${adjustedMonth}) .m-round-button`)
-         .click({ force: true });
-   });
+   // // Determine row index based on the number of rows
+   // cy.get('.scdi_info_dialog_div * table tbody tr.text-xs.group.false').then(rows => {
+   //    const rowIndex = rows.length <= 2 ? 0 : row;
+
+   //    // Click the apply button in the specified cell
+   //    cy.get(`.scdi_info_dialog_div * table tbody tr[data-rowdataindex=${rowIndex}] td:nth-of-type(${adjustedMonth}) .m-round-button`)
+   //       .click({ force: true });
+   // });
 });
 
 // Find cell in the table
@@ -186,9 +203,13 @@ Cypress.Commands.add('assertValueInCell', ($cell, value) => {
       .invoke('text') // Get the text of the span
       .then((text) => text.trim().replace(/\u00A0/g, '').replace(/,/g, '')) // Normalize by removing &nbsp;, commas, and trimming
       .then((normalizedText) => {
-         const expectedValue = parseFloat(value.toString().replace('%', '')).toFixed(2);
-         const actualValue = parseFloat(normalizedText).toFixed(2);
-         expect(actualValue).to.equal(expectedValue); // Assert normalized text matches the expected value
+         if (value === '-') {
+            expect(normalizedText).to.equal('-'); // Assert the text is "-"
+         } else {
+            const expectedValue = parseFloat(value.toString().replace('%', '')).toFixed(2);
+            const actualValue = parseFloat(normalizedText).toFixed(2);
+            expect(actualValue).to.equal(expectedValue); // Assert normalized text matches the expected value
+         }
       });
 });
 
@@ -398,12 +419,12 @@ Cypress.Commands.add('editAllocationTableCell', (rowIndex, cellIndex, value) => 
 });
 
 // Click on apply to all fields button in the allocation table
-Cypress.Commands.add('applyToAllFieldsAllocation', (row, month) => {
+Cypress.Commands.add('applyToAllFieldsAllocation', (tableName, rowIndex, cellIndex) => {
    // Validate inputs
-   if (row == null || row < 0) {
+   if (rowIndex == null || rowIndex < 0) {
       throw new Error('Invalid or missing rowIndex. Ensure the value is defined and non-negative.');
    }
-   if (month == null || month < 0) {
+   if (cellIndex == null || cellIndex < 0) {
       throw new Error('Invalid or missing monthIndex. Ensure the value is defined and non-negative.');
    }
 
@@ -565,4 +586,59 @@ Cypress.Commands.add('expandRow', (rowTitle) => {
       .eq(0) // Select the first td element
       .find('svg.cursor-pointer') // Find the svg element with the cursor-pointer class
       .click(); // Click to expand the row
+});
+
+// Validate inputs for applyFunction command
+Cypress.Commands.add('validateApplyFunctionInputs', (tableName, functionName) => {
+   if (!tableName || typeof tableName !== 'string') {
+      throw new Error('Invalid or missing tableName. Ensure the value is defined and is a string.');
+   }
+   if (!functionName || typeof functionName !== 'string') {
+      throw new Error('Invalid or missing functionName. Ensure the value is defined and is a string.');
+   }
+});
+
+// Click the hamburger menu in the specified table
+Cypress.Commands.add('clickHamburgerMenu', (tableName) => {
+   // Validate input
+   if (!tableName || typeof tableName !== 'string') {
+      throw new Error('Invalid or missing tableName. Ensure the value is defined and is a string.');
+   }
+
+   // Locate and click the hamburger menu in the specified table
+   cy.get('.scdi_info_dialog_div table')
+      .contains(tableName)
+      .closest('table')
+      .find('tr[data-rowdataindex="0"]')
+      .find('td')
+      .eq(0)
+      .find('div.cursor-pointer.ease-in-out')
+      .eq(0)
+      .click();
+});
+
+// Select the function from the dropdown menu
+Cypress.Commands.add('selectFunctionFromMenu', (functionName) => {
+   // Validate input
+   if (!functionName || typeof functionName !== 'string') {
+      throw new Error('Invalid or missing functionName. Ensure the value is defined and is a string.');
+   }
+
+   // Locate and click the function from the dropdown menu
+   cy.get('li')
+      .contains(functionName)
+      .closest('li')
+      .click();
+});
+
+// Apply function from fx hamburger menu
+Cypress.Commands.add('applyFunction', (tableName, functionName) => {
+   // Validate inputs
+   cy.validateApplyFunctionInputs(tableName, functionName);
+
+   // Click the hamburger menu
+   cy.clickHamburgerMenu(tableName);
+
+   // Select the function from the menu
+   cy.selectFunctionFromMenu(functionName);
 });
