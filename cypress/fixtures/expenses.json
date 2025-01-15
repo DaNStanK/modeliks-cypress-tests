@@ -91,7 +91,7 @@
                "screen": "Details",
                "type_name": "Expense % specific L3",
                "function": "General and administrative",
-               "enter_type": "% of specific revenue",
+               "enter_type": "% of specific revenue stream",
                "specific_revenue": "Service Revenue L3"
             },
             {
