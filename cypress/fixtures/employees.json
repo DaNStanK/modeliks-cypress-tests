@@ -28,7 +28,7 @@
                "screen": "Number of employees",
                "tables": [
                   {
-                     "name": "Number of employees",
+                     "name": "Number of Employees",
                      "value_per_month": [
                         {
                            "company": [ 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22 ]
@@ -64,7 +64,7 @@
                "screen": "Cost per employees",
                "tables": [
                   {
-                     "name": "Cost per employees",
+                     "name": "Cost per employee",
                      "value_per_month": [
                         {
                            "company": [ 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 3273, 3273, 3273 ]
