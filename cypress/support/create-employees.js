@@ -25,8 +25,9 @@ Cypress.Commands.add("setEmployeeFunction", (employeeFunction) => {
    // Find the input field for the employee function and check the provided function
    cy.get('div[role="dialog"] span')
       .contains('Employee function')
-      .closest('div')
-      .find('div.grid-cols-2 label')
+      .closest('div') // Get the closest div
+      .parent('div') // Move to the parent of the closest div
+      .find('div.grid-cols-2 label') // Continue finding the child elements
       .contains(employeeFunction)
       .closest('label')
       .find('input[type="checkbox"]')
