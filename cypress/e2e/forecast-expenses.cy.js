@@ -189,10 +189,13 @@ if (tests && tests.length > 0) {
                cy.clickButton('Save & Close');
 
                cy.intercept('POST', 'api/chart_of_accounts').as('cOa');
+               cy.intercept('PUT', 'api/cdv/calculateddrivers_v2').as('calculateDrivers');
 
-               cy.wait('@cOa')
-                  .its('response.statusCode')
-                  .should('eq', 200);
+               cy.wait(['@cOa', '@calculateDrivers']).then((interceptions) => {
+                  interceptions.forEach((interception) => {
+                    expect(interception.response.statusCode).to.eq(200);
+                  });
+                });
             });
          }
       });
