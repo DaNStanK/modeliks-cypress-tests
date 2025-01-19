@@ -17,6 +17,7 @@ const setOrAssertValues = (modeInput, tableName, rowIndex, values) => {
    }
 };
 
+// Check if there are tests to run
 if (tests && tests.length > 0) {
    tests.forEach(test => {
       // Extract screens from the test
@@ -271,7 +272,7 @@ if (tests && tests.length > 0) {
 
          if (advanceSettingsScreen.methodology === "% breakdown") {
             it(`Should be able to set and check the unit sales table for ${detailsScreen?.type_name}`, () => {
-
+               // Add your code here for setting and checking the unit sales table
             });
          }
 
@@ -330,5 +331,4 @@ if (tests && tests.length > 0) {
          //    cy.checkSubUnitValue(cog.type_name, 'BU2', 'Subunit 1', 24, cog.total_sub1_bu2_24); // rowTitle, businessUnitName, subunitName, month, value
       });
    });
-
 }
