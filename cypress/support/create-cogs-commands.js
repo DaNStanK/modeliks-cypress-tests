@@ -31,29 +31,28 @@ Cypress.Commands.add('selectRelation', (relation) => {
 });
 
 // Choose the type of cost
-Cypress.Commands.add('selectTypeOfCost', (type) => {
+Cypress.Commands.add('selectTypeOfCost', (typeName) => {
    // Validate input
-   if (type == null || typeof type !== 'string') {
+   if (typeName == null || typeof typeName !== 'string') {
       throw new Error('Invalid or missing type of cost. Ensure the type of cost is populated as a parameter in the function and is a string.');
    }
 
-   // Adjust the type to match the checkbox index
-   const adjustedType = type.toLowerCase() === 'cost per unit sold' ? 0 : 1;
-
-
-   // Check the type of cost checkbox if not already checked
-   cy.get('div.flex.flex-col.gap-4 div.flex.flex-col.gap-4')
-      .eq(1)
-      .find('label input[role="checkbox"]')
-      .eq(adjustedType)
-      .then(($checkbox) => {
-         if (!$checkbox.prop('checked')) {
-            cy.get('div.flex.flex-col.gap-4 div.flex.flex-col.gap-4')
-               .eq(1)
-               .find('label input[role="checkbox"]')
-               .eq(adjustedType)
-               .check({ force: true });
-         }
+   // Locate the dialog containing the cost type options
+   cy.get('div[role="dialog"]')
+      .should('be.visible') // Ensure the dialog is visible
+      .within(() => {
+         // Find the paragraph asking how to enter the cost
+         cy.contains('p', 'How will you enter this cost?')
+            .should('exist') // Ensure the paragraph exists
+            .closest('div') // Get the closest div containing the options
+            .within(() => {
+               // Find the label containing the type name
+               cy.contains('label', typeName)
+                  .should('exist') // Ensure the label exists
+                  .closest('label') // Get the closest label
+                  .find('input[role="checkbox"]') // Find the checkbox input
+                  .check({ force: true }); // Check the checkbox, forcing the action
+            });
       });
 });
 

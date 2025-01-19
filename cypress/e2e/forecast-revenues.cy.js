@@ -9,23 +9,13 @@ const {
   revenue_only
 } = revenues.revenues_type;
 
-describe('Forecast / Revenues Module', () => {
+describe('Forecast Revenues', () => {
   beforeEach(() => {
+    // Clear local storage before starting tests
+    cy.clearLocalStorage();
+
     // Login the user
     cy.loginUser(Cypress.env('LOGIN_USERNAME'), Cypress.env('LOGIN_PASSWORD'));
-
-    // cy.intercept('GET', `/api/organizational-structure?CompanyID=${company.number}`).as('oranizationalStructure');
-    // cy.intercept('GET', `/api/chart_of_accounts?CompanyID=${company.number}`).as('chartOfAccounts');
-
-    // // Wait for all fetches to complete
-    // cy.wait(['@oranizationalStructure', '@chartOfAccounts'], { timeout: 100000 })
-    //   .then(fetches => {
-    //     // Check if the fetches were successful
-    //     fetches.forEach(result => {
-    //       // Check if the fetch was successful
-    //       expect(result.response.statusCode).to.eq(200);
-    //     });
-    //   })
   });
 
   // Check if revenue only data is missing

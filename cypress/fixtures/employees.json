@@ -1,0 +1,170 @@
+{
+   "tests": [
+      {
+         "section": "Employees",
+         "section_url": "https://test.hz.modeliks.com/forecast/employees",
+         "create_button": "Add Employees",
+         "burden_rate_button": "Burden Rate",
+         "type": "New Employees",
+         "screens": [
+            {
+               "screen": "Burden Rate",
+               "ratio": 20
+            },
+            {
+               "screen": "Details",
+               "type_name": "Employee $ value L3",
+               "function": "General and administrative",
+               "salary_type": "$ value per employee",
+               "specific_revenue": "Service Revenue L3",
+               "status": "Employed by you"
+            },
+            {
+               "screen": "Advance Settings",
+               "level": "SU",
+               "methodology": "do not allocate"
+            },
+            {
+               "screen": "Number of employees",
+               "tables": [
+                  {
+                     "name": "Number of Employees",
+                     "value_per_month": [
+                        {
+                           "company": [ 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22 ]
+                        },
+                        {
+                           "bu1": [ 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9 ]
+                        },
+                        {
+                           "su1_bu1": [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ]
+                        },
+                        {
+                           "su2_bu1": [ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 ]
+                        },
+                        {
+                           "bu2": [ 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13 ]
+                        },
+                        {
+                           "su1_bu2": [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ]
+                        },
+                        {
+                           "su2_bu2": [ 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7 ]
+                        }
+                     ],
+                     "average": []
+                  },
+                  {
+                     "name": "Number of employees at start",
+                     "number_of_employees": [ 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 3273, 3273, 3273 ]
+                  }
+               ]
+            },
+            {
+               "screen": "Cost per employees",
+               "tables": [
+                  {
+                     "name": "Cost per employee",
+                     "value_per_month": [
+                        {
+                           "company": [ 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 273, 3273, 3273, 3273 ]
+                        },
+                        {
+                           "bu1": [ 156, 156, 156, 156, 156, 156, 156, 156, 156, 156, 156, 156, 1867, 1867, 1867 ]
+                        },
+                        {
+                           "su1_bu1": [ 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 1200, 1200, 1200 ]
+                        },
+                        {
+                           "su2_bu1": [ 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 2400, 2400, 2400 ]
+                        },
+                        {
+                           "bu2": [ 354, 354, 354, 354, 354, 354, 354, 354, 354, 354, 354, 354, 4246, 4246, 4246 ]
+                        },
+                        {
+                           "su1_bu2": [ 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 3600, 3600, 3600 ]
+                        },
+                        {
+                           "su2_bu2": [ 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 4800, 4800, 4800 ]
+                        }
+                     ],
+                     "average": []
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "section": "Employees",
+         "section_url": "https://test.hz.modeliks.com/forecast/employees",
+         "create_button": "Add Employees",
+         "burden_rate_button": "Burden Rate",
+         "type": "New Employees",
+         "screens": [
+            {
+               "screen": "Burden Rate",
+               "ratio": 20
+            },
+            {
+               "screen": "Details",
+               "type_name": "Employee % specific L3",
+               "function": "Sales and marketing",
+               "salary_type": "% of specific revenue stream",
+               "specific_revenue": "Service Revenue L3",
+               "status": "Employed by you"
+            },
+            {
+               "screen": "Advance Settings",
+               "level": "SU",
+               "methodology": "do not allocate"
+            },
+            {
+               "screen": "Number of employees",
+               "tables": [
+                  {
+                     "name": "Employee % specific L3",
+                     "value_per_month": [
+                        {
+                           "company": [ 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 40.30, 41.80, 40.20, 43.20 ]
+                        },
+                        {
+                           "bu1": [ 32.70, 32.70, 32.70, 32.70, 32.70, 32.70, 32.70, 32.70, 32.70, 32.70, 32.70, 39.80, 38.50, 39.90, 32.70 ]
+                        },
+                        {
+                           "su1_bu1": [ 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00 ]
+                        },
+                        {
+                           "su2_bu1": [ 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00 ]
+                        },
+                        {
+                           "bu2": [ 46.20, 46.20, 46.20, 46.20, 46.20, 46.20, 46.20, 46.20, 46.20, 46.20, 46.20, 46.20, 46.20, 46.20, 46.20 ]
+                        },
+                        {
+                           "su1_bu2": [ 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00, 40.00 ]
+                        },
+                        {
+                           "su2_bu2": [ 50.00, 50.00, 50.00, 50.00, 50.00, 50.00, 50.00, 50.00, 50.00, 50.00, 50.00, 50.00, 50.00, 50.00, 50.00 ]
+                        }
+                     ],
+                     "average": [ 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 43.20, 40.29, 41.75, 40.24, 43.20 ]
+                  },
+                  {
+                     "name": "Number of employees at start",
+                     "number_of_employees": []
+                  }
+               ]
+            },
+            {
+               "screen": "Cost per employees",
+               "tables": [
+                  {
+                     "name": "Cost per employees",
+                     "value_per_month": [],
+                     "average": []
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

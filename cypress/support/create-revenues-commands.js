@@ -10,7 +10,7 @@ Cypress.Commands.add('setRevenueName', (revenueName) => {
    }
 
    // Populate Revenue Name input field
-   cy.get('#revenueNameInput')
+   cy.get('input[name="streamName"]')
       .clear() // Clear any existing value
       .type(revenueName); // Type the new revenue name
 });
