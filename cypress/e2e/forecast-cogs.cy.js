@@ -190,13 +190,13 @@ if (tests && tests.length > 0) {
                      cy.applyFunction(tableOfUnitCosts.name, "Add Growth");
 
                      // Set the growth value on all business units
-                     setOrAssertValues("Set", tableOfUnitCostGrowth.name, 8, tableOfUnitCostsGrowthValues.bu1); // modeInput, tableName, rowIndex, cellValue
-                     setOrAssertValues("Set", tableOfUnitCostGrowth.name, 11, tableOfUnitCostsGrowthValues.bu2); // modeInput, tableName, rowIndex, cellValue
+                     setOrAssertValues("Set", tableOfUnitCostGrowth.name, 4, tableOfUnitCostsGrowthValues.bu1); // modeInput, tableName, rowIndex, cellValue
+                     setOrAssertValues("Set", tableOfUnitCostGrowth.name, 5, tableOfUnitCostsGrowthValues.bu2); // modeInput, tableName, rowIndex, cellValue
                   }
 
                   // Set the cell values in the table of unit cost        
                   setOrAssertValues("Set", tableOfUnitCosts.name, 1, tableOfUnitCostsValues.bu1); // modeInput, tableName, rowIndex, cellValue
-                  setOrAssertValues("Set", tableOfUnitCosts.name, 4, tableOfUnitCostsValues.bu2); // modeInput, tableName, rowIndex, cellValue
+                  setOrAssertValues("Set", tableOfUnitCosts.name, 2, tableOfUnitCostsValues.bu2); // modeInput, tableName, rowIndex, cellValue
                }
 
                // Check if we have some values for a function to be added within the test
@@ -217,34 +217,42 @@ if (tests && tests.length > 0) {
                setOrAssertValues("Assert", tableOfUnitCosts.name, 0, tableOfUnitCostsValues.company); // modeInput, tableName, rowIndex, cellValue
 
                // Assert if we have some values for a function to be added within the test
-               if (tableOfUnitCostGrowth?.value_per_month?.length > 0) {
-                  // Assert the values of the growth table
-                  setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 7, tableOfUnitCostsGrowthValues.company); // modeInput, tableName, rowIndex, cellValue
+               if (advanceSettingsScreen.level === "Level 1") {
+                  if (tableOfUnitCostGrowth?.value_per_month?.length > 0) {
+                     // Assert the values of the growth table
+                     setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 1, tableOfUnitCostsGrowthValues.company); // modeInput, tableName, rowIndex, cellValue
+                  }
                }
 
                // Assert if we have values for the business units
                if (advanceSettingsScreen.level === 'BU') {
                   setOrAssertValues("Assert", tableOfUnitCosts.name, 1, tableOfUnitCostsValues.bu1); // modeInput, tableName, rowIndex, cellValue
-                  setOrAssertValues("Assert", tableOfUnitCosts.name, 4, tableOfUnitCostsValues.bu2); // modeInput, tableName, rowIndex, cellValue
-
+                  setOrAssertValues("Assert", tableOfUnitCosts.name, 2, tableOfUnitCostsValues.bu2); // modeInput, tableName, rowIndex, cellValue
+                  
                   // Assert if we have some values for a function to be added within the test
                   if (tableOfUnitCostGrowth?.value_per_month?.length > 0) {
-                     setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 8, tableOfUnitCostsGrowthValues.bu1); // modeInput, tableName, rowIndex, cellValue
-                     setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 11, tableOfUnitCostsGrowthValues.bu2); // modeInput, tableName, rowIndex, cellValue                     
+                     setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 3, tableOfUnitCostsGrowthValues.company); // modeInput, tableName, rowIndex, cellValue
+                     setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 4, tableOfUnitCostsGrowthValues.bu1); // modeInput, tableName, rowIndex, cellValue
+                     setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 5, tableOfUnitCostsGrowthValues.bu2); // modeInput, tableName, rowIndex, cellValue                     
                   }
                }
-
+               
                // Assert if we have values for the subunits
                if (advanceSettingsScreen.level === 'SU') {
+                  setOrAssertValues("Assert", tableOfUnitCosts.name, 1, tableOfUnitCostsValues.bu1); // modeInput, tableName, rowIndex, cellValue
                   setOrAssertValues("Assert", tableOfUnitCosts.name, 2, tableOfUnitCostsValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
                   setOrAssertValues("Assert", tableOfUnitCosts.name, 3, tableOfUnitCostsValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
+                  setOrAssertValues("Assert", tableOfUnitCosts.name, 4, tableOfUnitCostsValues.bu2); // modeInput, tableName, rowIndex, cellValue
                   setOrAssertValues("Assert", tableOfUnitCosts.name, 5, tableOfUnitCostsValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
                   setOrAssertValues("Assert", tableOfUnitCosts.name, 6, tableOfUnitCostsValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
-
+                  
                   // Assert if we have some values for a function to be added within the test
                   if (tableOfUnitCostGrowth?.value_per_month?.length > 0) {
+                     setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 8, tableOfUnitCostsGrowthValues.company); // modeInput, tableName, rowIndex, cellValue
+                     setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 8, tableOfUnitCostsGrowthValues.bu1); // modeInput, tableName, rowIndex, cellValue
                      setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 9, tableOfUnitCostsGrowthValues.su1_bu1); // modeInput, tableName, rowIndex, cellValue
                      setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 10, tableOfUnitCostsGrowthValues.su2_bu1); // modeInput, tableName, rowIndex, cellValue
+                     setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 11, tableOfUnitCostsGrowthValues.bu2); // modeInput, tableName, rowIndex, cellValue                     
                      setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 12, tableOfUnitCostsGrowthValues.su1_bu2); // modeInput, tableName, rowIndex, cellValue
                      setOrAssertValues("Assert", tableOfUnitCostGrowth.name, 13, tableOfUnitCostsGrowthValues.su2_bu2); // modeInput, tableName, rowIndex, cellValue
                   }
