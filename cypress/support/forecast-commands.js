@@ -86,7 +86,7 @@ Cypress.Commands.add('applyToAllFields', (tableName, rowIndex, cellIndex) => {
 
    cy.findTableCell(tableName, rowIndex, cellIndex)
       .find('div.autofill_container .m-round-button')
-      .click({ force: true })
+      .click({ force: true });
 
    // // Adjust month index if necessary
    // const adjustedMonth = cellIndex > 13 ? cellIndex - 10 : cellIndex + 1;
@@ -331,50 +331,36 @@ Cypress.Commands.add('checkCogsCellValue', (rowIndex, cellIndex, value) => {
    });
 });
 
-// Click allocation set button
-Cypress.Commands.add('clickSetButton', (value) => {
+// Set organizational level
+Cypress.Commands.add('setOrganizationalLevel', (organizationalLevel) => {
    // Validate input
-   if (value == null || value < 0) {
-      throw new Error('Invalid or missing value. Ensure the value is defined and non-negative.');
+   if (!organizationalLevel || typeof organizationalLevel !== 'string') {
+      throw new Error('Invalid or missing organizationalLevel. Ensure the organizationalLevel is defined and is a string.');
    }
 
-   // Click the set button based on the value
-   cy.get('.scdi_info_dialog_div * table')
-      .eq(0)
-      .find('button')
-      .then(setButtons => {
-         const buttonIndex = setButtons.length > 2 ? value : value - 1;
-         cy.wrap(setButtons)
-            .eq(buttonIndex)
-            .click();
-      });
-});
+   // Determine the button index based on the organizationalLevel
+   const levelMapping = {
+      "Level 1": 0,
+      "BU1": 1,
+      "BU2": 2
+   };
 
-// Set allocation level based on the provided value
-Cypress.Commands.add('setTotals', (value) => {
-   // Validate input
-   if (!value || typeof value !== 'string') {
-      throw new Error('Invalid or missing value. Ensure the value is defined and is a string.');
-   }
+   let buttonIndex = levelMapping[organizationalLevel];
 
-   // Determine the button index based on the value
-   let buttonIndex;
-   switch (value) {
-      case company.organizationalStructure.levelOne.name:
-         buttonIndex = 0;
-         break;
-      case company.organizationalStructure.levelTwo_unitOne.name:
-         buttonIndex = 1;
-         break;
-      case company.organizationalStructure.levelTwo_unitTwo.name:
-         buttonIndex = 2;
-         break;
-      default:
-         throw new Error('Invalid value. Ensure the value matches one of the defined levels.');
+   if (buttonIndex === undefined) {
+      throw new Error('Invalid organizationalLevel. Ensure the value matches one of the defined levels: "Level 1", "BU1", or "BU2".');
    }
 
    // Click the set button based on the determined index
-   cy.clickSetButton(buttonIndex);
+   cy.get('.scdi_info_dialog_div * table')
+      .eq(0) // Select the first table
+      .find('button')
+      .then($buttons => {
+         if ($buttons.length < 3) {
+            buttonIndex -= 1;
+         }
+         cy.wrap($buttons).eq(buttonIndex).click(); // Click the button based on the adjusted index
+      });
 });
 
 // Find cell in allocation input table
