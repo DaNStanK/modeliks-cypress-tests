@@ -307,7 +307,7 @@ if (tests && tests.length > 0) {
             });
 
             // Check the URL after successful intercepts
-            cy.url().should('be', 'https://test.hz.modeliks.com/forecast/revenue');
+            cy.url().should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
           }
         });
       }
@@ -428,7 +428,7 @@ if (tests && tests.length > 0) {
             });
 
             // Check the URL after successful intercepts
-            cy.url().should('be', 'https://test.hz.modeliks.com/forecast/revenue');
+            cy.url().should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
           }
         });
       }
@@ -479,7 +479,7 @@ if (tests && tests.length > 0) {
           cy.intercept('PUT', `/api/cdv/calculateddrivers_v2`).as('calculatedDrivers');
 
           // Check the URL after successful intercepts
-          cy.url().should('be', 'https://test.hz.modeliks.com/forecast/revenue');
+          cy.url().should('eq', 'https://test.hz.modeliks.com/forecast/revenue');
         });
       }
     });
